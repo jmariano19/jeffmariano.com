@@ -64,7 +64,7 @@ export default function About() {
       </section>
 
       {/* Section 2 — Archetypes */}
-      <section className="px-4 md:px-24 pt-[70px] pb-24">
+      <section className="px-4 md:px-24 pt-[80px] pb-24">
         <div className="md:ml-[calc(400px+4rem)] lg:ml-[calc(465px+4rem)]">
           <FadeUp>
             <p className="font-[family-name:var(--font-roboto)] font-bold text-[18px] md:text-[20px] leading-[45px] text-[#606060] mb-3">
