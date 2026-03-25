@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { motion } from "framer-motion";
 import FadeUp from "../FadeUp";
 
 interface ContentSectionProps {
@@ -82,7 +83,13 @@ export default function ContentSection({
             </div>
           ) : (
             <div className="relative h-[240px] md:h-[400px] rounded-[20px] overflow-hidden mt-8">
-              <Image src={image} alt={title} fill className="object-cover" />
+              <motion.div
+                className="absolute inset-0"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                <Image src={image} alt={title} fill className="object-cover" />
+              </motion.div>
             </div>
           )}
         </FadeUp>
