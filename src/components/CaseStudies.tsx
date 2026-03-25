@@ -161,19 +161,6 @@ const tinybeansStudy = {
 export default function CaseStudies() {
   return (
     <section className="px-4 md:px-24 pb-16">
-      {/* Tabs */}
-      <FadeUp>
-        <div className="flex items-center gap-6 mb-6 md:mb-8 px-2 md:px-0">
-          <button type="button" className="font-[family-name:var(--font-playfair)] text-lg md:text-xl text-green-dark relative">
-            Case Stories
-            <span className="absolute -bottom-1 left-0 h-1 w-full bg-green-accent" />
-          </button>
-          <button type="button" className="font-[family-name:var(--font-playfair)] text-lg md:text-xl text-gray-light cursor-default" aria-disabled="true">
-            Articles
-          </button>
-        </div>
-      </FadeUp>
-
       {/* Cards */}
       <div className="flex flex-col gap-6 md:gap-10">
         {caseStudies.map((study) => (
