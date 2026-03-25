@@ -16,7 +16,7 @@ export default function About() {
       <Nav />
 
       {/* Hero — portrait + intro */}
-      <section className="px-4 md:px-24 pt-12 pb-0">
+      <section className="px-4 md:px-24 pt-12 pb-24">
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 
           {/* Portrait */}
@@ -32,7 +32,7 @@ export default function About() {
             </div>
           </FadeUp>
 
-          {/* Intro text */}
+          {/* Right column — intro text + archetypes */}
           <div className="flex-1 pt-0 md:pt-6">
             <FadeUp>
               <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[36px] md:text-[45px] leading-[1.1] text-green-heading mb-6 md:mb-8">
@@ -59,39 +59,37 @@ export default function About() {
                 </p>
               </div>
             </FadeUp>
-          </div>
-        </div>
-      </section>
 
-      {/* Section 2 — Archetypes */}
-      <section className="px-4 md:px-24 pt-[80px] pb-24">
-        <div className="md:ml-[calc(400px+4rem)] lg:ml-[calc(465px+4rem)]">
-          <FadeUp>
-            <p className="font-[family-name:var(--font-roboto)] font-bold text-[18px] md:text-[20px] leading-[45px] text-[#606060] mb-3">
-              Designing AI for Human Archetypes
-            </p>
-          </FadeUp>
+            {/* Archetypes — 80px below intro text */}
+            <div className="mt-[80px]">
+              <FadeUp>
+                <p className="font-[family-name:var(--font-roboto)] font-bold text-[18px] md:text-[20px] leading-[45px] text-[#606060] mb-3">
+                  Designing AI for Human Archetypes
+                </p>
+              </FadeUp>
 
-          <div className="w-full h-px bg-[#606060] opacity-20 mb-2" />
+              <div className="w-full h-px bg-[#606060] opacity-20 mb-2" />
 
-          <FadeUp>
-            <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] mt-6 space-y-6">
-              <p>
-                As AI becomes part of everyday workflows, designing the interface alone
-                is not enough. Different people relate to intelligent systems in different
-                ways — as advisors, tools, guides, or mirrors.
-              </p>
-              <p>
-                When designing AI-assisted products, I often consider these human
-                archetypes to ensure the system adapts to different mental models and
-                decision styles.
-              </p>
-              <p>
-                Recognizing these patterns helps create AI experiences that feel natural,
-                trustworthy, and aligned with how people actually think.
-              </p>
+              <FadeUp>
+                <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] mt-6 space-y-6">
+                  <p>
+                    As AI becomes part of everyday workflows, designing the interface alone
+                    is not enough. Different people relate to intelligent systems in different
+                    ways — as advisors, tools, guides, or mirrors.
+                  </p>
+                  <p>
+                    When designing AI-assisted products, I often consider these human
+                    archetypes to ensure the system adapts to different mental models and
+                    decision styles.
+                  </p>
+                  <p>
+                    Recognizing these patterns helps create AI experiences that feel natural,
+                    trustworthy, and aligned with how people actually think.
+                  </p>
+                </div>
+              </FadeUp>
             </div>
-          </FadeUp>
+          </div>
         </div>
       </section>
 
