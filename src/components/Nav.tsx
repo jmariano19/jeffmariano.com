@@ -9,6 +9,7 @@ import Logo from "./Logo";
 const links = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Articles", href: "/articles" },
 ];
 
 export default function Nav() {

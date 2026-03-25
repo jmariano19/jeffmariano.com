@@ -16,7 +16,7 @@ export default function About() {
       <Nav />
 
       {/* Hero — portrait + intro */}
-      <section className="px-4 md:px-24 pt-12 pb-16 md:pb-24">
+      <section className="px-4 md:px-24 pt-12 pb-8 md:pb-14">
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 
           {/* Portrait */}
