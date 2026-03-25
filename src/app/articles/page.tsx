@@ -85,7 +85,7 @@ export default function Articles() {
       <section className="px-5 md:px-28 pt-8 md:pt-14 pb-10 md:pb-14">
         <FadeUp>
           <h1 className="font-[family-name:var(--font-playfair)] text-[28px] md:text-[45px] font-normal leading-[1.15] text-green-heading mb-6 md:mb-8 max-w-[900px]">
-            Where empathy meets intelligence — putting the human in AI.
+            <strong>Where empathy meets intelligence — putting the human in AI.</strong>
           </h1>
         </FadeUp>
         <FadeUp>
@@ -98,23 +98,6 @@ export default function Articles() {
         </FadeUp>
       </section>
 
-      {/* Tabs */}
-      <section className="px-5 md:px-28 mb-6 md:mb-8">
-        <div className="flex items-baseline gap-8 md:gap-12">
-          <div className="flex flex-col">
-            <span className="font-[family-name:var(--font-playfair)] text-[18px] md:text-[20px] font-bold text-black leading-[45px]">
-              Articles
-            </span>
-            <div className="h-[4px] w-[72px] bg-black -mt-1" />
-          </div>
-          <Link
-            href="/"
-            className="font-[family-name:var(--font-playfair)] text-[18px] md:text-[20px] font-normal text-[#2c2c2c] leading-[45px] hover:opacity-60 transition-opacity"
-          >
-            Case Stories
-          </Link>
-        </div>
-      </section>
 
       {/* Featured article */}
       <section className="px-5 md:px-28 mb-6 md:mb-8">
