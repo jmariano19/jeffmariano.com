@@ -44,7 +44,7 @@ function UnlockForm() {
   return (
     <div className="min-h-screen bg-[#f8f4e9] flex flex-col">
       {/* Nav */}
-      <div className="px-6 md:px-12 pt-8">
+      <div className="pt-8 flex justify-center">
         <Logo />
       </div>
 
