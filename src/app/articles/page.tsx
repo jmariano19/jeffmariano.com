@@ -63,12 +63,12 @@ export default function Articles() {
 
       {/* Hero */}
       <section className="px-5 md:px-28 pt-8 md:pt-14 pb-10 md:pb-14">
-        <FadeUp>
+        <FadeUp delay={0.2}>
           <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading mb-6 md:mb-8 max-w-[900px]">
             <strong>Designing AI systems people trust — from experimentation to real-world adoption.</strong>
           </h1>
         </FadeUp>
-        <FadeUp>
+        <FadeUp delay={0.4}>
           <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-black/50 max-w-[782px] flex flex-col gap-4">
             <p>I design and test AI-powered experiences at both enterprise scale and from scratch—focused on what actually works, what breaks, and how people respond in real use.</p>
             <p>Through hands-on experiments, I&apos;m learning what it takes to make AI systems not just functional, but trustworthy.</p>

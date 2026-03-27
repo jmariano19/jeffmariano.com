@@ -34,13 +34,13 @@ export default function About() {
 
           {/* Right column — intro text + archetypes */}
           <div className="flex-1 pt-0 md:pt-6">
-            <FadeUp>
+            <FadeUp delay={0.2}>
               <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading mb-6 md:mb-8">
                 Designing Systems That Learn
               </h1>
             </FadeUp>
 
-            <FadeUp>
+            <FadeUp delay={0.4}>
               <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] space-y-0">
                 <p>
                   Most modern products are no longer static interfaces — they are evolving
