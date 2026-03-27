@@ -24,7 +24,7 @@ export default function CaseStudyHero({
           </p>
         </FadeUp>
         <FadeUp delay={0.15}>
-          <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[28px] md:text-[42px] leading-[34px] md:leading-[50px] text-green-heading">
+          <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading">
             {title}
           </h1>
         </FadeUp>

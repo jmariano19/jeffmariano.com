@@ -35,7 +35,7 @@ export default function About() {
           {/* Right column — intro text + archetypes */}
           <div className="flex-1 pt-0 md:pt-6">
             <FadeUp>
-              <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[36px] md:text-[45px] leading-[1.1] text-green-heading mb-6 md:mb-8">
+              <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading mb-6 md:mb-8">
                 Designing Systems That Learn
               </h1>
             </FadeUp>

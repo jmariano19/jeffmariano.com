@@ -56,7 +56,7 @@ export default function VerizonAI() {
       {/* Simplified AI Outputs */}
       <section className="px-6 md:px-28 py-10 md:py-16">
         <FadeUp>
-          <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[26px] md:text-[34px] leading-[32px] md:leading-[42px] text-green-heading mb-8">
+          <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[28px] md:text-[38px] leading-[34px] md:leading-[46px] text-green-heading mb-8">
             Simplified AI Outputs
           </h2>
         </FadeUp>

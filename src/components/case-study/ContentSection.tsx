@@ -35,7 +35,7 @@ export default function ContentSection({
   return (
     <section className="px-6 md:px-28 py-[40px]">
       <FadeUp>
-        <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[26px] md:text-[34px] leading-[32px] md:leading-[42px] text-green-heading">
+        <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[28px] md:text-[38px] leading-[34px] md:leading-[46px] text-green-heading">
           {title}
         </h2>
         {subtitle && (

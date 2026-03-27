@@ -36,12 +36,12 @@ export default function Methodology() {
   return (
     <section className="px-8 md:px-28 py-12 md:py-20">
       <FadeUp>
-        <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[30px] md:text-[45px] leading-[36px] md:leading-[45px] text-green-heading mb-4">
+        <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading mb-4">
           My methodology
         </h2>
       </FadeUp>
       <FadeUp delay={0.15}>
-        <p className="font-[family-name:var(--font-roboto)] text-base md:text-[19px] leading-[26px] md:leading-[30px] text-black max-w-[891px] mb-8 md:mb-12">
+        <p className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-black max-w-[891px] mb-8 md:mb-12">
           Meaningful experiences rarely begin with perfect clarity. I focus on
           putting ideas in front of real people early and letting solutions evolve
           by capturing real signals of value. Innovation happens when we&apos;re
