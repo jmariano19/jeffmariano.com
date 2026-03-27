@@ -65,7 +65,7 @@ export default function Articles() {
       <section className="px-5 md:px-28 pt-8 md:pt-14 pb-10 md:pb-14">
         <FadeUp>
           <h1 className="font-[family-name:var(--font-playfair)] text-[28px] md:text-[45px] font-normal leading-[1.15] text-green-heading mb-6 md:mb-8 max-w-[900px]">
-            <strong>Where empathy meets intelligence — putting the human in AI.</strong>
+            <strong>Designing AI systems people trust — from experimentation to real-world adoption.</strong>
           </h1>
         </FadeUp>
         <FadeUp>
