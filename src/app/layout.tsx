@@ -30,7 +30,10 @@ const lato = Lato({
 export const metadata: Metadata = {
   metadataBase: new URL("https://jeffmariano.com"),
   icons: {
-    icon: "/images/fivicon.png",
+    icon: [
+      { url: "/images/fivicon.png", media: "(prefers-color-scheme: light)" },
+      { url: "/images/fivicon-white.png", media: "(prefers-color-scheme: dark)" },
+    ],
     apple: "/images/fivicon.png",
   },
   title: {
