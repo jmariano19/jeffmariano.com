@@ -69,12 +69,10 @@ export default function Articles() {
           </h1>
         </FadeUp>
         <FadeUp>
-          <p className="font-[family-name:var(--font-roboto)] text-[17px] md:text-[22px] leading-[1.8] md:leading-[45px] text-black/50 max-w-[782px]">
-            I design emotionally aware, human–AI experiences that amplify human
-            potential, blending deep UX expertise with emerging technologies to
-            create intuitive, trustworthy, and transformative products that
-            improve millions of lives.
-          </p>
+          <div className="font-[family-name:var(--font-roboto)] text-[17px] md:text-[22px] leading-[1.8] md:leading-[45px] text-black/50 max-w-[782px] flex flex-col gap-4">
+            <p>I design and test AI-powered experiences at both enterprise scale and from scratch—focused on what actually works, what breaks, and how people respond in real use.</p>
+            <p>Through hands-on experiments, I&apos;m learning what it takes to make AI systems not just functional, but trustworthy.</p>
+          </div>
         </FadeUp>
       </section>
 
