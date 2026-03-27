@@ -12,39 +12,46 @@ export const metadata: Metadata = {
 
 const articles = [
   {
+    title: "I've been using AI heavily at work and in my personal projects — and honestly, it's been confusing.",
+    date: "Mar 27, 2026",
+    tag: "AI + UX",
+    image: "/images/1.Article.png",
+    href: "https://jmariano19.substack.com/p/ive-been-using-ai-heavily-at-work",
+    featured: true,
+  },
+  {
     title: "The Human-Centered Future of AI in Retail",
     date: "Aug 10, 2025",
     tag: "AI Design",
-    image: "/images/1.Article.png",
+    image: "/images/2.Article.png",
     href: "https://jmariano19.substack.com/p/the-human-centered-future-of-ai-in?r=gv4h7&utm_campaign=post&utm_medium=web&triedRedirect=true",
-    featured: true,
   },
   {
     title: "Designing for Trust: When AI Gets It Wrong",
     date: "Jul 2025",
     tag: "UX Research",
-    image: "/images/2.Article.png",
+    image: "/images/3.Article.png",
     href: "#",
   },
   {
     title: "The Invisible Interface: Conversational AI and the End of Screens",
     date: "Jun 2025",
     tag: "Product Design",
-    image: "/images/3.Article.png",
+    image: "/images/4.Article.png",
     href: "#",
   },
   {
     title: "Health AI and the Hispanic Community: What the Data Won't Tell You",
     date: "May 2025",
     tag: "AI + Health",
-    image: "/images/4.Article.png",
+    image: "/images/5.Article.png",
     href: "#",
   },
   {
     title: "Modular Systems Thinking: Why Your Design Process Is Already an AI",
     date: "Apr 2025",
     tag: "Systems Design",
-    image: "/images/5.Article.png",
+    image: "/images/1.Article.png",
     href: "#",
   },
 ];
