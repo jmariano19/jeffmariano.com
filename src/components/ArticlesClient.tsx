@@ -216,11 +216,11 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
             <div className="relative w-full aspect-[1151/412] overflow-hidden rounded-[18px]">
               <ArticleImage src={featured.image} alt={featured.title} priority />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-8 left-8 md:bottom-10 md:left-10 right-8 md:right-16">
+              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 right-6 md:right-12">
                 <p className="font-[family-name:var(--font-lato)] text-xs md:text-sm text-white/70 mb-2 uppercase tracking-widest">
                   {featured.tag} · {featured.date}
                 </p>
-                <h2 className="font-[family-name:var(--font-playfair)] text-[28px] md:text-[51px] font-normal leading-[1.1] text-white max-w-[600px] group-hover:opacity-90 transition-opacity line-clamp-3">
+                <h2 className="font-[family-name:var(--font-playfair)] text-[22px] md:text-[36px] font-normal leading-[1.15] text-white max-w-[560px] group-hover:opacity-90 transition-opacity line-clamp-3">
                   {featured.title}
                 </h2>
               </div>
