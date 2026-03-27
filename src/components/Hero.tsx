@@ -9,15 +9,10 @@ export default function Hero() {
         </h1>
       </FadeUp>
       <FadeUp delay={0.4}>
-        <p className="mt-6 md:mt-8 font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-gray-text max-w-[768px]">
-          I help businesses implement AI that their teams and customers actually
-          adopt —{" "}
-          <span className="font-bold">
-            through behavioral design, micro-experimentation
-          </span>
-          , and a methodology proven across retail, health, and digital
-          ecosystems.
-        </p>
+        <div className="mt-6 md:mt-8 font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-gray-text max-w-[768px] flex flex-col gap-4">
+          <p>Most teams are testing AI. Few are seeing real adoption.</p>
+          <p>I focus on what happens in practice—how people behave, where systems break, and what it takes to make AI trustworthy.</p>
+        </div>
       </FadeUp>
     </section>
   );
