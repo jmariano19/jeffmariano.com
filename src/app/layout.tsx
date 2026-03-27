@@ -29,6 +29,10 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jeffmariano.com"),
+  icons: {
+    icon: "/images/fivicon.png",
+    apple: "/images/fivicon.png",
+  },
   title: {
     default: "Jeff Mariano — Experience Designer",
     template: "%s | Jeff Mariano",
