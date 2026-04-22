@@ -25,7 +25,7 @@ export default function Nav() {
     >
       {/* Desktop nav */}
       <div className="hidden md:flex items-center justify-between">
-        <div className="flex items-center gap-8 font-[family-name:var(--font-lato)] text-sm text-black">
+        <div className="flex items-center gap-8 font-[family-name:var(--font-caveat)] text-base text-black">
           {links.map(({ label, href }) => {
             const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
             return (
@@ -43,7 +43,7 @@ export default function Nav() {
           <Logo size={85} />
         </Link>
 
-        <p className="font-[family-name:var(--font-lato)] text-sm text-black text-right">
+        <p className="font-[family-name:var(--font-caveat)] text-sm text-black text-right">
           Get in touch to view work:
           <br />
           <a href="mailto:jmariano19@gmail.com" className="hover:opacity-70">
@@ -77,7 +77,7 @@ export default function Nav() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-cream z-50 px-5 py-6 border-b border-black/10 flex flex-col gap-4 font-[family-name:var(--font-lato)] text-base text-black"
+          className="md:hidden absolute top-full left-0 right-0 bg-cream z-50 px-5 py-6 border-b border-black/10 flex flex-col gap-4 font-[family-name:var(--font-caveat)] text-base text-black"
         >
           {links.map(({ label, href }) => (
             <Link key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</Link>
