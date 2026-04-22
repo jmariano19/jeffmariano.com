@@ -32,7 +32,9 @@ export default function Nav() {
               <Link key={href} href={href} className="relative hover:opacity-70 transition-opacity">
                 {label}
                 {isActive && (
-                  <span className="absolute -bottom-1 left-0 h-[1px] w-full bg-black" />
+                  <svg className="absolute -bottom-1 left-0 w-full" height="5" viewBox="0 0 40 5" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,3.5 C4,1.5 8,4 13,3 C18,2 22,4.5 27,3.5 C32,2.5 36,4 40,3" stroke="black" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 )}
               </Link>
             );
