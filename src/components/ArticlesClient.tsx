@@ -50,11 +50,11 @@ function ArticleOverlay({
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    setError(false);
-    setContent(null);
+    const controller = new AbortController();
 
-    fetch(`/api/article?url=${encodeURIComponent(article.href)}`)
+    fetch(`/api/article?url=${encodeURIComponent(article.href)}`, {
+      signal: controller.signal,
+    })
       .then((r) => r.json())
       .then((data) => {
         if (data.error) {
@@ -64,8 +64,18 @@ function ArticleOverlay({
           setDescription(data.description);
         }
       })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
+      .catch((fetchError: unknown) => {
+        if (!(fetchError instanceof DOMException && fetchError.name === "AbortError")) {
+          setError(true);
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      });
+
+    return () => controller.abort();
   }, [article.href]);
 
   // Close on Escape key
@@ -78,7 +88,6 @@ function ArticleOverlay({
   }, [onClose]);
 
   return (
-    <AnimatePresence>
       <motion.div
         key="overlay-backdrop"
         initial={{ opacity: 0 }}
@@ -190,7 +199,6 @@ function ArticleOverlay({
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
   );
 }
 
@@ -255,7 +263,15 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
       </section>
 
       {/* Overlay */}
-      {open && <ArticleOverlay article={open} onClose={() => setOpen(null)} />}
+      <AnimatePresence>
+        {open && (
+          <ArticleOverlay
+            key={open.href}
+            article={open}
+            onClose={() => setOpen(null)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

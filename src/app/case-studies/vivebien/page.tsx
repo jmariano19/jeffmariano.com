@@ -120,7 +120,7 @@ export default function ViveBien() {
           {
             company: "Tinybeans",
             title: "Rebranding a 20 Million-Family App",
-            image: "/images/case-tinybeans.png",
+            image: "/images/case-tinybeans.jpg",
             href: "/case-studies/tinybeans",
           },
         ]}

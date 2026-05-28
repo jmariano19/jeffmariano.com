@@ -12,6 +12,7 @@ function UnlockForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -94,13 +95,32 @@ function UnlockForm() {
             <div className="relative">
               <input
                 ref={inputRef}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
                 autoFocus
-                className="w-full bg-white border border-[#325624]/20 rounded-[10px] px-5 py-4 font-[family-name:var(--font-roboto)] text-[15px] text-[#25391d] placeholder:text-[#606060]/50 outline-none focus:border-[#325624]/60 transition-colors"
+                className="w-full bg-white border border-[#325624]/20 rounded-[10px] pl-5 pr-14 py-4 font-[family-name:var(--font-roboto)] text-[15px] text-[#25391d] placeholder:text-[#606060]/50 outline-none focus:border-[#325624]/60 transition-colors"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((isVisible) => !isVisible)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute inset-y-0 right-4 flex items-center justify-center text-[#606060] hover:text-[#325624] transition-colors"
+              >
+                {showPassword ? (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M3 3L21 21" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+                    <path d="M10.58 10.59A2 2 0 0013.41 13.42" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+                    <path d="M9.9 5.1A10.67 10.67 0 0112 4.88c5.5 0 9 7.12 9 7.12a15.55 15.55 0 01-3.18 3.73M6.18 6.27C4.12 7.75 3 12 3 12s3.5 7.12 9 7.12a10.6 10.6 0 003.1-.47" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M3 12s3.5-7.12 9-7.12S21 12 21 12s-3.5 7.12-9 7.12S3 12 3 12z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+                    <circle cx="12" cy="12" r="2.75" stroke="currentColor" strokeWidth="1.7" />
+                  </svg>
+                )}
+              </button>
             </div>
 
             {error && (

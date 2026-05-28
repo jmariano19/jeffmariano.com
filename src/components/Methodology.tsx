@@ -54,7 +54,7 @@ export default function Methodology() {
         {steps.map((step, i) => (
           <FadeUp key={step.number} delay={i * 0.15}>
             <div className="flex flex-col items-center">
-              <div className="relative w-full h-[180px] md:h-[302px] rounded-[20px] border border-black overflow-hidden mb-3 md:mb-4">
+              <div className="relative w-full h-[180px] md:h-[302px] rounded-[20px] overflow-hidden mb-3 md:mb-4">
                 <Image
                   src={step.image}
                   alt={step.title}

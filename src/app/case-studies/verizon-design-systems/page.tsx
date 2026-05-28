@@ -23,7 +23,7 @@ export default function VerizonDesignSystems() {
         tag="DESIGN SYSTEMS · FORTUNE 50 TELECOM"
         title="From 7 Inconsistent Screens to One Scalable Retail Design System"
         meta="Role: Lead Designer → Associate Director | Team: 9 designers (US + India) | Scope: 15+ teams, 5-10 products"
-        image="/images/case-verizon-ecosystem.png"
+        image="/images/case-studies/Design Systems-verizon.png"
       />
 
       <Challenges
@@ -124,7 +124,7 @@ export default function VerizonDesignSystems() {
           {
             company: "Tinybeans",
             title: "Rebranding a 20 Million-Family App",
-            image: "/images/case-tinybeans.png",
+            image: "/images/case-tinybeans.jpg",
             href: "/case-studies/tinybeans",
           },
         ]}

@@ -23,3 +23,34 @@ body {
   color: #333;
   font-family: var(--font-roboto), sans-serif;
 }
+
+@keyframes logo-outer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo-outer-spin {
+  animation: logo-outer-spin 90s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-outer-spin {
+    animation: none;
+  }
+}
+
+.about-scroll-pane,
+html:has(.about-page),
+body:has(.about-page) {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.about-scroll-pane::-webkit-scrollbar,
+html:has(.about-page)::-webkit-scrollbar,
+body:has(.about-page)::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}

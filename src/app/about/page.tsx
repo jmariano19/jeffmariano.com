@@ -7,17 +7,17 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About — Jeff Mariano",
   description:
-    "Designer, technologist, and founder. I design systems that learn — modular frameworks, experimentation loops, and AI-assisted experiences.",
+    "I design AI-assisted systems that evolve through real-world human behavior, focusing on trust, adoption, and everyday workflows.",
 };
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-cream max-w-[1440px] mx-auto">
+    <div className="about-page min-h-screen bg-cream max-w-[1440px] mx-auto md:h-screen md:flex md:flex-col md:overflow-hidden">
       <Nav />
 
       {/* Hero — portrait + intro */}
-      <section className="px-4 md:px-24 pt-12 pb-24">
-        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
+      <main className="px-4 md:px-24 pt-12 pb-24 md:flex-1 md:min-h-0 md:pb-12 md:overflow-hidden">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start md:h-full">
 
           {/* Portrait */}
           <FadeUp className="w-full md:w-[400px] lg:w-[465px] flex-shrink-0">
@@ -33,7 +33,7 @@ export default function About() {
           </FadeUp>
 
           {/* Right column — intro text + archetypes */}
-          <div className="flex-1 pt-0 md:pt-6">
+          <div className="about-scroll-pane flex-1 min-w-0 pt-0 md:pt-6 md:h-full md:overflow-y-auto md:pr-4">
             <FadeUp delay={0.2}>
               <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading mb-6 md:mb-8">
                 Designing Systems That Learn
@@ -41,21 +41,25 @@ export default function About() {
             </FadeUp>
 
             <FadeUp delay={0.4}>
-              <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] space-y-0">
+              <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] space-y-5">
                 <p>
-                  Most modern products are no longer static interfaces — they are evolving
-                  systems shaped by human behavior.
+                  Most products no longer fail because of missing features. They fail
+                  because people never fully adopt them.
                 </p>
                 <p>
-                  My work focuses on designing environments where signals of value can
-                  emerge. By observing real behavior, products, AI systems, and human
-                  workflows can continuously adapt and improve.
+                  I design AI-assisted systems that evolve through real-world human behavior
+                  — focusing on how people trust, resist, adapt to, and integrate intelligent
+                  systems into everyday workflows.
                 </p>
                 <p>
-                  I specialize in{" "}
-                  <span className="font-bold">designing modular systems</span>,{" "}
-                  <span className="font-bold">experimentation frameworks</span>, and
-                  AI-assisted experiences that allow products to evolve through real-world use.
+                  At Verizon, I&apos;ve led AI-powered retail experiences used at Fortune 50
+                  scale, helping transform fragmented tools into systems people voluntarily
+                  use daily.
+                </p>
+                <p>
+                  My work combines behavioral design, systems thinking, experimentation
+                  frameworks, and AI-assisted product development to create products that
+                  improve through real-world use.
                 </p>
               </div>
             </FadeUp>
@@ -64,7 +68,7 @@ export default function About() {
             <div className="mt-[80px]">
               <FadeUp>
                 <p className="font-[family-name:var(--font-roboto)] font-bold text-[18px] md:text-[20px] leading-[45px] text-[#606060] mb-3">
-                  Designing AI for Human Archetypes
+                  Designing AI for Human Behavior
                 </p>
               </FadeUp>
 
@@ -73,27 +77,40 @@ export default function About() {
               <FadeUp>
                 <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] mt-6 space-y-6">
                   <p>
-                    As AI becomes part of everyday workflows, designing the interface alone
-                    is not enough. Different people relate to intelligent systems in different
-                    ways — as advisors, tools, guides, or mirrors.
+                    As AI becomes part of everyday work, designing the interface alone is no
+                    longer enough.
                   </p>
                   <p>
-                    When designing AI-assisted products, I often consider these human
-                    archetypes to ensure the system adapts to different mental models and
-                    decision styles.
+                    Different people interact with intelligent systems in fundamentally
+                    different ways — some seek guidance, some seek control, and others resist
+                    automation altogether.
                   </p>
                   <p>
-                    Recognizing these patterns helps create AI experiences that feel natural,
-                    trustworthy, and aligned with how people actually think.
+                    My work focuses on identifying the behavioral patterns that shape
+                    adoption:
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>trust,</li>
+                    <li>cognitive load,</li>
+                    <li>identity threat,</li>
+                    <li>perceived usefulness,</li>
+                    <li>and emotional resistance to AI systems.</li>
+                  </ul>
+                  <p>
+                    By designing around these human dynamics, AI products become more
+                    natural, trustworthy, and operationally effective in practice — not just
+                    in demos.
                   </p>
                 </div>
               </FadeUp>
             </div>
+
+            <div className="mt-20">
+              <Footer />
+            </div>
           </div>
         </div>
-      </section>
-
-      <Footer />
+      </main>
     </div>
   );
 }

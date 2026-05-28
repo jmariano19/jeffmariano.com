@@ -1,8 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import FadeUp from "./FadeUp";
+
+const MotionLink = motion.create(Link);
+
+const cardHover = {
+  hover: { y: -4, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" },
+};
+
+const imageHover = {
+  hover: { scale: 1.03 },
+};
 
 interface CaseStudyCardProps {
   company: string;
@@ -23,15 +34,16 @@ function CaseStudyCard({
 }: CaseStudyCardProps) {
   return (
     <FadeUp>
-      <motion.a
+      <MotionLink
         href={href || "#"}
-        className={`group relative block rounded-[20px] overflow-hidden ${large ? "h-[420px] md:h-[620px]" : "h-[320px] md:h-[568px]"}`}
-        whileHover={{ y: -4, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
+        className={`group relative block rounded-[20px] overflow-hidden ${large ? "h-[420px] md:h-[620px]" : "h-[360px] md:h-[568px]"}`}
+        variants={cardHover}
+        whileHover="hover"
         transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
       >
         <motion.div
           className="absolute inset-0"
-          whileHover={{ scale: 1.03 }}
+          variants={imageHover}
           transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <Image
@@ -63,7 +75,7 @@ function CaseStudyCard({
             Read Case Study
           </p>
         </div>
-      </motion.a>
+      </MotionLink>
     </FadeUp>
   );
 }
@@ -83,16 +95,17 @@ function TinybeansCard({
 }: TinybeansCardProps) {
   return (
     <FadeUp>
-      <motion.a
+      <MotionLink
         href="/case-studies/tinybeans"
-        className="group relative block overflow-hidden rounded-[20px]"
-        whileHover={{ y: -4, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
+        className="group relative block overflow-hidden rounded-[20px] bg-cream-light md:bg-transparent"
+        variants={cardHover}
+        whileHover="hover"
         transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
       >
-        <div className="relative h-[320px] md:h-[590px] rounded-[20px] overflow-hidden">
+        <div className="relative h-[240px] md:h-[590px] rounded-[20px] overflow-hidden">
           <motion.div
             className="absolute inset-0"
-            whileHover={{ scale: 1.03 }}
+            variants={imageHover}
             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <Image
@@ -104,7 +117,7 @@ function TinybeansCard({
             />
           </motion.div>
         </div>
-        <div className="absolute bottom-8 left-6 right-6 md:bottom-16 md:left-12 md:right-auto bg-cream-light/80 rounded-2xl p-6 md:p-10 md:max-w-[680px]">
+        <div className="relative -mt-10 mx-4 mb-4 bg-cream-light/95 rounded-2xl p-5 md:absolute md:mt-0 md:mx-0 md:mb-0 md:bottom-16 md:left-12 md:right-auto md:bg-cream-light/80 md:p-10 md:max-w-[680px]">
           <p className="font-[family-name:var(--font-playfair)] font-bold italic text-sm md:text-lg text-green-accent mb-1 md:mb-2">
             {company}
           </p>
@@ -118,7 +131,7 @@ function TinybeansCard({
             Read Case Study
           </p>
         </div>
-      </motion.a>
+      </MotionLink>
     </FadeUp>
   );
 }
@@ -126,25 +139,25 @@ function TinybeansCard({
 const caseStudies = [
   {
     company: "Verizon",
-    title: "Retail Eco-Systems",
+    title: "The AI Was Smart. The UX Was Wrong.",
     description:
-      "Unified design across 15+ teams and two continents at a Fortune 50 telecom company.",
-    image: "/images/case-verizon-ecosystem.png",
-    href: "/case-studies/verizon-design-systems",
+      "Redesigned an AI-powered retail POS from 2% adoption to voluntary daily use — by solving the behavioral and trust problems the technology couldn't fix on its own.",
+    image: "/images/case-verizon-ai.png",
+    href: "/case-studies/verizon-ai",
   },
   {
     company: "Verizon",
-    title: "The AI Was Smart. The UX Was Wrong.",
+    title: "Retail Eco-Systems",
     description:
-      "Redesigned an AI-powered retail POS from 2% adoption to voluntary use.",
-    image: "/images/case-verizon-ai.png",
-    href: "/case-studies/verizon-ai",
+      "Unified design and operational standards across 15+ teams and two continents at a Fortune 50 telecom company — reducing design inconsistency and accelerating delivery across the retail organization.",
+    image: "/images/case-verizon-ecosystem.png",
+    href: "/case-studies/verizon-design-systems",
   },
   {
     company: "ViveBien",
     title: "63 Million People Ignored by Digital Health",
     description:
-      "Designing a WhatsApp-based health product for the Hispanic community — from the inside.",
+      "Designing a WhatsApp-based AI health platform for the Hispanic community — from the inside, with real users, in active beta.",
     image: "/images/case-vivebien.png",
     href: "/case-studies/vivebien",
   },
@@ -154,8 +167,8 @@ const tinybeansStudy = {
   company: "Tinybeans",
   title: "Rebranding a 20 Million-Family App Without Breaking Trust",
   description:
-    "Led the full rebrand of Tinybeans — strategy, design system, and execution across every touchpoint.",
-  image: "/images/case-tinybeans.png",
+    "Led the full rebrand of Tinybeans — strategy, design system, and execution across every touchpoint — delivering a 5.5% increase in conversion rate and 3.5% rise in app store downloads.",
+  image: "/images/case-tinybeans.jpg",
 };
 
 export default function CaseStudies() {

@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen bg-cream max-w-[1440px] mx-auto">
-      <Nav />
+      <Nav home />
       <Hero />
       <CaseStudies />
       <Methodology />
