@@ -139,10 +139,10 @@ function TinybeansCard({
 const caseStudies = [
   {
     company: "Verizon",
-    title: "The AI Was Smart. The UX Was Wrong.",
+    title: "What Happens When People Feel Seen by AI?",
     description:
-      "Redesigned an AI-powered retail POS from 2% adoption to voluntary daily use — by solving the behavioral and trust problems the technology couldn't fix on its own.",
-    image: "/images/case-verizon-ai.png",
+      "Redesigned a retail AI experience around human control, conversational trust, and voluntary adoption.",
+    image: "/images/case-studies/ai_advisor/ai_advisor_top.png",
     href: "/case-studies/verizon-ai",
   },
   {
