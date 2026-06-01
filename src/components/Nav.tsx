@@ -30,7 +30,7 @@ export default function Nav({ home = false }: NavProps) {
     >
       {/* Desktop nav */}
       <div className="hidden md:flex items-center justify-between">
-        <div className="flex items-center gap-8 font-[family-name:var(--font-caveat)] text-base text-black">
+        <div className="flex items-center gap-8 font-[family-name:var(--font-roboto)] text-sm font-medium text-black">
           {links.map(({ label, href }) => {
             const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
             return (
@@ -58,7 +58,7 @@ export default function Nav({ home = false }: NavProps) {
 
         <a
           href="mailto:jmariano19@gmail.com"
-          className="inline-flex items-center gap-1 font-[family-name:var(--font-caveat)] text-sm text-black hover:opacity-70 transition-opacity"
+          className="inline-flex items-center gap-1 font-[family-name:var(--font-roboto)] text-sm font-medium text-black hover:opacity-70 transition-opacity"
         >
           Get in touch
           <Image src="/images/arrow.svg" alt="" width={11} height={10} aria-hidden="true" />
@@ -95,7 +95,7 @@ export default function Nav({ home = false }: NavProps) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-cream z-50 px-5 py-6 border-b border-black/10 flex flex-col gap-4 font-[family-name:var(--font-caveat)] text-base text-black"
+          className="md:hidden absolute top-full left-0 right-0 bg-cream z-50 px-5 py-6 border-b border-black/10 flex flex-col gap-4 font-[family-name:var(--font-roboto)] text-base font-medium text-black"
         >
           {links.map(({ label, href }) => (
             <Link key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</Link>
