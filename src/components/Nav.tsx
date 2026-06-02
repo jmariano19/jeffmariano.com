@@ -38,6 +38,9 @@ export default function Nav({ home = false }: NavProps) {
                 key={href}
                 href={href}
                 className="relative hover:opacity-70 transition-opacity"
+                data-ga-event="nav_click"
+                data-ga-category="navigation"
+                data-ga-label={label}
               >
                 {label}
                 {isActive && (
@@ -59,6 +62,9 @@ export default function Nav({ home = false }: NavProps) {
         <a
           href="mailto:jmariano19@gmail.com"
           className="inline-flex items-center gap-1 font-[family-name:var(--font-roboto)] text-sm font-medium text-black hover:opacity-70 transition-opacity"
+          data-ga-event="contact_click"
+          data-ga-category="contact"
+          data-ga-label="Header email"
         >
           Get in touch
           <Image src="/images/arrow.svg" alt="" width={11} height={10} aria-hidden="true" />
@@ -98,10 +104,25 @@ export default function Nav({ home = false }: NavProps) {
           className="md:hidden absolute top-full left-0 right-0 bg-cream z-50 px-5 py-6 border-b border-black/10 flex flex-col gap-4 font-[family-name:var(--font-roboto)] text-base font-medium text-black"
         >
           {links.map(({ label, href }) => (
-            <Link key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</Link>
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              data-ga-event="nav_click"
+              data-ga-category="navigation"
+              data-ga-label={`Mobile ${label}`}
+            >
+              {label}
+            </Link>
           ))}
           <hr className="border-black/10" />
-          <a href="mailto:jmariano19@gmail.com" className="inline-flex items-center gap-1 text-sm text-gray-text hover:opacity-70 transition-opacity">
+          <a
+            href="mailto:jmariano19@gmail.com"
+            className="inline-flex items-center gap-1 text-sm text-gray-text hover:opacity-70 transition-opacity"
+            data-ga-event="contact_click"
+            data-ga-category="contact"
+            data-ga-label="Mobile email"
+          >
             Get in touch
             <Image src="/images/arrow.svg" alt="" width={11} height={10} aria-hidden="true" />
           </a>

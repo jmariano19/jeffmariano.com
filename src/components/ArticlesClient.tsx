@@ -243,6 +243,9 @@ function FilterButton({
   return (
     <button
       onClick={onClick}
+      data-ga-event="article_filter_click"
+      data-ga-category="articles"
+      data-ga-label={label}
       className={`rounded-full border px-5 py-2 font-[family-name:var(--font-roboto)] text-sm font-bold transition-colors ${
         active
           ? "border-green-heading bg-green-heading text-white"
@@ -266,6 +269,9 @@ function ArticleCard({
   return (
     <motion.button
       onClick={published ? onClick : undefined}
+      data-ga-event={published ? "article_open" : "article_draft_click"}
+      data-ga-category="articles"
+      data-ga-label={article.title}
       className={`group flex h-full flex-col overflow-hidden rounded-[22px] bg-cream-light text-left shadow-[0_18px_45px_rgba(0,0,0,0.06)] transition-shadow ${
         published ? "cursor-pointer hover:shadow-[0_22px_55px_rgba(0,0,0,0.1)]" : "cursor-default"
       }`}
@@ -328,6 +334,9 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
         <FadeUp>
           <button
             onClick={() => handleClick(featured)}
+            data-ga-event="article_open"
+            data-ga-category="articles"
+            data-ga-label={featured.title}
             className="group grid w-full overflow-hidden rounded-[26px] bg-cream-light text-left shadow-[0_22px_60px_rgba(0,0,0,0.08)] md:grid-cols-[1.05fr_0.95fr]"
           >
             <div className="relative min-h-[320px] overflow-hidden md:min-h-full">

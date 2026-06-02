@@ -14,13 +14,33 @@ export default function Footer() {
       </FadeUp>
       <FadeUp delay={0.2}>
         <div className="flex gap-6 font-[family-name:var(--font-cormorant)] text-lg md:text-xl text-black">
-          <a href="https://www.linkedin.com/in/jeffrey-mariano-0b28722a/" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-70 transition-opacity">
+          <a
+            href="https://www.linkedin.com/in/jeffrey-mariano-0b28722a/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:opacity-70 transition-opacity"
+            data-ga-event="outbound_link_click"
+            data-ga-category="footer"
+            data-ga-label="LinkedIn"
+          >
             LinkedIn
           </a>
-          <a href="#" className="underline hover:opacity-70 transition-opacity">
+          <a
+            href="#"
+            className="underline hover:opacity-70 transition-opacity"
+            data-ga-event="resume_click"
+            data-ga-category="footer"
+            data-ga-label="Resume"
+          >
             Resume
           </a>
-          <a href="mailto:jmariano19@gmail.com" className="underline hover:opacity-70 transition-opacity">
+          <a
+            href="mailto:jmariano19@gmail.com"
+            className="underline hover:opacity-70 transition-opacity"
+            data-ga-event="contact_click"
+            data-ga-category="footer"
+            data-ga-label="Footer email"
+          >
             Contact
           </a>
         </div>

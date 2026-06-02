@@ -37,6 +37,9 @@ function CaseStudyCard({
       <MotionLink
         href={href || "#"}
         className={`group relative block rounded-[20px] overflow-hidden ${large ? "h-[420px] md:h-[620px]" : "h-[360px] md:h-[568px]"}`}
+        data-ga-event="case_study_click"
+        data-ga-category="case_studies"
+        data-ga-label={title}
         variants={cardHover}
         whileHover="hover"
         transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
@@ -98,6 +101,9 @@ function TinybeansCard({
       <MotionLink
         href="/case-studies/tinybeans"
         className="group relative block overflow-hidden rounded-[20px] bg-cream-light md:bg-transparent"
+        data-ga-event="case_study_click"
+        data-ga-category="case_studies"
+        data-ga-label={title}
         variants={cardHover}
         whileHover="hover"
         transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
