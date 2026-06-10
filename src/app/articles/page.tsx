@@ -44,16 +44,6 @@ const articles = [
     ],
   },
   {
-    title: "I've been using AI heavily at work and in my personal projects — and honestly, it's been confusing.",
-    date: "Mar 27, 2026",
-    tag: "AI + UX",
-    topic: "AI + UX",
-    summary:
-      "A candid reflection on using AI every day, where it speeds up thinking, where it muddies the process, and what that means for designers.",
-    image: "/images/1.Article.png",
-    href: "https://jmariano19.substack.com/p/ive-been-using-ai-heavily-at-work",
-  },
-  {
     title: "The Human-Centered Future of AI in Retail",
     date: "Aug 10, 2025",
     tag: "AI Design",

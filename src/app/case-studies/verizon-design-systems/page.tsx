@@ -6,12 +6,13 @@ import ContentSection from "@/components/case-study/ContentSection";
 import Outcomes from "@/components/case-study/Outcomes";
 import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
+import SystemLeadership from "@/components/case-study/SystemLeadership";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Verizon Design Systems — Jeff Mariano",
   description:
-    "From 7 inconsistent screens to one scalable retail design system at a Fortune 50 telecom company.",
+    "A design systems case study on scaling reusable patterns, governance, and cross-functional delivery across a Fortune 50 retail ecosystem.",
 };
 
 export default function VerizonDesignSystems() {
@@ -20,9 +21,9 @@ export default function VerizonDesignSystems() {
       <Nav />
 
       <CaseStudyHero
-        tag="DESIGN SYSTEMS · FORTUNE 50 TELECOM"
-        title="From 7 Inconsistent Screens to One Scalable Retail Design System"
-        meta="Role: Lead Designer → Associate Director | Team: 9 designers (US + India) | Scope: 15+ teams, 5-10 products"
+        tag="DESIGN SYSTEMS · GOVERNANCE · FORTUNE 50 TELECOM"
+        title="Scaling a Retail Design System Across 15+ Teams"
+        meta="Role: Team Leader | Team: 9 designers (US + India) | Scope: 15+ teams, 5-10 products"
         image="/images/case-studies/Design Systems-verizon.png"
       />
 
@@ -35,8 +36,10 @@ export default function VerizonDesignSystems() {
         description="A Fortune 50 telecom company had a retail design problem that nobody had been able to solve. The enterprise design system existed, but retail was a fundamentally different environment: different screen resolutions, different usage behaviors, touch-based kiosks in busy stores. The fragmentation was visible everywhere — same buttons built differently by different teams, same navigation patterns with different implementations. Some stakeholders believed the fragmentation was too deep to unify. I needed to prove them wrong — but not by arguing. By showing."
       />
 
+      <SystemLeadership />
+
       <ContentSection
-        title="Key Decisions"
+        title="Design System Strategy"
         subtitle="The Deck of Cards"
         tag="WHAT I BUILT"
         description="A modular system where &quot;cards&quot; are containers for content. Representatives choose which card to use depending on the conversation. Everything powered by a scalable retail design system that adapts to kiosk sizes and screen orientations."
@@ -52,7 +55,7 @@ export default function VerizonDesignSystems() {
       />
 
       <ContentSection
-        title="Reorganizing Across Continents"
+        title="Operating Model Across Continents"
         tag="WHAT I CHANGED"
         description="Reorganized into domain pods — sales, unity, service. Each pod had a US lead and India lead. Work assigned by priority, not geography. Weekly lead syncs."
         beforeAfter={{
@@ -65,7 +68,7 @@ export default function VerizonDesignSystems() {
 
       <ContentSection
         title="The Experimental Sandbox"
-        tag="WHY IT WORKED"
+        tag="GOVERNANCE MODEL"
         description="A structured process for validating design solutions before they become part of the official system. Not just prototyping — a cross-team coordination process involving business partners, product, research, and development."
         explanation="Bill optimization was our first sandbox project. We deployed it as a micro-flow, observed it in actual stores, and used those signals to determine what earned the right to scale."
         explanation2="Rejected both top-down mandates (teams resist) and pure grassroots (too slow). Orchestrated adoption: internal team first, then PMs, then senior leadership. By the time I presented up, everyone already knew."

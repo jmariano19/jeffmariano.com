@@ -145,19 +145,19 @@ function TinybeansCard({
 const caseStudies = [
   {
     company: "Verizon",
+    title: "Scaling a Retail Design System Across 15+ Teams",
+    description:
+      "Built the operating model, reusable patterns, and cross-continent design workflow for a Fortune 50 retail ecosystem — improving consistency, delivery speed, and system adoption.",
+    image: "/images/case-verizon-ecosystem.png",
+    href: "/case-studies/verizon-design-systems",
+  },
+  {
+    company: "Verizon",
     title: "The AI Was Smart. The UX Was Wrong.",
     description:
       "Redesigned an AI-powered retail POS from 2% adoption to voluntary daily use — by solving the behavioral and trust problems the technology couldn't fix on its own.",
     image: "/images/case-verizon-ai.png",
     href: "/case-studies/verizon-ai",
-  },
-  {
-    company: "Verizon",
-    title: "Retail Eco-Systems",
-    description:
-      "Unified design and operational standards across 15+ teams and two continents at a Fortune 50 telecom company — reducing design inconsistency and accelerating delivery across the retail organization.",
-    image: "/images/case-verizon-ecosystem.png",
-    href: "/case-studies/verizon-design-systems",
   },
   {
     company: "ViveBien",

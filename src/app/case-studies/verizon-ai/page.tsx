@@ -3,7 +3,6 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import FadeUp from "@/components/FadeUp";
-import ImageSlider from "@/components/case-study/ImageSlider";
 import AnimatedEvidenceGraph from "@/components/case-study/AnimatedEvidenceGraph";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -381,16 +380,21 @@ export default function VerizonAI() {
 
           <FadeUp>
             <div className="mt-12">
-              <ImageSlider
-                label="Progressive disclosure"
-                images={[
-                  "/images/case-studies/Images-slide/1.png",
-                  "/images/case-studies/Images-slide/2.png",
-                  "/images/case-studies/Images-slide/3.png",
-                  "/images/case-studies/Images-slide/4.png",
-                  "/images/case-studies/Images-slide/5.png",
-                ]}
-              />
+              <div className="rounded-[20px] bg-[#e6e2d6] p-6 md:p-10">
+                <p className="mb-6 text-center font-[family-name:var(--font-roboto)] text-sm font-bold text-gray-text md:text-base">
+                  Progressive disclosure
+                </p>
+                <div className="overflow-hidden rounded-[10px] bg-white/30">
+                  <Image
+                    src="/images/case-studies/Images-slide/1.png"
+                    alt="Progressive disclosure screen for AI Advisor"
+                    width={1400}
+                    height={900}
+                    sizes="100vw"
+                    className="h-auto w-full object-contain"
+                  />
+                </div>
+              </div>
             </div>
           </FadeUp>
         </section>
