@@ -5,11 +5,11 @@ const PASSWORD = process.env.PORTFOLIO_PASSWORD ?? "jeff2026";
 export async function POST(req: NextRequest) {
   const { password, from } = await req.json();
 
-  if (password !== PASSWORD) {
+  if (String(password).trim() !== PASSWORD) {
     return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
   }
 
-  const redirect = (from as string) || "/";
+  const redirect = typeof from === "string" && from.startsWith("/") ? from : "/";
   const res = NextResponse.json({ ok: true, redirect });
 
   res.cookies.set("portfolio_auth", "true", {

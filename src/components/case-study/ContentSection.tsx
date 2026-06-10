@@ -13,6 +13,7 @@ interface ContentSectionProps {
   explanation2?: string;
   image?: string;
   imageFit?: "cover" | "contain";
+  imageHeight?: string;
   imagePlaceholder?: boolean;
   beforeAfter?: {
     before: string;
@@ -29,6 +30,7 @@ export default function ContentSection({
   explanation2,
   image,
   imageFit = "cover",
+  imageHeight = "h-[240px] md:h-[400px]",
   imagePlaceholder,
   beforeAfter,
 }: ContentSectionProps) {
@@ -84,7 +86,7 @@ export default function ContentSection({
               <Image src={image} alt={title} width={1400} height={800} className="w-full h-auto object-contain" />
             </div>
           ) : (
-            <div className="relative h-[240px] md:h-[400px] rounded-[20px] overflow-hidden mt-8">
+            <div className={`relative ${imageHeight} rounded-[20px] overflow-hidden mt-8`}>
               <motion.div
                 className="absolute inset-0"
                 whileHover={{ scale: 1.03 }}

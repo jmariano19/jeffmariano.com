@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useRef, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Logo from "@/components/Logo";
 
 function UnlockForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get("from") || "/";
 
@@ -24,12 +23,12 @@ function UnlockForm() {
       const res = await fetch("/api/unlock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password, from }),
+        body: JSON.stringify({ password: password.trim(), from }),
       });
 
       if (res.ok) {
         const data = await res.json();
-        router.push(data.redirect);
+        window.location.assign(data.redirect);
       } else {
         setError("Incorrect password. Try again.");
         setPassword("");

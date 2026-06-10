@@ -45,6 +45,7 @@ export default function VerizonDesignSystems() {
         description="A modular system where &quot;cards&quot; are containers for content. Representatives choose which card to use depending on the conversation. Everything powered by a scalable retail design system that adapts to kiosk sizes and screen orientations."
         explanation="The enterprise system couldn't simply scale down to retail. Instead of forcing adaptation, I created a theme layer — purpose-built for retail, drawing from the enterprise system. React components with retail themes. Micro front-ends for team independence."
         image="/images/card.png"
+        imageHeight="h-[300px] md:h-[520px]"
       />
 
       <ContentSection
@@ -52,6 +53,7 @@ export default function VerizonDesignSystems() {
         tag="WHY THIS APPROACH"
         description="Started with the easiest screens — low risk, high visibility. Aligned system work with the product roadmap. Built priority features WITH the system, not separately."
         image="/images/retail.png"
+        imageHeight="h-[300px] md:h-[520px]"
       />
 
       <ContentSection
@@ -73,6 +75,7 @@ export default function VerizonDesignSystems() {
         explanation="Bill optimization was our first sandbox project. We deployed it as a micro-flow, observed it in actual stores, and used those signals to determine what earned the right to scale."
         explanation2="Rejected both top-down mandates (teams resist) and pure grassroots (too slow). Orchestrated adoption: internal team first, then PMs, then senior leadership. By the time I presented up, everyone already knew."
         image="/images/Experimental sandbox.png"
+        imageHeight="h-[300px] md:h-[520px]"
       />
 
       <Outcomes
