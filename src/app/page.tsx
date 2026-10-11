@@ -173,7 +173,7 @@ export default function Home() {
           <div className="overflow-hidden rounded-[14px] bg-[#1d1810] grid grid-cols-[1fr_auto] items-center gap-4 md:gap-10 pl-6 md:pl-[10%] pr-4 md:pr-[8%]">
             <div className="py-10 md:py-0 max-w-[460px]">
               <p className="text-[12px] md:text-[13px] uppercase tracking-[0.04em] text-[#8a7a5c]">
-                Mobile narrative game · In prototype
+                Narrative game · Prototype
               </p>
               <h3 className="mt-3 md:mt-4 text-[28px] md:text-[52px] leading-[1.05] font-semibold tracking-[-0.04em] text-[#d6bf8e]">
                 Eli&apos;s Last Experiment
@@ -183,7 +183,7 @@ export default function Home() {
               </p>
             </div>
             <div className="relative h-[260px] sm:h-[360px] md:h-[520px] aspect-[434/660] self-end">
-              <Image src="/images/home/eli.jpg" alt="" fill sizes="(max-width: 768px) 40vw, 30vw" className="object-contain object-bottom" />
+              <Image src="/images/home/eli.jpg" alt="" fill sizes="(max-width: 768px) 40vw, 30vw" className="object-contain object-bottom [mask-image:linear-gradient(to_right,transparent,black_18%,black_88%,transparent)]" />
             </div>
           </div>
           </Reveal>
