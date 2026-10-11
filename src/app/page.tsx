@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import FadeUp from "@/components/FadeUp";
+import Reveal from "@/components/Reveal";
 
 const email = "mailto:jmariano19@gmail.com";
 
@@ -85,9 +85,10 @@ function ContactPill({ dark = false, label = "Get in touch" }: { dark?: boolean;
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-roboto)]">
+    <div className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-inter)] tracking-[-0.02em]">
       <div className="max-w-[1440px] mx-auto px-5 md:px-[68px]">
         {/* Header */}
+        <Reveal onLoad delay={0.2} y={-20}>
         <header className="pt-8 md:pt-9 flex items-start justify-between">
           <Link href="/" className="flex flex-col gap-4" aria-label="Jeffrey Mariano, home">
             <Image src="/images/Logo/logo-center.svg" alt="" width={34} height={34} priority />
@@ -105,29 +106,30 @@ export default function Home() {
             <ContactPill />
           </nav>
         </header>
+        </Reveal>
 
         {/* Hero */}
         <section className="pt-28 md:pt-[200px] pb-28 md:pb-[230px] md:pl-[27%]">
-          <FadeUp>
-            <h1 className="text-[34px] md:text-[56px] leading-[1.15] font-medium tracking-[-0.01em]">
+          <Reveal onLoad delay={0.8}>
+            <h1 className="text-[34px] md:text-[56px] leading-[1.1] font-semibold tracking-[-0.04em]">
               <span className="text-[#a8a8a8]">I design intelligent systems that connect </span>
-              <span className="font-bold">people, workflows and AI.</span>
+              <span>people, workflows and AI.</span>
             </h1>
-          </FadeUp>
-          <FadeUp delay={0.15}>
-            <p className="mt-6 text-[15px] md:text-[16px] leading-[2.1] max-w-[680px]">
+          </Reveal>
+          <Reveal onLoad delay={0.95}>
+            <p className="mt-6 text-[15px] md:text-[16px] leading-[1.9] tracking-[-0.01em] max-w-[680px]">
               I help organizations implement AI that their teams and customers actually adopt, through
               behavioral design, micro-experimentation, and a method built across retail, customer
               service, and health.
             </p>
-          </FadeUp>
+          </Reveal>
         </section>
 
         {/* Projects */}
         <section className="pb-16 md:pb-20">
           <SectionLabel>Projects</SectionLabel>
           <div className="grid sm:grid-cols-2 gap-x-5 gap-y-12 md:gap-y-[70px]">
-            {projects.map((p) => {
+            {projects.map((p, i) => {
               const card = (
                 <>
                   <div className="relative aspect-[4/3] rounded-[14px] overflow-hidden bg-[#e4e4e4]">
@@ -139,13 +141,14 @@ export default function Home() {
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
                   </div>
-                  <h3 className="mt-4 text-[18px] md:text-[22px] uppercase leading-tight">{p.name}</h3>
-                  <p className="mt-1 text-[16px] md:text-[20px] text-[#9a9a9a] leading-snug">{p.description}</p>
+                  <h3 className="mt-4 text-[18px] md:text-[22px] uppercase leading-tight font-medium tracking-[-0.03em]">{p.name}</h3>
+                  <p className="mt-1 text-[16px] md:text-[20px] text-[#9a9a9a] leading-snug tracking-[-0.03em]">{p.description}</p>
                 </>
               );
-              return p.href ? (
+              return (
+                <Reveal key={p.name} blur y={60} delay={(i % 2) * 0.12}>
+                {p.href ? (
                 <Link
-                  key={p.name}
                   href={p.href}
                   className="group block"
                   data-ga-event="case_study_click"
@@ -155,7 +158,9 @@ export default function Home() {
                   {card}
                 </Link>
               ) : (
-                <div key={p.name} className="group">{card}</div>
+                <div className="group">{card}</div>
+              )}
+                </Reveal>
               );
             })}
           </div>
@@ -164,6 +169,7 @@ export default function Home() {
         {/* Side projects */}
         <section className="pb-20 md:pb-24">
           <SectionLabel id="side-projects">Side projects</SectionLabel>
+          <Reveal blur y={60}>
           <div className="relative overflow-hidden rounded-[14px] bg-[#1d1810] aspect-[4/3] sm:aspect-[16/9] flex items-center">
             <p className="relative z-10 pl-[8%] md:pl-[20%] font-[family-name:var(--font-young-serif)] text-[26px] md:text-[48px] text-[#b5975a]">
               Eli&apos;s Last Experiment
@@ -172,15 +178,18 @@ export default function Home() {
               <Image src="/images/home/eli.jpg" alt="" fill sizes="(max-width: 768px) 50vw, 30vw" className="object-contain" />
             </div>
           </div>
+          </Reveal>
         </section>
 
         {/* Experience */}
         <section className="pb-20 md:pb-24">
           <SectionLabel>Experience</SectionLabel>
           <ul className="mt-10 border-t border-[#c9c9c9]">
-            {experience.map((company) => (
-              <li key={company} className="py-3.5 border-b border-[#c9c9c9] text-[12px] md:text-[13px] font-medium">
-                {company}
+            {experience.map((company, i) => (
+              <li key={company} className="border-b border-[#c9c9c9]">
+                <Reveal y={20} delay={i * 0.05} className="py-3.5 text-[12px] md:text-[13px] font-medium">
+                  {company}
+                </Reveal>
               </li>
             ))}
           </ul>
@@ -189,7 +198,8 @@ export default function Home() {
         {/* Contact */}
         <section className="pb-20">
           <SectionLabel>Contact</SectionLabel>
-          <h2 className="text-[36px] md:text-[56px] leading-[1.12] font-bold">
+          <Reveal y={60}>
+          <h2 className="text-[36px] md:text-[56px] leading-[1.1] font-semibold tracking-[-0.04em]">
             Always happy to connect.
             <br />
             <span className="text-[#a8a8a8]">Feel free to reach out!</span>
@@ -197,6 +207,7 @@ export default function Home() {
           <div className="mt-8">
             <ContactPill dark />
           </div>
+          </Reveal>
         </section>
 
         <footer className="pb-10 text-center text-[13px] text-[#9a9a9a]">
