@@ -52,7 +52,7 @@ export default function IntroLoader() {
         <motion.div
           key="intro"
           role="status"
-          aria-label="Jeff Mariano, System Designer"
+          aria-label="Jeff Mariano, Agent Experience Designer"
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#111111] text-[#d9d9d9] font-[family-name:var(--font-inter)]"
           exit={reduce ? { opacity: 0 } : { y: "-100%" }}
           transition={{ duration: reduce ? 0.3 : 0.9, ease }}
@@ -71,7 +71,7 @@ export default function IntroLoader() {
             >
               <Image src="/images/Logo/logo-center.svg" alt="" fill sizes="64px" priority className="invert opacity-85" />
             </motion.span>
-            <Letters text="System Designer" delay={0.75} />
+            <Letters text="Agent Experience Designer" delay={0.75} />
           </motion.div>
         </motion.div>
       )}
