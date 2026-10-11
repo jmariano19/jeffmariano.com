@@ -111,7 +111,7 @@ export default function Home() {
         {/* Hero */}
         <section className="pt-28 md:pt-[200px] pb-28 md:pb-[230px] md:pl-[27%]">
           <Reveal onLoad delay={0.1}>
-            <h1 className="text-[34px] md:text-[56px] leading-[1.1] font-semibold tracking-[-0.04em]">
+            <h1 className="text-[34px] md:text-[56px] leading-[1.1] font-bold tracking-[-0.04em]">
               <span className="text-[#a8a8a8]">I design intelligent systems that connect </span>
               <span>people, workflows and AI.</span>
             </h1>
