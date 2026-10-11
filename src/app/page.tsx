@@ -92,7 +92,7 @@ export default function Home() {
         <header className="pt-8 md:pt-9 flex items-start justify-between">
           <Link href="/" className="flex flex-col gap-4" aria-label="Jeffrey Mariano, home">
             <Image src="/images/Logo/logo-center.svg" alt="" width={34} height={34} priority />
-            <span className="text-[13px] md:text-[15px] leading-[1.45] font-bold tracking-[-0.03em]">
+            <span className="text-[12px] md:text-[13px] leading-[1.5]">
               Jeffrey Mariano
               <br />
               Based in the US
