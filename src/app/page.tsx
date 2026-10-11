@@ -88,11 +88,11 @@ export default function Home() {
     <div className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-inter)] tracking-[-0.02em]">
       <div className="max-w-[1440px] mx-auto px-5 md:px-[68px]">
         {/* Header */}
-        <Reveal onLoad delay={0.2} y={-20}>
+        <Reveal onLoad delay={0} y={-20}>
         <header className="pt-8 md:pt-9 flex items-start justify-between">
           <Link href="/" className="flex flex-col gap-4" aria-label="Jeffrey Mariano, home">
             <Image src="/images/Logo/logo-center.svg" alt="" width={34} height={34} priority />
-            <span className="text-[13px] md:text-[15px] leading-[1.45]">
+            <span className="text-[13px] md:text-[15px] leading-[1.45] font-bold tracking-[-0.03em]">
               Jeffrey Mariano
               <br />
               Based in the US
@@ -110,13 +110,13 @@ export default function Home() {
 
         {/* Hero */}
         <section className="pt-28 md:pt-[200px] pb-28 md:pb-[230px] md:pl-[27%]">
-          <Reveal onLoad delay={0.8}>
+          <Reveal onLoad delay={0.1}>
             <h1 className="text-[34px] md:text-[56px] leading-[1.1] font-semibold tracking-[-0.04em]">
               <span className="text-[#a8a8a8]">I design intelligent systems that connect </span>
               <span>people, workflows and AI.</span>
             </h1>
           </Reveal>
-          <Reveal onLoad delay={0.95}>
+          <Reveal onLoad delay={0.25}>
             <p className="mt-6 text-[15px] md:text-[16px] leading-[1.9] tracking-[-0.01em] max-w-[680px]">
               I help organizations implement AI that their teams and customers actually adopt, through
               behavioral design, micro-experimentation, and a method built across retail, customer

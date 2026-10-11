@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Roboto, Cormorant, Lato, Caveat, Young_Serif, Inter } from "next/font/google";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import IntroLoader from "@/components/IntroLoader";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -19,7 +20,7 @@ const roboto = Roboto({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const youngSerif = Young_Serif({
@@ -89,6 +90,7 @@ export default function RootLayout({
         className={`${playfair.variable} ${roboto.variable} ${cormorant.variable} ${lato.variable} ${caveat.variable} ${youngSerif.variable} ${inter.variable} antialiased`}
       >
         <GoogleAnalytics />
+        <IntroLoader />
         {children}
       </body>
     </html>
