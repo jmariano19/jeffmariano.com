@@ -170,12 +170,20 @@ export default function Home() {
         <section className="pb-20 md:pb-24">
           <SectionLabel id="side-projects">Side projects</SectionLabel>
           <Reveal blur y={60}>
-          <div className="relative overflow-hidden rounded-[14px] bg-[#1d1810] aspect-[4/3] sm:aspect-[16/9] flex items-center">
-            <p className="relative z-10 pl-[8%] md:pl-[20%] font-[family-name:var(--font-young-serif)] text-[26px] md:text-[48px] text-[#b5975a]">
-              Eli&apos;s Last Experiment
-            </p>
-            <div className="absolute right-[4%] md:right-[13%] bottom-[6%] top-[6%] aspect-[434/660]">
-              <Image src="/images/home/eli.jpg" alt="" fill sizes="(max-width: 768px) 50vw, 30vw" className="object-contain" />
+          <div className="overflow-hidden rounded-[14px] bg-[#1d1810] grid grid-cols-[1fr_auto] items-center gap-4 md:gap-10 pl-6 md:pl-[10%] pr-4 md:pr-[8%]">
+            <div className="py-10 md:py-0 max-w-[460px]">
+              <p className="text-[12px] md:text-[13px] uppercase tracking-[0.04em] text-[#8a7a5c]">
+                Mobile narrative game · In prototype
+              </p>
+              <h3 className="mt-3 md:mt-4 text-[28px] md:text-[52px] leading-[1.05] font-semibold tracking-[-0.04em] text-[#d6bf8e]">
+                Eli&apos;s Last Experiment
+              </h3>
+              <p className="mt-3 md:mt-5 text-[14px] md:text-[17px] leading-relaxed text-[#a39880]">
+                A boy built from the player&apos;s own words. An experiment in how people form trust and attachment with an AI character.
+              </p>
+            </div>
+            <div className="relative h-[260px] sm:h-[360px] md:h-[520px] aspect-[434/660] self-end">
+              <Image src="/images/home/eli.jpg" alt="" fill sizes="(max-width: 768px) 40vw, 30vw" className="object-contain object-bottom" />
             </div>
           </div>
           </Reveal>
