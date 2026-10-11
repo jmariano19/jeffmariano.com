@@ -12,6 +12,12 @@
   --color-gray-light: #999;
   --color-text-dark: #4a493c;
 
+  /* v2 neutral palette (homepage + /projects) */
+  --color-paper: #f3f3f1;
+  --color-ink: #111111;
+  --color-ink-muted: #6f6f6c;
+  --color-line: #d9d9d5;
+
   --font-playfair: var(--font-playfair);
   --font-roboto: var(--font-roboto);
   --font-cormorant: var(--font-cormorant);

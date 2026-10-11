@@ -44,15 +44,15 @@ export const metadata: Metadata = {
     apple: "/images/fivicon.png",
   },
   title: {
-    default: "Jeff Mariano — Design Systems & AI Experience Leader",
+    default: "Jeff Mariano — AI Adoption & Agent Experience Design",
     template: "%s | Jeff Mariano",
   },
   description:
-    "I scale design systems for complex employee and AI workflows, helping enterprise teams improve consistency, adoption, and speed to delivery.",
+    "I help organizations implement AI that their teams and customers actually adopt, through behavioral design and micro-experimentation.",
   openGraph: {
-    title: "Jeff Mariano — Design Systems & AI Experience Leader",
+    title: "Jeff Mariano — AI Adoption & Agent Experience Design",
     description:
-      "I scale design systems for complex employee and AI workflows, helping enterprise teams improve consistency, adoption, and speed to delivery.",
+      "I help organizations implement AI that their teams and customers actually adopt, through behavioral design and micro-experimentation.",
     url: "https://jeffmariano.com",
     siteName: "Jeff Mariano Portfolio",
     locale: "en_US",
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jeff Mariano — Design Systems & AI Experience Leader",
+    title: "Jeff Mariano — AI Adoption & Agent Experience Design",
     description:
-      "I scale design systems for complex employee and AI workflows, helping enterprise teams improve consistency, adoption, and speed to delivery.",
+      "I help organizations implement AI that their teams and customers actually adopt, through behavioral design and micro-experimentation.",
   },
 };
 
