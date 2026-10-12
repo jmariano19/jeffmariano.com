@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
   }
 
   const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+  // Google shows app passwords in groups of four; strip the spaces if pasted that way.
+  const pass = process.env.SMTP_PASS?.replace(/\s+/g, "");
   if (!user || !pass) {
     console.error("[contact] SMTP_USER / SMTP_PASS are not set");
     return NextResponse.json({ error: "The form isn't working right now. Please email jmariano19@gmail.com." }, { status: 503 });
