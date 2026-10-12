@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import ScrollBlur from "@/components/ScrollBlur";
 
 const email = "mailto:jmariano19@gmail.com";
 
@@ -110,6 +111,7 @@ export default function Home() {
 
         {/* Hero */}
         <section className="pt-28 md:pt-[200px] pb-28 md:pb-[230px]">
+          <ScrollBlur>
           <Reveal onLoad delay={0.1}>
             <h1 className="text-[40px] md:text-[64px] xl:text-[80px] 2xl:text-[88px] leading-[1.05] font-bold tracking-[-0.04em]">
               <span className="text-[#a8a8a8]">
@@ -125,6 +127,7 @@ export default function Home() {
               and health.
             </p>
           </Reveal>
+          </ScrollBlur>
         </section>
 
         {/* Projects */}
