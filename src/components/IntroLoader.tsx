@@ -78,34 +78,37 @@ function HomeIntro({ reduce }: { reduce: boolean }) {
 function LogoMark({ reduce, delay }: { reduce: boolean; delay: number }) {
   return (
     <motion.div
-      className="relative w-[96px] h-[96px] md:w-[132px] md:h-[132px]"
-      initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.72, rotate: -40, filter: "blur(12px)" }}
-      animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1, rotate: 0, filter: "blur(0px)" }}
+      className="relative flex items-center justify-center w-[150px] h-[150px] md:w-[206px] md:h-[206px]"
+      initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.86, filter: "blur(12px)" }}
+      animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1, filter: "blur(0px)" }}
       exit={reduce ? { opacity: 0 } : { opacity: 0, y: -48, scale: 0.94, filter: "blur(6px)" }}
       transition={{ duration: reduce ? 0.2 : 0.7, delay, ease: softEase }}
     >
-      <Image src="/images/Logo/logo-center.svg" alt="" fill sizes="132px" priority className="invert opacity-90" />
-      {!reduce && (
-        <svg
-          className="pointer-events-none absolute -inset-[22px] md:-inset-[30px] w-[calc(100%+44px)] h-[calc(100%+44px)] md:w-[calc(100%+60px)] md:h-[calc(100%+60px)] -rotate-90"
-          viewBox="0 0 100 100"
-          aria-hidden="true"
-        >
-          <circle cx="50" cy="50" r="49" fill="none" stroke="rgba(217,217,217,0.12)" strokeWidth="0.6" />
-          <motion.circle
-            cx="50"
-            cy="50"
-            r="49"
-            fill="none"
-            stroke="rgba(217,217,217,0.7)"
-            strokeWidth="0.6"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 0.7, delay: delay + 0.05, ease: [0.65, 0, 0.35, 1] }}
-          />
-        </svg>
-      )}
+      {/* Hairline ring, about three times the logo's width, drawn around it. */}
+      <svg className="pointer-events-none absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="49.5" fill="none" stroke="rgba(230,230,230,0.14)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <motion.circle
+          cx="50"
+          cy="50"
+          r="49.5"
+          fill="none"
+          stroke="rgba(235,235,235,0.85)"
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+          strokeLinecap="round"
+          initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: reduce ? 0 : 0.7, delay: delay + 0.05, ease: [0.65, 0, 0.35, 1] }}
+        />
+      </svg>
+      <motion.span
+        className="relative block w-[48px] h-[48px] md:w-[64px] md:h-[64px]"
+        initial={reduce ? false : { rotate: -40 }}
+        animate={{ rotate: 0 }}
+        transition={{ duration: 0.7, delay, ease: softEase }}
+      >
+        <Image src="/images/Logo/logo-center.svg" alt="" fill sizes="64px" priority className="invert opacity-80" />
+      </motion.span>
     </motion.div>
   );
 }
