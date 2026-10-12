@@ -1,116 +1,61 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import Image from "next/image";
-import FadeUp from "@/components/FadeUp";
 import type { Metadata } from "next";
+import Reveal from "@/components/Reveal";
+import { ContactSection, SiteHeader } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "About — Jeff Mariano",
   description:
-    "I design AI-assisted systems that evolve through real-world human behavior, focusing on trust, adoption, and everyday workflows.",
+    "I design AI-assisted systems around the five behavioral barriers that decide whether people keep using them.",
 };
+
+const paragraphs = [
+  "I design AI-assisted systems around the five behavioral barriers that decide whether people keep using them: trust uncertainty, cognitive load, identity threat, delayed reward, and behavioral friction.",
+  "Identity threat is the one teams miss. When a tool implies someone’s expertise is now optional, they find reasons not to use it — and none of those reasons are about the interface.",
+  "At Verizon, I lead AI-powered retail experiences at Fortune 50 scale, including a multi-agent rep platform routing across 13 specialized agents. A POS redesign I led went from 2% adoption to voluntary daily use. I run a micro-experimentation framework there on a sandbox-first principle: earn the right to scale.",
+  "In health, I’m building a WhatsApp-first AI platform for Spanish-speaking users, designed around a 14-day arc that ends in users owning their own patterns rather than depending on the system.",
+  "The method is the same in both: design for the behavior, then let the system improve as people use it.",
+];
 
 export default function About() {
   return (
-    <div className="about-page min-h-screen bg-cream max-w-[1440px] mx-auto md:h-screen md:flex md:flex-col md:overflow-hidden">
-      <Nav />
+    <div className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-inter)] tracking-[-0.02em]">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-[68px]">
+        <SiteHeader active="about" />
 
-      {/* Hero — portrait + intro */}
-      <main className="px-4 md:px-24 pt-12 pb-24 md:flex-1 md:min-h-0 md:pb-12 md:overflow-hidden">
-        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start md:h-full">
-
-          {/* Portrait */}
-          <FadeUp className="w-full md:w-[400px] lg:w-[465px] flex-shrink-0">
-            <div className="relative w-full h-[420px] md:h-[514px] rounded-[25px] overflow-hidden">
+        <main className="pt-16 md:pt-[90px] pb-28 md:pb-[260px] grid gap-10 lg:grid-cols-[minmax(0,498px)_minmax(0,1fr)] lg:gap-[76px] items-start">
+          <Reveal onLoad delay={0.1} blur>
+            <div className="relative w-full max-w-[498px] aspect-[498/710] rounded-[26px] overflow-hidden bg-[#e4e4e4]">
               <Image
                 src="/images/about_portrait.jpg"
-                alt="Jeff Mariano"
+                alt="Jeffrey Mariano"
                 fill
-                className="object-cover object-top"
                 priority
+                sizes="(max-width: 1024px) 100vw, 498px"
+                className="object-cover object-top grayscale"
               />
             </div>
-          </FadeUp>
+          </Reveal>
 
-          {/* Right column — intro text + archetypes */}
-          <div className="about-scroll-pane flex-1 min-w-0 pt-0 md:pt-6 md:h-full md:overflow-y-auto md:pr-4">
-            <FadeUp delay={0.2}>
-              <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading mb-6 md:mb-8">
-                Designing Systems That Learn
+          <div className="max-w-[805px]">
+            <Reveal onLoad delay={0.2}>
+              <h1 className="text-[36px] md:text-[56px] leading-[1.16] font-bold tracking-[-0.04em]">
+                Adoption is the hard part.
+                <br className="hidden md:block" /> Features ship; habits don&apos;t.
               </h1>
-            </FadeUp>
-
-            <FadeUp delay={0.4}>
-              <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] space-y-5">
-                <p>
-                  Most products no longer fail because of missing features. They fail
-                  because people never fully adopt them.
-                </p>
-                <p>
-                  I design AI-assisted systems that evolve through real-world human behavior
-                  — focusing on how people trust, resist, adapt to, and integrate intelligent
-                  systems into everyday workflows.
-                </p>
-                <p>
-                  At Verizon, I&apos;ve led AI-powered retail experiences used at Fortune 50
-                  scale, helping transform fragmented tools into systems people voluntarily
-                  use daily.
-                </p>
-                <p>
-                  My work combines behavioral design, systems thinking, experimentation
-                  frameworks, and AI-assisted product development to create products that
-                  improve through real-world use.
-                </p>
+            </Reveal>
+            <Reveal onLoad delay={0.32}>
+              <div className="mt-5 max-w-[629px] text-[16px] md:text-[18px] leading-[1.95] tracking-[-0.01em] text-[#141414]">
+                {paragraphs.map((text) => (
+                  <p key={text.slice(0, 24)}>{text}</p>
+                ))}
               </div>
-            </FadeUp>
-
-            {/* Archetypes — 80px below intro text */}
-            <div className="mt-[80px]">
-              <FadeUp>
-                <p className="font-[family-name:var(--font-roboto)] font-bold text-[18px] md:text-[20px] leading-[45px] text-[#606060] mb-3">
-                  Designing AI for Human Behavior
-                </p>
-              </FadeUp>
-
-              <div className="w-full h-px bg-[#606060] opacity-20 mb-2" />
-
-              <FadeUp>
-                <div className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[35px] text-[#606060] mt-6 space-y-6">
-                  <p>
-                    As AI becomes part of everyday work, designing the interface alone is no
-                    longer enough.
-                  </p>
-                  <p>
-                    Different people interact with intelligent systems in fundamentally
-                    different ways — some seek guidance, some seek control, and others resist
-                    automation altogether.
-                  </p>
-                  <p>
-                    My work focuses on identifying the behavioral patterns that shape
-                    adoption:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>trust,</li>
-                    <li>cognitive load,</li>
-                    <li>identity threat,</li>
-                    <li>perceived usefulness,</li>
-                    <li>and emotional resistance to AI systems.</li>
-                  </ul>
-                  <p>
-                    By designing around these human dynamics, AI products become more
-                    natural, trustworthy, and operationally effective in practice — not just
-                    in demos.
-                  </p>
-                </div>
-              </FadeUp>
-            </div>
-
-            <div className="mt-20">
-              <Footer />
-            </div>
+            </Reveal>
           </div>
-        </div>
-      </main>
+        </main>
+
+        <ContactSection />
+      </div>
     </div>
   );
 }
