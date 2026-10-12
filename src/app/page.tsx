@@ -109,18 +109,20 @@ export default function Home() {
         </Reveal>
 
         {/* Hero */}
-        <section className="pt-28 md:pt-[200px] pb-28 md:pb-[230px] md:pl-[27%]">
+        <section className="pt-28 md:pt-[200px] pb-28 md:pb-[230px]">
           <Reveal onLoad delay={0.1}>
-            <h1 className="text-[34px] md:text-[56px] leading-[1.1] font-bold tracking-[-0.04em]">
-              <span className="text-[#a8a8a8]">I design intelligent systems that connect </span>
-              <span>people, workflows and AI.</span>
+            <h1 className="text-[40px] md:text-[64px] xl:text-[80px] 2xl:text-[88px] leading-[1.05] font-bold tracking-[-0.04em]">
+              <span className="text-[#a8a8a8]">
+                <span className="xl:block">I design intelligent</span> systems that connect{" "}
+              </span>
+              <span className="xl:block">people, workflows and AI.</span>
             </h1>
           </Reveal>
           <Reveal onLoad delay={0.25}>
-            <p className="mt-6 text-[15px] md:text-[16px] leading-[1.9] tracking-[-0.01em] max-w-[680px]">
-              I help organizations implement AI that their teams and customers actually adopt, through
-              behavioral design, micro-experimentation, and a method built across retail, customer
-              service, and health.
+            <p className="mt-8 md:mt-10 text-[16px] md:text-[18px] leading-[1.7] tracking-[-0.01em] max-w-[38rem]">
+              I help organizations build AI that their teams and customers actually adopt, using
+              behavioral design and rapid experiments shaped by years in retail, customer service,
+              and health.
             </p>
           </Reveal>
         </section>

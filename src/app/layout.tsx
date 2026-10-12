@@ -61,11 +61,11 @@ export const metadata: Metadata = {
     template: "%s | Jeff Mariano",
   },
   description:
-    "I help organizations implement AI that their teams and customers actually adopt, through behavioral design and micro-experimentation.",
+    "I help organizations build AI that their teams and customers actually adopt, using behavioral design and rapid experiments.",
   openGraph: {
     title: "Jeff Mariano — AI Adoption & Agent Experience Design",
     description:
-      "I help organizations implement AI that their teams and customers actually adopt, through behavioral design and micro-experimentation.",
+      "I help organizations build AI that their teams and customers actually adopt, using behavioral design and rapid experiments.",
     url: "https://jeffmariano.com",
     siteName: "Jeff Mariano Portfolio",
     locale: "en_US",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jeff Mariano — AI Adoption & Agent Experience Design",
     description:
-      "I help organizations implement AI that their teams and customers actually adopt, through behavioral design and micro-experimentation.",
+      "I help organizations build AI that their teams and customers actually adopt, using behavioral design and rapid experiments.",
   },
 };
 
