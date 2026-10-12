@@ -9,7 +9,7 @@ const projects = [
   {
     name: "Cortex",
     context: "Verizon",
-    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180 },
+    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180, size: "w-[24%] max-w-[151px]" },
     description: "An AI platform that unifies every assisted customer service channel.",
     image: "/images/home/cortex.jpg",
     href: null,
@@ -17,7 +17,7 @@ const projects = [
   {
     name: "Systems",
     context: "Verizon",
-    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180 },
+    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180, size: "w-[24%] max-w-[151px]" },
     description: "A retail design system scaled across 15+ teams at Verizon.",
     image: "/images/home/systems.jpg",
     href: "/case-studies/verizon-design-systems",
@@ -34,7 +34,7 @@ const projects = [
   {
     name: "Tinybeans",
     context: "Tinybeans",
-    logo: { src: "/images/logos/tinybeans.png", alt: "Tinybeans", width: 800, height: 156 },
+    logo: { src: "/images/logos/tinybeans.png", alt: "Tinybeans", width: 800, height: 156, size: "w-[27%] max-w-[168px]" },
     description: "A rebrand for a 20 million-family app, without breaking trust.",
     image: "/images/home/tinybeans.jpg",
     href: "/case-studies/tinybeans",
@@ -158,7 +158,7 @@ export default function Home() {
                               alt={p.logo.alt}
                               width={p.logo.width}
                               height={p.logo.height}
-                              className="w-[27%] max-w-[168px] h-auto opacity-0 scale-[0.94] transition-[opacity,transform] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100"
+                              className={`${p.logo.size} h-auto opacity-0 scale-[0.94] transition-[opacity,transform] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100`}
                             />
                           ) : (
                             <span
