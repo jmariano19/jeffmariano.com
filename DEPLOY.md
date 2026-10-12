@@ -30,3 +30,17 @@ production build.
 
 ## GitHub Repo
 `github.com/jmariano19/jeffmariano.com`
+
+## Contact form email
+The "Get in touch" form posts to `/api/contact`, which sends each message to
+`jmariano19@gmail.com` through Gmail SMTP. Set these in Easypanel (Environment):
+
+```
+SMTP_USER=jmariano19@gmail.com
+SMTP_PASS=<16-character Google app password>
+```
+
+Create the app password at https://myaccount.google.com/apppasswords (requires
+2-Step Verification). Optional: `CONTACT_TO` to send somewhere else, and
+`SMTP_HOST` / `SMTP_PORT` to use a different provider. Without `SMTP_USER` and
+`SMTP_PASS` the form tells visitors to email directly instead.

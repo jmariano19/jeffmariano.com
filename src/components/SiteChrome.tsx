@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import ContactPill from "@/components/ContactPill";
 
 // Shared header, section labels and contact block used by the homepage and About page.
-
-export const contactEmail = "mailto:jmariano19@gmail.com";
 
 export function Asterisk({ size = 14 }: { size?: number }) {
   return (
@@ -28,25 +27,6 @@ export function SectionLabel({ children, id }: { children: React.ReactNode; id?:
   );
 }
 
-export function ContactPill({ dark = false, label = "Get in touch" }: { dark?: boolean; label?: string }) {
-  return (
-    <a
-      href={contactEmail}
-      className={`inline-flex items-center gap-2 rounded-full pl-1 pr-3.5 py-1 text-[12px] transition-opacity hover:opacity-80 ${
-        dark ? "bg-[#1a1a1a] text-white" : "bg-white text-black shadow-[0_1px_2px_rgba(0,0,0,0.08)]"
-      }`}
-      data-ga-event="contact_click"
-      data-ga-category="contact"
-      data-ga-label={dark ? "Contact section" : "Header"}
-    >
-      <span className="relative w-6 h-6 rounded-full overflow-hidden">
-        <Image src="/images/about_portrait.jpg" alt="" fill sizes="24px" className="object-cover object-top" />
-      </span>
-      {label} <span aria-hidden="true">↗</span>
-    </a>
-  );
-}
-
 const navLinks = [
   { label: "About", href: "/about", key: "about" },
   { label: "Experiments", href: "/#side-projects", key: "experiments" },
@@ -54,7 +34,7 @@ const navLinks = [
 
 export function SiteHeader({ active }: { active?: "about" }) {
   return (
-    <Reveal onLoad delay={0} y={-20}>
+    <Reveal onLoad delay={0} y={-20} className="relative z-30">
       <header className="pt-8 md:pt-9 flex items-start justify-between">
         <Link href="/" className="flex flex-col gap-4" aria-label="Jeffrey Mariano, home">
           <Image src="/images/Logo/logo-center.svg" alt="" width={34} height={34} priority />
