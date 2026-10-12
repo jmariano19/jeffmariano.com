@@ -154,7 +154,7 @@ export default function Home() {
                             alt={p.logo.alt}
                             width={p.logo.width}
                             height={p.logo.height}
-                            className="w-[38%] max-w-[240px] h-auto opacity-0 scale-[0.94] blur-[2px] transition-[opacity,transform,filter] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0 group-focus-visible:opacity-100 group-focus-visible:scale-100 group-focus-visible:blur-0"
+                            className="w-[27%] max-w-[168px] h-auto opacity-0 scale-[0.94] transition-[opacity,transform] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100"
                           />
                         </div>
                       </>
