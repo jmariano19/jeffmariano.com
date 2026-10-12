@@ -25,6 +25,8 @@ const projects = [
   {
     name: "Plato Inteligente",
     context: "ViveBien",
+    // No logo file yet, so the hover reveal shows the name as a wordmark.
+    logoText: "Plato Inteligente",
     description: "A WhatsApp-first AI health platform for the Hispanic community.",
     image: "/images/home/plato.jpg",
     href: "/case-studies/vivebien",
@@ -139,10 +141,10 @@ export default function Home() {
                       fill
                       sizes="(max-width: 640px) 100vw, 50vw"
                       className={`object-cover transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] ${
-                        p.logo ? "group-hover:blur-[18px] group-focus-visible:blur-[18px]" : ""
+                        p.logo || p.logoText ? "group-hover:blur-[18px] group-focus-visible:blur-[18px]" : ""
                       }`}
                     />
-                    {p.logo && (
+                    {(p.logo || p.logoText) && (
                       <>
                         {/* On hover the photo softens and the client logo comes forward. */}
                         <div
@@ -150,13 +152,22 @@ export default function Home() {
                           className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/30 group-focus-visible:bg-black/30"
                         />
                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                          <Image
-                            src={p.logo.src}
-                            alt={p.logo.alt}
-                            width={p.logo.width}
-                            height={p.logo.height}
-                            className="w-[27%] max-w-[168px] h-auto opacity-0 scale-[0.94] transition-[opacity,transform] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100"
-                          />
+                          {p.logo ? (
+                            <Image
+                              src={p.logo.src}
+                              alt={p.logo.alt}
+                              width={p.logo.width}
+                              height={p.logo.height}
+                              className="w-[27%] max-w-[168px] h-auto opacity-0 scale-[0.94] transition-[opacity,transform] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100"
+                            />
+                          ) : (
+                            <span
+                              aria-hidden="true"
+                              className="text-white text-[22px] md:text-[28px] font-semibold tracking-[-0.05em] opacity-0 scale-[0.94] transition-[opacity,transform] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100"
+                            >
+                              {p.logoText}
+                            </span>
+                          )}
                         </div>
                       </>
                     )}
