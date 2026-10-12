@@ -49,7 +49,7 @@ export default function ContentSection({
 
       {tag && (
         <FadeUp delay={0.1}>
-          <p className="font-[family-name:var(--font-inter)] font-bold text-xs tracking-[2px] text-brown uppercase mt-6 mb-3">
+          <p className="font-[family-name:var(--font-inter)] font-bold text-[14px] tracking-[2px] text-brown uppercase mt-6 mb-3">
             {tag}
           </p>
           <div className="w-full h-px bg-gray-text opacity-20 mb-4" />
@@ -114,7 +114,7 @@ export default function ContentSection({
         <FadeUp delay={0.2}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8">
             <div className="bg-white rounded-2xl p-6 md:p-8">
-              <p className="font-[family-name:var(--font-inter)] font-bold text-xs tracking-[2px] text-brown uppercase mb-3">
+              <p className="font-[family-name:var(--font-inter)] font-bold text-[14px] tracking-[2px] text-brown uppercase mb-3">
                 BEFORE
               </p>
               <p className="font-[family-name:var(--font-inter)] text-base leading-[28px] text-gray-text">
@@ -122,7 +122,7 @@ export default function ContentSection({
               </p>
             </div>
             <div className="bg-white rounded-2xl p-6 md:p-8">
-              <p className="font-[family-name:var(--font-inter)] font-bold text-xs tracking-[2px] text-green-accent uppercase mb-3">
+              <p className="font-[family-name:var(--font-inter)] font-bold text-[14px] tracking-[2px] text-green-accent uppercase mb-3">
                 AFTER
               </p>
               <p className="font-[family-name:var(--font-inter)] text-base leading-[28px] text-gray-text">

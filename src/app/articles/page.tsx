@@ -166,7 +166,7 @@ const articles = [
 
 export default function Articles() {
   return (
-    <SitePage>
+    <SitePage active="articles">
 
       <section className="pt-8 md:pt-14 pb-10 md:pb-14">
         <FadeUp delay={0.2}>

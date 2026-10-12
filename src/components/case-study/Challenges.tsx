@@ -20,14 +20,14 @@ export default function Challenges({ stats, description }: ChallengesProps) {
       </FadeUp>
 
       {/* Stats row */}
-      <div className="grid grid-cols-3 gap-4 md:gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 mb-10">
         {stats.map((stat, i) => (
           <FadeUp key={stat.label} delay={i * 0.1}>
             <div className="bg-white rounded-2xl p-6 md:p-8 text-center">
               <p className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[36px] md:text-[52px] text-green-heading">
                 {stat.number}
               </p>
-              <p className="font-[family-name:var(--font-inter)] text-xs md:text-sm text-gray-text mt-1">
+              <p className="font-[family-name:var(--font-inter)] text-[14px] md:text-sm text-gray-text mt-1">
                 {stat.label}
               </p>
             </div>

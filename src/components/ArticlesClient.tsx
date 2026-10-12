@@ -121,7 +121,7 @@ function ArticleOverlay({
       >
         <div className="flex shrink-0 items-start justify-between gap-5 border-b border-black/10 bg-cream-light px-6 py-5 md:px-8">
           <div>
-            <p className="font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.18em] text-gray-text/60">
+            <p className="font-[family-name:var(--font-inter)] text-[14px] font-bold uppercase tracking-[0.18em] text-gray-text/60">
               {article.tag} · {article.date}
             </p>
             <h2 className="mt-2 max-w-[680px] font-[family-name:var(--font-inter)] tracking-[-0.03em] text-xl font-bold leading-tight text-green-heading md:text-[30px]">
@@ -281,13 +281,13 @@ function ArticleCard({
       <div className="relative aspect-[4/3] overflow-hidden">
         <ArticleImage src={article.image} alt={article.title} />
         {!published && (
-          <span className="absolute right-4 top-4 rounded-full bg-cream px-3 py-1 font-[family-name:var(--font-inter)] text-xs font-bold text-green-heading">
+          <span className="absolute right-4 top-4 rounded-full bg-cream px-3 py-1 font-[family-name:var(--font-inter)] text-[14px] font-bold text-green-heading">
             Coming soon
           </span>
         )}
       </div>
       <div className="flex flex-1 flex-col p-6">
-        <p className="font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.16em] text-gray-text/60">
+        <p className="font-[family-name:var(--font-inter)] text-[14px] font-bold uppercase tracking-[0.16em] text-gray-text/60">
           {article.tag} · {article.date}
         </p>
         <h3 className="mt-3 font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[26px] font-bold leading-[32px] text-green-heading">
@@ -341,12 +341,12 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
           >
             <div className="relative min-h-[320px] overflow-hidden md:min-h-full">
               <ArticleImage src={featured.image} alt={featured.title} priority />
-              <div className="absolute left-5 top-5 rounded-full bg-cream px-4 py-2 font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.14em] text-green-heading">
+              <div className="absolute left-5 top-5 rounded-full bg-cream px-4 py-2 font-[family-name:var(--font-inter)] text-[14px] font-bold uppercase tracking-[0.14em] text-green-heading">
                 Featured essay
               </div>
             </div>
             <div className="flex flex-col justify-center p-7 md:p-12">
-              <p className="font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.18em] text-gray-text/60">
+              <p className="font-[family-name:var(--font-inter)] text-[14px] font-bold uppercase tracking-[0.18em] text-gray-text/60">
                 {featured.tag} · {featured.date}
               </p>
               <h2 className="mt-4 font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[34px] font-bold leading-[40px] text-green-heading md:text-[52px] md:leading-[58px]">

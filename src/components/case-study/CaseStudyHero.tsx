@@ -19,7 +19,7 @@ export default function CaseStudyHero({ tag, title, meta, image, summary, imageA
       {/* Text and image each blur and fade as they scroll away, as on the homepage hero. */}
       <ScrollBlur start="start">
       <Reveal onLoad delay={0.1}>
-        <p className="flex items-center gap-2 text-[12px] md:text-[13px] uppercase tracking-[0.04em] text-[#555]">
+        <p className="flex items-center gap-2 text-[14px] md:text-[14px] uppercase tracking-[0.04em] text-[#555]">
           <Asterisk />
           {tag}
         </p>
@@ -40,7 +40,7 @@ export default function CaseStudyHero({ tag, title, meta, image, summary, imageA
             const [label, ...rest] = item.trim().split(":");
             return (
               <div key={label}>
-                <dt className="text-[12px] md:text-[13px] uppercase tracking-[0.02em] text-[#9a9a9a]">{label}</dt>
+                <dt className="text-[14px] md:text-[14px] uppercase tracking-[0.02em] text-[#9a9a9a]">{label}</dt>
                 <dd className="mt-1 text-[14px] md:text-[15px] leading-snug text-[#111]">{rest.join(":").trim()}</dd>
               </div>
             );

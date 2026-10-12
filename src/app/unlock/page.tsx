@@ -122,7 +122,7 @@ function UnlockForm() {
             </div>
 
             {error && (
-              <p className="font-[family-name:var(--font-inter)] text-[13px] text-red-600 text-center -mt-1">
+              <p className="font-[family-name:var(--font-inter)] text-[14px] text-red-600 text-center -mt-1">
                 {error}
               </p>
             )}
@@ -136,7 +136,7 @@ function UnlockForm() {
             </button>
           </form>
 
-          <p className="font-[family-name:var(--font-inter)] text-[13px] text-[#555555]/60 text-center mt-8">
+          <p className="font-[family-name:var(--font-inter)] text-[14px] text-[#555555]/60 text-center mt-8">
             Don&apos;t have the password?{" "}
             <a
               href="mailto:jmariano19@gmail.com"

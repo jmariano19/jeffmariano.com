@@ -148,7 +148,7 @@ export default function VerizonAI() {
             <div className="grid gap-5 md:grid-cols-3">
               {impactHighlights.map((item) => (
                 <div key={item.label} className="rounded-[18px] bg-white px-6 py-7 md:px-8 md:py-9">
-                  <p className="font-[family-name:var(--font-inter)] font-bold text-xs md:text-sm uppercase tracking-[0.14em] text-[#111111]/80">
+                  <p className="font-[family-name:var(--font-inter)] font-bold text-[14px] md:text-sm uppercase tracking-[0.14em] text-[#111111]/80">
                     {item.label}
                   </p>
                   <h2 className="mt-3 font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[32px] md:text-[44px] leading-[38px] md:leading-[48px] text-[#111111]">

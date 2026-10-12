@@ -23,7 +23,7 @@ export default function SystemLeadership() {
     <section className="py-[40px]">
       <FadeUp>
         <div className="rounded-[28px] bg-cream-light px-6 py-8 md:px-12 md:py-12">
-          <p className="font-[family-name:var(--font-inter)] text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-brown">
+          <p className="font-[family-name:var(--font-inter)] text-[14px] md:text-sm font-bold uppercase tracking-[0.22em] text-brown">
             Enterprise Experience Focus
           </p>
 
