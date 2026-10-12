@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       { url: "/images/fivicon.png", media: "(prefers-color-scheme: light)" },
       { url: "/images/fivicon-white.png", media: "(prefers-color-scheme: dark)" },
     ],
-    apple: "/images/fivicon.png",
+    apple: "/images/apple-touch-icon.png",
   },
   title: {
     default: "Jeff Mariano — AI Adoption & Agent Experience Design",
