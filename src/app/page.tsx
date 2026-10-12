@@ -32,6 +32,7 @@ const projects = [
   {
     name: "Tinybeans",
     context: "Tinybeans",
+    logo: { src: "/images/logos/tinybeans.png", alt: "Tinybeans", width: 800, height: 156 },
     description: "A rebrand for a 20 million-family app, without breaking trust.",
     image: "/images/home/tinybeans.jpg",
     href: "/case-studies/tinybeans",
