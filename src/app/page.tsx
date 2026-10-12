@@ -9,6 +9,7 @@ const projects = [
   {
     name: "Cortex",
     context: "Verizon",
+    logo: { src: "/images/logos/verizon.svg", alt: "Verizon", width: 101, height: 23 },
     description: "An AI platform that unifies every assisted customer service channel.",
     image: "/images/home/cortex.jpg",
     href: null,
@@ -16,6 +17,7 @@ const projects = [
   {
     name: "Systems",
     context: "Verizon",
+    logo: { src: "/images/logos/verizon.svg", alt: "Verizon", width: 101, height: 23 },
     description: "A retail design system scaled across 15+ teams at Verizon.",
     image: "/images/home/systems.jpg",
     href: "/case-studies/verizon-design-systems",
@@ -135,8 +137,28 @@ export default function Home() {
                       alt=""
                       fill
                       sizes="(max-width: 640px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className={`object-cover transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] ${
+                        p.logo ? "group-hover:blur-[18px] group-focus-visible:blur-[18px]" : ""
+                      }`}
                     />
+                    {p.logo && (
+                      <>
+                        {/* On hover the photo softens and the client logo comes forward. */}
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/30 group-focus-visible:bg-black/30"
+                        />
+                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                          <Image
+                            src={p.logo.src}
+                            alt={p.logo.alt}
+                            width={p.logo.width}
+                            height={p.logo.height}
+                            className="w-[38%] max-w-[240px] h-auto opacity-0 scale-[0.94] blur-[2px] transition-[opacity,transform,filter] duration-500 ease-out group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0 group-focus-visible:opacity-100 group-focus-visible:scale-100 group-focus-visible:blur-0"
+                          />
+                        </div>
+                      </>
+                    )}
                     <div className="absolute bottom-4 right-4">
                       {p.href ? (
                         <Arrow />
