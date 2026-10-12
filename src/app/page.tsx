@@ -93,7 +93,7 @@ export default function Home() {
 
         {/* Proof */}
         <section aria-label="At a glance" className="pb-24 md:pb-36">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
             {stats.map((s, i) => (
               <Reveal key={s.label} y={40} delay={i * 0.07} className="h-full">
                 <div className="flex h-full min-h-[210px] md:min-h-[260px] flex-col justify-between rounded-[16px] bg-white p-5 md:p-6">
