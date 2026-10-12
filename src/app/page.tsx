@@ -9,7 +9,7 @@ const projects = [
   {
     name: "Cortex",
     context: "Verizon",
-    logo: { src: "/images/logos/verizon.svg", alt: "Verizon", width: 101, height: 23 },
+    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180 },
     description: "An AI platform that unifies every assisted customer service channel.",
     image: "/images/home/cortex.jpg",
     href: null,
@@ -17,7 +17,7 @@ const projects = [
   {
     name: "Systems",
     context: "Verizon",
-    logo: { src: "/images/logos/verizon.svg", alt: "Verizon", width: 101, height: 23 },
+    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180 },
     description: "A retail design system scaled across 15+ teams at Verizon.",
     image: "/images/home/systems.jpg",
     href: "/case-studies/verizon-design-systems",
