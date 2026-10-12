@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { ContactSection, SectionLabel, SiteHeader } from "@/components/SiteChrome";
+import { ContactSection, SectionLabel, SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import ScrollBlur from "@/components/ScrollBlur";
 
 // Placeholder images were cropped from the design mockup; swap in the full-resolution originals.
@@ -149,9 +149,7 @@ export default function Home() {
 
         <ContactSection />
 
-        <footer className="pb-10 text-center text-[13px] text-[#9a9a9a]">
-          Portfolio created with CODEX AND CLAUDE
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

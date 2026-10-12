@@ -1,5 +1,3 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import Challenges from "@/components/case-study/Challenges";
 import ContentSection from "@/components/case-study/ContentSection";
@@ -8,6 +6,7 @@ import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import SystemLeadership from "@/components/case-study/SystemLeadership";
 import type { Metadata } from "next";
+import { SitePage } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "Verizon Design Systems — Jeff Mariano",
@@ -17,8 +16,7 @@ export const metadata: Metadata = {
 
 export default function VerizonDesignSystems() {
   return (
-    <div className="min-h-screen bg-cream max-w-[1440px] mx-auto">
-      <Nav />
+    <SitePage>
 
       <CaseStudyHero
         tag="DESIGN SYSTEMS · GOVERNANCE · FORTUNE 50 TELECOM"
@@ -135,8 +133,6 @@ export default function VerizonDesignSystems() {
           },
         ]}
       />
-
-      <Footer />
-    </div>
+    </SitePage>
   );
 }

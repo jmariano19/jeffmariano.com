@@ -35,13 +35,13 @@ export default function ContentSection({
   beforeAfter,
 }: ContentSectionProps) {
   return (
-    <section className="px-6 md:px-28 py-[40px]">
+    <section className="py-[40px]">
       <FadeUp>
-        <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[28px] md:text-[38px] leading-[34px] md:leading-[46px] text-green-heading">
+        <h2 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[28px] md:text-[38px] leading-[34px] md:leading-[46px] text-green-heading">
           {title}
         </h2>
         {subtitle && (
-          <h3 className="font-[family-name:var(--font-playfair)] italic text-[20px] md:text-[24px] text-gray-text mt-2">
+          <h3 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[20px] md:text-[24px] text-gray-text mt-2">
             {subtitle}
           </h3>
         )}
@@ -49,7 +49,7 @@ export default function ContentSection({
 
       {tag && (
         <FadeUp delay={0.1}>
-          <p className="font-[family-name:var(--font-roboto)] font-bold text-xs tracking-[2px] text-brown uppercase mt-6 mb-3">
+          <p className="font-[family-name:var(--font-inter)] font-bold text-xs tracking-[2px] text-brown uppercase mt-6 mb-3">
             {tag}
           </p>
           <div className="w-full h-px bg-gray-text opacity-20 mb-4" />
@@ -57,14 +57,14 @@ export default function ContentSection({
       )}
 
       <FadeUp delay={0.15}>
-        <p className="font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
+        <p className="font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
           {description}
         </p>
       </FadeUp>
 
       {explanation && (
         <FadeUp delay={0.2}>
-          <p className="mt-6 font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
+          <p className="mt-6 font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
             {explanation}
           </p>
         </FadeUp>
@@ -72,7 +72,7 @@ export default function ContentSection({
 
       {explanation2 && (
         <FadeUp delay={0.25}>
-          <p className="mt-6 font-[family-name:var(--font-roboto)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
+          <p className="mt-6 font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
             {explanation2}
           </p>
         </FadeUp>
@@ -101,8 +101,8 @@ export default function ContentSection({
 
       {imagePlaceholder && (
         <FadeUp delay={0.2}>
-          <div className="h-[240px] md:h-[400px] rounded-[20px] bg-[#d9d3c4]/30 mt-8 flex items-center justify-center">
-            <p className="font-[family-name:var(--font-roboto)] text-gray-light text-sm">
+          <div className="h-[240px] md:h-[400px] rounded-[20px] bg-[#e4e4e4] mt-8 flex items-center justify-center">
+            <p className="font-[family-name:var(--font-inter)] text-gray-light text-sm">
               Image placeholder
             </p>
           </div>
@@ -113,19 +113,19 @@ export default function ContentSection({
       {beforeAfter && (
         <FadeUp delay={0.2}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8">
-            <div className="bg-[#e6e0cf]/30 rounded-2xl p-6 md:p-8">
-              <p className="font-[family-name:var(--font-roboto)] font-bold text-xs tracking-[2px] text-brown uppercase mb-3">
+            <div className="bg-white rounded-2xl p-6 md:p-8">
+              <p className="font-[family-name:var(--font-inter)] font-bold text-xs tracking-[2px] text-brown uppercase mb-3">
                 BEFORE
               </p>
-              <p className="font-[family-name:var(--font-roboto)] text-base leading-[28px] text-gray-text">
+              <p className="font-[family-name:var(--font-inter)] text-base leading-[28px] text-gray-text">
                 {beforeAfter.before}
               </p>
             </div>
-            <div className="bg-[#d4e8c4]/30 rounded-2xl p-6 md:p-8">
-              <p className="font-[family-name:var(--font-roboto)] font-bold text-xs tracking-[2px] text-green-accent uppercase mb-3">
+            <div className="bg-white rounded-2xl p-6 md:p-8">
+              <p className="font-[family-name:var(--font-inter)] font-bold text-xs tracking-[2px] text-green-accent uppercase mb-3">
                 AFTER
               </p>
-              <p className="font-[family-name:var(--font-roboto)] text-base leading-[28px] text-gray-text">
+              <p className="font-[family-name:var(--font-inter)] text-base leading-[28px] text-gray-text">
                 {beforeAfter.after}
               </p>
             </div>

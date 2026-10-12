@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import FadeUp from "@/components/FadeUp";
 import AnimatedEvidenceGraph from "@/components/case-study/AnimatedEvidenceGraph";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { SitePage } from "@/components/SiteChrome";
+import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 
 export const metadata: Metadata = {
   title: "AI Advisor — Jeff Mariano",
@@ -101,7 +101,7 @@ const relatedStudies = [
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <>
-      <p className="font-[family-name:var(--font-roboto)] font-bold text-sm md:text-[20px] leading-[30px] md:leading-[45px] text-gray-text uppercase">
+      <p className="font-[family-name:var(--font-inter)] font-bold text-sm md:text-[20px] leading-[30px] md:leading-[45px] text-gray-text uppercase">
         {children}
       </p>
       <div className="h-px w-full bg-gray-text/25 mt-3 md:mt-4" />
@@ -111,7 +111,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 function BodyCopy({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`font-[family-name:var(--font-roboto)] text-base md:text-[22px] leading-[30px] md:leading-[45px] text-gray-text ${className}`}>
+    <div className={`font-[family-name:var(--font-inter)] text-base md:text-[22px] leading-[30px] md:leading-[45px] text-gray-text ${className}`}>
       {children}
     </div>
   );
@@ -119,11 +119,11 @@ function BodyCopy({ children, className = "" }: { children: ReactNode; className
 
 function OutcomeCard({ title, description }: { title: string; description: string }) {
   return (
-    <div className="rounded-[18px] md:rounded-[28px] bg-[#def1d2] px-6 py-10 md:px-10 md:py-14 text-center">
-      <h3 className="font-[family-name:var(--font-playfair)] font-bold text-[30px] md:text-[52px] leading-[38px] md:leading-[55px] text-[#535f4b]">
+    <div className="rounded-[18px] md:rounded-[28px] bg-white px-6 py-10 md:px-10 md:py-14 text-center">
+      <h3 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[30px] md:text-[52px] leading-[38px] md:leading-[55px] text-[#111111]">
         {title}
       </h3>
-      <p className="mt-2 font-[family-name:var(--font-roboto)] font-bold text-sm md:text-[22px] leading-[22px] md:leading-[35px] text-[#535f4b]">
+      <p className="mt-2 font-[family-name:var(--font-inter)] font-bold text-sm md:text-[22px] leading-[22px] md:leading-[35px] text-[#111111]">
         {description}
       </p>
     </div>
@@ -132,60 +132,29 @@ function OutcomeCard({ title, description }: { title: string; description: strin
 
 export default function VerizonAI() {
   return (
-    <div className="min-h-screen bg-cream max-w-[1440px] mx-auto">
-      <Nav />
-
+    <SitePage>
       <main>
-        <section className="px-6 md:px-16 pt-6 md:pt-12 text-center">
-          <FadeUp>
-            <p className="font-[family-name:var(--font-roboto)] font-bold text-sm md:text-[20px] leading-[28px] md:leading-[45px] text-gray-text uppercase">
-              AI + UX · Fortune 50 Telecom
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <h1 className="mx-auto mt-4 font-[family-name:var(--font-playfair)] font-bold text-[42px] md:text-[56px] leading-[48px] md:leading-[65px] text-green-heading max-w-[820px]">
-              What Happens When People Feel Seen by AI?
-            </h1>
-          </FadeUp>
-          <FadeUp delay={0.2}>
-            <p className="mx-auto mt-8 max-w-[820px] font-[family-name:var(--font-roboto)] text-lg md:text-[24px] leading-[32px] md:leading-[42px] text-gray-text">
-              Verizon&apos;s retail AI tool was technically powerful, but reps avoided it because it interrupted the human rhythm of sales conversations.
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.3}>
-            <div className="mt-8 font-[family-name:var(--font-roboto)] text-base md:text-[22px] leading-[30px] md:leading-[45px] text-gray-text">
-              <p><span className="font-bold">Role:</span> Project Lead</p>
-              <p><span className="font-bold">Team:</span> 10 designers (US + India)</p>
-              <p><span className="font-bold">Focus:</span> AI adoption in retail</p>
-            </div>
-          </FadeUp>
-        </section>
+        <CaseStudyHero
+          tag="AI + UX · Fortune 50 Telecom"
+          title="What Happens When People Feel Seen by AI?"
+          summary="Verizon's retail AI tool was technically powerful, but reps avoided it because it interrupted the human rhythm of sales conversations."
+          meta="Role: Project Lead | Team: 10 designers (US + India) | Focus: AI adoption in retail"
+          image={`${assetPath}/ai_advisor_top.png`}
+          imageAlt="Customer using a Verizon retail planning screen"
+        />
 
-        <FadeUp delay={0.25}>
-          <div className="relative mt-16 md:mt-24 h-[300px] md:h-[720px] w-full overflow-hidden">
-            <Image
-              src={`${assetPath}/ai_advisor_top.png`}
-              alt="Customer using a Verizon retail planning screen"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-          </div>
-        </FadeUp>
-
-        <section className="px-6 md:px-14 py-12 md:py-16">
+        <section className="py-12 md:py-16">
           <FadeUp>
             <div className="grid gap-5 md:grid-cols-3">
               {impactHighlights.map((item) => (
-                <div key={item.label} className="rounded-[18px] bg-[#def1d2] px-6 py-7 md:px-8 md:py-9">
-                  <p className="font-[family-name:var(--font-roboto)] font-bold text-xs md:text-sm uppercase tracking-[0.14em] text-[#535f4b]/80">
+                <div key={item.label} className="rounded-[18px] bg-white px-6 py-7 md:px-8 md:py-9">
+                  <p className="font-[family-name:var(--font-inter)] font-bold text-xs md:text-sm uppercase tracking-[0.14em] text-[#111111]/80">
                     {item.label}
                   </p>
-                  <h2 className="mt-3 font-[family-name:var(--font-playfair)] font-bold text-[32px] md:text-[44px] leading-[38px] md:leading-[48px] text-[#535f4b]">
+                  <h2 className="mt-3 font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[32px] md:text-[44px] leading-[38px] md:leading-[48px] text-[#111111]">
                     {item.value}
                   </h2>
-                  <p className="mt-4 font-[family-name:var(--font-roboto)] text-base md:text-[18px] leading-7 text-[#535f4b]">
+                  <p className="mt-4 font-[family-name:var(--font-inter)] text-base md:text-[18px] leading-7 text-[#111111]">
                     {item.detail}
                   </p>
                 </div>
@@ -197,7 +166,7 @@ export default function VerizonAI() {
             <div className="mt-12 grid gap-8 rounded-[22px] border border-gray-text/20 px-6 py-8 md:grid-cols-[0.85fr_1.15fr] md:px-10 md:py-10">
               <div>
                 <SectionLabel>My role</SectionLabel>
-                <h2 className="mt-6 font-[family-name:var(--font-playfair)] font-bold text-[32px] md:text-[42px] leading-[40px] md:leading-[50px] text-green-heading">
+                <h2 className="mt-6 font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[32px] md:text-[42px] leading-[40px] md:leading-[50px] text-green-heading">
                   I turned field signals into an AI interaction model reps could trust.
                 </h2>
               </div>
@@ -210,9 +179,9 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
 
-        <section className="px-6 md:px-14 py-14 md:py-20">
+        <section className="py-14 md:py-20">
           <FadeUp>
-            <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[32px] md:text-[42px] leading-[38px] md:leading-[50px] text-green-heading max-w-[720px]">
+            <h2 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[32px] md:text-[42px] leading-[38px] md:leading-[50px] text-green-heading max-w-[720px]">
               The system assumes a linear journey. Real conversations are not.
             </h2>
           </FadeUp>
@@ -226,7 +195,7 @@ export default function VerizonAI() {
 
           <FadeUp delay={0.15}>
             <div className="mt-12 md:mt-16">
-              <h3 className="font-[family-name:var(--font-roboto)] font-bold text-xl md:text-[24px] text-center text-black mb-6">
+              <h3 className="font-[family-name:var(--font-inter)] font-bold text-xl md:text-[24px] text-center text-black mb-6">
                 Friction Map
               </h3>
               <div className="relative w-full overflow-hidden rounded-[18px]">
@@ -257,15 +226,15 @@ export default function VerizonAI() {
           </FadeUp>
 
           <FadeUp>
-            <div className="mt-6 rounded-[16px] bg-[#f1d7d1] px-6 py-10 text-center">
-              <p className="font-[family-name:var(--font-playfair)] italic font-bold text-[24px] md:text-[28px] leading-[34px] md:leading-[42px] text-[#6b332b]">
+            <div className="mt-6 rounded-[16px] bg-white px-6 py-10 text-center">
+              <p className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[24px] md:text-[28px] leading-[34px] md:leading-[42px] text-[#111111]">
                 &ldquo;96% of conversations hit at least one friction point before reaching a decision.&rdquo;
               </p>
             </div>
           </FadeUp>
 
           <FadeUp>
-            <div className="mt-12 grid md:grid-cols-2 gap-6 md:gap-12 font-[family-name:var(--font-roboto)] font-bold text-lg md:text-[22px] text-[#7b1410]">
+            <div className="mt-12 grid md:grid-cols-2 gap-6 md:gap-12 font-[family-name:var(--font-inter)] font-bold text-lg md:text-[22px] text-[#111111]">
               <p>Every loop = lost momentum</p>
               <p>Every detour = broken conversation</p>
             </div>
@@ -283,16 +252,16 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
 
-        <section className="px-6 md:px-14 py-8 md:py-12">
+        <section className="py-8 md:py-12">
           <FadeUp>
-            <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[34px] md:text-[42px] leading-[42px] text-green-heading">
+            <h2 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[34px] md:text-[42px] leading-[42px] text-green-heading">
               Design Decisions
             </h2>
           </FadeUp>
 
           <FadeUp delay={0.1}>
             <div className="mt-10">
-              <h3 className="font-[family-name:var(--font-roboto)] font-bold text-xl md:text-[28px] text-[#172511] mb-10">
+              <h3 className="font-[family-name:var(--font-inter)] font-bold text-xl md:text-[28px] text-[#111111] mb-10">
                 From Push to Pull
               </h3>
               <SectionLabel>Before</SectionLabel>
@@ -325,7 +294,7 @@ export default function VerizonAI() {
           </FadeUp>
 
           <FadeUp>
-            <div className="mt-12 rounded-[10px] bg-[#e6e2d6] p-5 md:p-8">
+            <div className="mt-12 rounded-[10px] bg-white p-5 md:p-8">
               <Image
                 src={`${assetPath}/before_after.png`}
                 alt="Before and after interface comparison from linear interface to AI Advisor"
@@ -338,9 +307,9 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
 
-        <section className="px-6 md:px-14 py-12 md:py-16">
+        <section className="py-12 md:py-16">
           <FadeUp>
-            <h2 className="font-[family-name:var(--font-roboto)] font-bold text-2xl md:text-[28px] text-[#172511]">
+            <h2 className="font-[family-name:var(--font-inter)] font-bold text-2xl md:text-[28px] text-[#111111]">
               Simplified Visual AI Outputs
             </h2>
           </FadeUp>
@@ -380,8 +349,8 @@ export default function VerizonAI() {
 
           <FadeUp>
             <div className="mt-12">
-              <div className="rounded-[20px] bg-[#e6e2d6] p-6 md:p-10">
-                <p className="mb-6 text-center font-[family-name:var(--font-roboto)] text-sm font-bold text-gray-text md:text-base">
+              <div className="rounded-[20px] bg-white p-6 md:p-10">
+                <p className="mb-6 text-center font-[family-name:var(--font-inter)] text-sm font-bold text-gray-text md:text-base">
                   Progressive disclosure
                 </p>
                 <div className="overflow-hidden rounded-[10px] bg-white/30">
@@ -399,9 +368,9 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
 
-        <section className="px-6 md:px-14 py-12 md:py-16">
+        <section className="py-12 md:py-16">
           <FadeUp>
-            <h2 className="font-[family-name:var(--font-roboto)] font-bold text-2xl md:text-[28px] text-[#172511]">
+            <h2 className="font-[family-name:var(--font-inter)] font-bold text-2xl md:text-[28px] text-[#111111]">
               The AI UX Framework
             </h2>
           </FadeUp>
@@ -427,9 +396,9 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
 
-        <section className="px-6 md:px-14 py-12 md:py-16">
+        <section className="py-12 md:py-16">
           <FadeUp>
-            <h2 className="font-[family-name:var(--font-roboto)] font-bold text-2xl md:text-[28px] text-[#172511] mb-8">
+            <h2 className="font-[family-name:var(--font-inter)] font-bold text-2xl md:text-[28px] text-[#111111] mb-8">
               The Tiger Team
             </h2>
           </FadeUp>
@@ -459,9 +428,9 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
 
-        <section className="px-6 md:px-14 py-12 md:py-16">
+        <section className="py-12 md:py-16">
           <FadeUp>
-            <h2 className="font-[family-name:var(--font-roboto)] font-bold text-2xl md:text-[28px] text-[#172511] mb-8">
+            <h2 className="font-[family-name:var(--font-inter)] font-bold text-2xl md:text-[28px] text-[#111111] mb-8">
               Outcomes
             </h2>
           </FadeUp>
@@ -474,11 +443,11 @@ export default function VerizonAI() {
           </div>
         </section>
 
-        <section className="px-6 md:px-14 py-12 md:py-20">
+        <section className="py-12 md:py-20">
           <FadeUp>
-            <blockquote className="border-l-8 border-[#e6e0cf] pl-6 md:pl-10 font-[family-name:var(--font-playfair)] italic text-[26px] md:text-[41px] leading-[36px] md:leading-[52px] text-gray-text max-w-[940px]">
+            <blockquote className="border-l-8 border-[#d4d4d4] pl-6 md:pl-10 font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[26px] md:text-[41px] leading-[36px] md:leading-[52px] text-gray-text max-w-[940px]">
               &ldquo;I feel that the Verizon team is finally understanding us and the way we work.&rdquo;
-              <footer className="mt-6 font-[family-name:var(--font-roboto)] not-italic text-sm md:text-[18px] leading-[28px]">
+              <footer className="mt-6 font-[family-name:var(--font-inter)] not-italic text-sm md:text-[18px] leading-[28px]">
                 — Retail Representative
               </footer>
             </blockquote>
@@ -486,10 +455,10 @@ export default function VerizonAI() {
 
           <FadeUp>
             <div className="mt-20 border-y border-gray-text/25 py-14 text-center">
-              <p className="mx-auto font-[family-name:var(--font-playfair)] italic text-[26px] md:text-[41px] leading-[36px] md:leading-[52px] text-gray-text max-w-[940px]">
+              <p className="mx-auto font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[26px] md:text-[41px] leading-[36px] md:leading-[52px] text-gray-text max-w-[940px]">
                 &ldquo;Most AI products fail at the UX layer, not the ML layer. The fix isn&apos;t technical — it&apos;s philosophical. Give users control.&rdquo;
               </p>
-              <p className="mx-auto mt-8 max-w-[820px] font-[family-name:var(--font-roboto)] text-base md:text-[22px] leading-[30px] md:leading-[40px] text-gray-text">
+              <p className="mx-auto mt-8 max-w-[820px] font-[family-name:var(--font-inter)] text-base md:text-[22px] leading-[30px] md:leading-[40px] text-gray-text">
                 This project changed AI from an automated decision-maker into a conversational support system, one that preserved rep judgment while making complex decisions easier to explain.
               </p>
             </div>
@@ -499,7 +468,7 @@ export default function VerizonAI() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
               {relatedStudies.map((study) => (
                 <Link key={study.company + study.href} href={study.href} className="group">
-                  <div className="relative h-[120px] md:h-[180px] rounded-[10px] overflow-hidden bg-[#e6e2d6]">
+                  <div className="relative h-[120px] md:h-[180px] rounded-[10px] overflow-hidden bg-white">
                     <Image
                       src={study.image}
                       alt={study.company}
@@ -508,7 +477,7 @@ export default function VerizonAI() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <p className="mt-3 font-[family-name:var(--font-roboto)] font-bold text-sm md:text-[18px] text-gray-text">
+                  <p className="mt-3 font-[family-name:var(--font-inter)] font-bold text-sm md:text-[18px] text-gray-text">
                     {study.company}
                   </p>
                 </Link>
@@ -517,8 +486,6 @@ export default function VerizonAI() {
           </FadeUp>
         </section>
       </main>
-
-      <Footer />
-    </div>
+    </SitePage>
   );
 }

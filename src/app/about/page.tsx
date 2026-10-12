@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
-import { ContactSection, SiteHeader } from "@/components/SiteChrome";
+import { SitePage } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "About — Jeff Mariano",
@@ -19,9 +19,7 @@ const paragraphs = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-inter)] tracking-[-0.02em]">
-      <div className="max-w-[1440px] mx-auto px-5 md:px-[68px]">
-        <SiteHeader active="about" />
+    <SitePage active="about">
 
         <main className="pt-16 md:pt-[90px] pb-28 md:pb-[260px] grid gap-10 lg:grid-cols-[minmax(0,498px)_minmax(0,1fr)] lg:gap-[76px] items-start">
           <Reveal onLoad delay={0.1} blur>
@@ -53,9 +51,6 @@ export default function About() {
             </Reveal>
           </div>
         </main>
-
-        <ContactSection />
-      </div>
-    </div>
+    </SitePage>
   );
 }

@@ -15,7 +15,7 @@ type AnimatedEvidenceGraphProps = {
 export default function AnimatedEvidenceGraph({ signals }: AnimatedEvidenceGraphProps) {
   return (
     <motion.div
-      className="rounded-[22px] bg-[#f1d7d1] px-5 py-7 md:px-10 md:py-10"
+      className="rounded-[22px] bg-white px-5 py-7 md:px-10 md:py-10"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.35 }}
@@ -47,16 +47,16 @@ export default function AnimatedEvidenceGraph({ signals }: AnimatedEvidenceGraph
             }}
           >
             <div>
-              <p className="font-[family-name:var(--font-roboto)] font-bold text-base md:text-[18px] leading-6 text-[#6b332b]">
+              <p className="font-[family-name:var(--font-inter)] font-bold text-base md:text-[18px] leading-6 text-[#111111]">
                 {signal.label}
               </p>
-              <p className="font-[family-name:var(--font-roboto)] text-sm md:text-base leading-6 text-[#6b332b]/80">
+              <p className="font-[family-name:var(--font-inter)] text-sm md:text-base leading-6 text-[#111111]/80">
                 {signal.detail}
               </p>
             </div>
-            <div className="h-4 overflow-hidden rounded-full bg-[#e3bbb3]">
+            <div className="h-4 overflow-hidden rounded-full bg-[#e4e4e4]">
               <motion.div
-                className="h-full origin-left rounded-full bg-[#7b1410]"
+                className="h-full origin-left rounded-full bg-[#111111]"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: signal.value / 100 }}
                 viewport={{ once: true, amount: 0.5 }}
@@ -69,7 +69,7 @@ export default function AnimatedEvidenceGraph({ signals }: AnimatedEvidenceGraph
               />
             </div>
             <motion.p
-              className="font-[family-name:var(--font-playfair)] font-bold text-[34px] leading-none text-[#6b332b] md:text-right"
+              className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[34px] leading-none text-[#111111] md:text-right"
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}

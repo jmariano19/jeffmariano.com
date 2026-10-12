@@ -3,7 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import ContactPill from "@/components/ContactPill";
 
-// Shared header, section labels and contact block used by the homepage and About page.
+// Shared page frame, header, section labels and contact block used across the site.
 
 export function Asterisk({ size = 14 }: { size?: number }) {
   return (
@@ -83,5 +83,35 @@ export function ContactSection() {
         </div>
       </Reveal>
     </section>
+  );
+}
+
+export function SiteFooter() {
+  return (
+    <footer className="pb-10 text-center text-[13px] text-[#9a9a9a]">
+      Portfolio created with CODEX AND CLAUDE
+    </footer>
+  );
+}
+
+/** Standard page frame: neutral background, shared header, contact block and footer. */
+export function SitePage({
+  children,
+  active,
+  contact = true,
+}: {
+  children: React.ReactNode;
+  active?: "about";
+  contact?: boolean;
+}) {
+  return (
+    <div className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-inter)] tracking-[-0.02em]">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-[68px]">
+        <SiteHeader active={active} />
+        {children}
+        {contact && <ContactSection />}
+        <SiteFooter />
+      </div>
+    </div>
   );
 }

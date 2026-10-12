@@ -1,61 +1,54 @@
 import Image from "next/image";
-import FadeUp from "../FadeUp";
+import Reveal from "../Reveal";
+import { Asterisk } from "../SiteChrome";
 
 interface CaseStudyHeroProps {
   tag: string;
   title: string;
   meta: string;
   image: string;
+  /** Optional one-line framing shown under the title. */
+  summary?: string;
+  imageAlt?: string;
 }
 
-export default function CaseStudyHero({
-  tag,
-  title,
-  meta,
-  image,
-}: CaseStudyHeroProps) {
+export default function CaseStudyHero({ tag, title, meta, image, summary, imageAlt }: CaseStudyHeroProps) {
   return (
-    <section>
-      {/* Title block */}
-      <div className="max-w-[768px] mx-auto text-center mt-10 md:mt-14 px-6 mb-10 md:mb-14">
-        <FadeUp>
-          <p className="font-[family-name:var(--font-roboto)] text-sm md:text-base tracking-[2px] text-brown uppercase mb-4">
-            {tag}
-          </p>
-        </FadeUp>
-        <FadeUp delay={0.15}>
-          <h1 className="font-[family-name:var(--font-playfair)] font-bold text-[33px] md:text-[45px] leading-[40px] md:leading-[52px] text-green-heading">
-            {title}
-          </h1>
-        </FadeUp>
-        <FadeUp delay={0.3}>
-          <div className="mt-6 font-[family-name:var(--font-roboto)] text-sm md:text-base leading-[28px] text-gray-text flex flex-col items-center gap-1">
-            {meta.split("|").map((item, i) => {
-              const parts = item.trim().split(":");
-              return (
-                <p key={i}>
-                  <span className="font-bold">{parts[0]}:</span>
-                  {parts.slice(1).join(":")}
-                </p>
-              );
-            })}
-          </div>
-        </FadeUp>
-      </div>
-
-      {/* Full-width hero image */}
-      <FadeUp delay={0.2}>
-        <div className="relative w-full h-[300px] md:h-[600px] overflow-hidden">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="100vw"
-            className="object-cover"
-            priority
-          />
+    <section className="pt-16 md:pt-[110px] pb-10 md:pb-14">
+      <Reveal onLoad delay={0.1}>
+        <p className="flex items-center gap-2 text-[12px] md:text-[13px] uppercase tracking-[0.04em] text-[#555]">
+          <Asterisk />
+          {tag}
+        </p>
+      </Reveal>
+      <Reveal onLoad delay={0.18}>
+        <h1 className="mt-5 max-w-[16ch] text-[40px] md:text-[64px] xl:text-[72px] leading-[1.05] font-bold tracking-[-0.04em]">
+          {title}
+        </h1>
+      </Reveal>
+      {summary && (
+        <Reveal onLoad delay={0.23}>
+          <p className="mt-6 max-w-[38rem] text-[16px] md:text-[18px] leading-[1.7] tracking-[-0.01em] text-[#444]">{summary}</p>
+        </Reveal>
+      )}
+      <Reveal onLoad delay={0.28}>
+        <dl className="mt-8 md:mt-10 grid gap-x-10 gap-y-4 sm:grid-cols-3 border-t border-[#c9c9c9] pt-4 max-w-[1000px]">
+          {meta.split("|").map((item) => {
+            const [label, ...rest] = item.trim().split(":");
+            return (
+              <div key={label}>
+                <dt className="text-[12px] md:text-[13px] uppercase tracking-[0.02em] text-[#9a9a9a]">{label}</dt>
+                <dd className="mt-1 text-[14px] md:text-[15px] leading-snug text-[#111]">{rest.join(":").trim()}</dd>
+              </div>
+            );
+          })}
+        </dl>
+      </Reveal>
+      <Reveal onLoad delay={0.35} blur y={60}>
+        <div className="relative mt-10 md:mt-14 w-full h-[280px] md:h-[600px] overflow-hidden rounded-[14px] bg-[#e4e4e4]">
+          <Image src={image} alt={imageAlt ?? title} fill sizes="(max-width: 1440px) 100vw, 1304px" className="object-cover" priority />
         </div>
-      </FadeUp>
+      </Reveal>
     </section>
   );
 }

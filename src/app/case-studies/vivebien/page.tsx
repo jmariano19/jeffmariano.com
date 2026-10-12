@@ -1,5 +1,3 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import Challenges from "@/components/case-study/Challenges";
 import ContentSection from "@/components/case-study/ContentSection";
@@ -7,6 +5,7 @@ import Outcomes from "@/components/case-study/Outcomes";
 import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import type { Metadata } from "next";
+import { SitePage } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "ViveBien — Jeff Mariano",
@@ -16,8 +15,7 @@ export const metadata: Metadata = {
 
 export default function ViveBien() {
   return (
-    <div className="min-h-screen bg-cream max-w-[1440px] mx-auto">
-      <Nav />
+    <SitePage>
 
       <CaseStudyHero
         tag="HEALTH TECH · AI PRODUCT DESIGN · FOUNDER"
@@ -125,8 +123,6 @@ export default function ViveBien() {
           },
         ]}
       />
-
-      <Footer />
-    </div>
+    </SitePage>
   );
 }

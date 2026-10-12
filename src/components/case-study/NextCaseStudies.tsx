@@ -17,9 +17,9 @@ interface NextCaseStudiesProps {
 
 export default function NextCaseStudies({ studies }: NextCaseStudiesProps) {
   return (
-    <section className="px-6 md:px-28 py-[40px]">
+    <section className="py-[40px]">
       <FadeUp>
-        <h2 className="font-[family-name:var(--font-playfair)] font-bold text-[24px] md:text-[30px] text-green-heading mb-8">
+        <h2 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[24px] md:text-[30px] text-green-heading mb-8">
           More Case Studies
         </h2>
       </FadeUp>
@@ -48,10 +48,10 @@ export default function NextCaseStudies({ studies }: NextCaseStudiesProps) {
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-0 left-0 p-5 md:p-6 text-white">
-                <p className="font-[family-name:var(--font-playfair)] font-bold italic text-sm mb-1">
+                <p className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-sm mb-1">
                   {study.company}
                 </p>
-                <h3 className="font-[family-name:var(--font-playfair)] font-bold text-[18px] md:text-[22px] leading-[22px] md:leading-[28px]">
+                <h3 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[18px] md:text-[22px] leading-[22px] md:leading-[28px]">
                   {study.title}
                 </h3>
               </div>

@@ -2,15 +2,16 @@
 @plugin "@tailwindcss/typography";
 
 @theme inline {
-  --color-cream: #f8f4e9;
-  --color-cream-light: #fffbf0;
-  --color-green-dark: #25391d;
-  --color-green-heading: #325624;
-  --color-green-accent: #3f5037;
-  --color-brown: #7c4c2a;
-  --color-gray-text: #606060;
-  --color-gray-light: #999;
-  --color-text-dark: #4a493c;
+  /* Legacy token names, now mapped to the neutral site palette */
+  --color-cream: #f2f2f2;
+  --color-cream-light: #ffffff;
+  --color-green-dark: #111111;
+  --color-green-heading: #111111;
+  --color-green-accent: #111111;
+  --color-brown: #555555;
+  --color-gray-text: #444444;
+  --color-gray-light: #9a9a9a;
+  --color-text-dark: #111111;
 
   /* v2 neutral palette (homepage + /projects) */
   --color-paper: #f3f3f1;
@@ -18,45 +19,10 @@
   --color-ink-muted: #6f6f6c;
   --color-line: #d9d9d5;
 
-  --font-playfair: var(--font-playfair);
-  --font-roboto: var(--font-roboto);
-  --font-cormorant: var(--font-cormorant);
-  --font-lato: var(--font-lato);
 }
 
 body {
-  background: var(--color-cream);
-  color: #333;
-  font-family: var(--font-roboto), sans-serif;
-}
-
-@keyframes logo-outer-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.logo-outer-spin {
-  animation: logo-outer-spin 90s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .logo-outer-spin {
-    animation: none;
-  }
-}
-
-.about-scroll-pane,
-html:has(.about-page),
-body:has(.about-page) {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.about-scroll-pane::-webkit-scrollbar,
-html:has(.about-page)::-webkit-scrollbar,
-body:has(.about-page)::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
+  background: #f2f2f2;
+  color: #111;
+  font-family: var(--font-inter), sans-serif;
 }

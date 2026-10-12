@@ -24,9 +24,9 @@ export default function ImageSlider({ images, label }: ImageSliderProps) {
   };
 
   return (
-    <div className="bg-[#e6e2d6] rounded-[20px] mt-10 p-6 md:p-10">
+    <div className="bg-white rounded-[20px] mt-10 p-6 md:p-10">
       {label && (
-        <p className="font-[family-name:var(--font-roboto)] font-bold text-sm md:text-base text-gray-text text-center mb-6">
+        <p className="font-[family-name:var(--font-inter)] font-bold text-sm md:text-base text-gray-text text-center mb-6">
           {label}
         </p>
       )}
@@ -39,7 +39,7 @@ export default function ImageSlider({ images, label }: ImageSliderProps) {
           aria-label="Previous"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M12.5 15L7.5 10L12.5 5" stroke="#363636" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="#111111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
@@ -73,7 +73,7 @@ export default function ImageSlider({ images, label }: ImageSliderProps) {
           aria-label="Next"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M7.5 5L12.5 10L7.5 15" stroke="#363636" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>

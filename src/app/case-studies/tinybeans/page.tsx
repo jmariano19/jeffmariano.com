@@ -1,5 +1,3 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import Challenges from "@/components/case-study/Challenges";
 import ContentSection from "@/components/case-study/ContentSection";
@@ -7,6 +5,7 @@ import Outcomes from "@/components/case-study/Outcomes";
 import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import type { Metadata } from "next";
+import { SitePage } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "Tinybeans — Jeff Mariano",
@@ -16,8 +15,7 @@ export const metadata: Metadata = {
 
 export default function Tinybeans() {
   return (
-    <div className="min-h-screen bg-cream max-w-[1440px] mx-auto">
-      <Nav />
+    <SitePage>
 
       <CaseStudyHero
         tag="BRAND DESIGN · DESIGN SYSTEMS · ART DIRECTION"
@@ -123,8 +121,6 @@ export default function Tinybeans() {
           },
         ]}
       />
-
-      <Footer />
-    </div>
+    </SitePage>
   );
 }

@@ -121,10 +121,10 @@ function ArticleOverlay({
       >
         <div className="flex shrink-0 items-start justify-between gap-5 border-b border-black/10 bg-cream-light px-6 py-5 md:px-8">
           <div>
-            <p className="font-[family-name:var(--font-roboto)] text-xs font-bold uppercase tracking-[0.18em] text-gray-text/60">
+            <p className="font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.18em] text-gray-text/60">
               {article.tag} · {article.date}
             </p>
-            <h2 className="mt-2 max-w-[680px] font-[family-name:var(--font-playfair)] text-xl font-bold leading-tight text-green-heading md:text-[30px]">
+            <h2 className="mt-2 max-w-[680px] font-[family-name:var(--font-inter)] tracking-[-0.03em] text-xl font-bold leading-tight text-green-heading md:text-[30px]">
               {article.title}
             </h2>
           </div>
@@ -139,24 +139,24 @@ function ArticleOverlay({
 
         <div className="flex-1 overflow-y-auto px-6 py-8 md:px-10">
           {!hasLocalContent && loading && (
-            <div className="flex h-48 items-center justify-center rounded-2xl bg-white/50 font-[family-name:var(--font-roboto)] text-sm text-black/40">
+            <div className="flex h-48 items-center justify-center rounded-2xl bg-white/50 font-[family-name:var(--font-inter)] text-sm text-black/40">
               Loading article preview...
             </div>
           )}
 
           {!hasLocalContent && error && (
             <div className="flex min-h-[280px] flex-col items-center justify-center gap-5 rounded-2xl bg-white/55 px-6 text-center">
-              <p className="font-[family-name:var(--font-playfair)] text-2xl font-bold text-green-heading">
+              <p className="font-[family-name:var(--font-inter)] tracking-[-0.03em] text-2xl font-bold text-green-heading">
                 The inline preview is being shy.
               </p>
-              <p className="max-w-[520px] font-[family-name:var(--font-roboto)] text-base leading-7 text-gray-text">
+              <p className="max-w-[520px] font-[family-name:var(--font-inter)] text-base leading-7 text-gray-text">
                 Substack sometimes blocks previews, but the full article is available in a new tab.
               </p>
               <a
                 href={article.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-green-heading px-6 py-3 font-[family-name:var(--font-roboto)] text-sm font-bold text-white transition-opacity hover:opacity-85"
+                className="rounded-full bg-green-heading px-6 py-3 font-[family-name:var(--font-inter)] text-sm font-bold text-white transition-opacity hover:opacity-85"
               >
                 Read on Substack ↗
               </a>
@@ -166,13 +166,13 @@ function ArticleOverlay({
           {(hasLocalContent || (!loading && !error)) && (
             <>
               {(displayDescription || article.summary) && (
-                <p className="mb-8 border-l-4 border-green-heading/25 pl-5 font-[family-name:var(--font-playfair)] text-lg italic leading-relaxed text-black/60 md:text-xl">
+                <p className="mb-8 border-l-4 border-green-heading/25 pl-5 font-[family-name:var(--font-inter)] tracking-[-0.03em] text-lg leading-relaxed text-black/60 md:text-xl">
                   {displayDescription || article.summary}
                 </p>
               )}
 
               {article.content?.length ? (
-                <article className="mx-auto max-w-[720px] font-[family-name:var(--font-roboto)] text-[18px] leading-9 text-gray-text">
+                <article className="mx-auto max-w-[720px] font-[family-name:var(--font-inter)] text-[18px] leading-9 text-gray-text">
                   {article.content.map((paragraph) => {
                     const isStandaloneLine = [
                       "Amplify me. Don't replace me.",
@@ -189,7 +189,7 @@ function ArticleOverlay({
                     return isStandaloneLine ? (
                       <p
                         key={paragraph}
-                        className="my-10 border-y border-gray-text/20 py-8 text-center font-[family-name:var(--font-playfair)] text-[34px] font-bold italic leading-[42px] text-green-heading md:text-[46px] md:leading-[54px]"
+                        className="my-10 border-y border-gray-text/20 py-8 text-center font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[34px] font-bold leading-[42px] text-green-heading md:text-[46px] md:leading-[54px]"
                       >
                         {paragraph}
                       </p>
@@ -202,22 +202,22 @@ function ArticleOverlay({
                 </article>
               ) : content ? (
                 <div
-                  className="prose prose-lg max-w-none font-[family-name:var(--font-roboto)] leading-relaxed text-black/80
-                    [&_a]:text-green-heading [&_a]:underline [&_h1]:font-[family-name:var(--font-playfair)] [&_h1]:font-bold [&_h1]:text-green-heading
-                    [&_h2]:font-[family-name:var(--font-playfair)] [&_h2]:font-bold [&_h2]:text-green-heading
-                    [&_h3]:font-[family-name:var(--font-playfair)] [&_h3]:text-green-heading [&_img]:rounded-xl"
+                  className="prose prose-lg max-w-none font-[family-name:var(--font-inter)] leading-relaxed text-black/80
+                    [&_a]:text-green-heading [&_a]:underline [&_h1]:font-[family-name:var(--font-inter)] tracking-[-0.03em] [&_h1]:font-bold [&_h1]:text-green-heading
+                    [&_h2]:font-[family-name:var(--font-inter)] tracking-[-0.03em] [&_h2]:font-bold [&_h2]:text-green-heading
+                    [&_h3]:font-[family-name:var(--font-inter)] tracking-[-0.03em] [&_h3]:text-green-heading [&_img]:rounded-xl"
                   dangerouslySetInnerHTML={{ __html: content }}
                 />
               ) : (
                 <div className="flex min-h-[220px] flex-col items-center justify-center gap-5 rounded-2xl bg-white/55 px-6 text-center">
-                  <p className="font-[family-name:var(--font-roboto)] text-base text-gray-text">
+                  <p className="font-[family-name:var(--font-inter)] text-base text-gray-text">
                     Article preview not available here.
                   </p>
                   <a
                     href={article.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-[family-name:var(--font-roboto)] text-sm font-bold text-green-heading underline underline-offset-4"
+                    className="font-[family-name:var(--font-inter)] text-sm font-bold text-green-heading underline underline-offset-4"
                   >
                     Read on Substack ↗
                   </a>
@@ -246,7 +246,7 @@ function FilterButton({
       data-ga-event="article_filter_click"
       data-ga-category="articles"
       data-ga-label={label}
-      className={`rounded-full border px-5 py-2 font-[family-name:var(--font-roboto)] text-sm font-bold transition-colors ${
+      className={`rounded-full border px-5 py-2 font-[family-name:var(--font-inter)] text-sm font-bold transition-colors ${
         active
           ? "border-green-heading bg-green-heading text-white"
           : "border-gray-text/25 text-gray-text hover:border-green-heading hover:text-green-heading"
@@ -281,22 +281,22 @@ function ArticleCard({
       <div className="relative aspect-[4/3] overflow-hidden">
         <ArticleImage src={article.image} alt={article.title} />
         {!published && (
-          <span className="absolute right-4 top-4 rounded-full bg-cream px-3 py-1 font-[family-name:var(--font-roboto)] text-xs font-bold text-green-heading">
+          <span className="absolute right-4 top-4 rounded-full bg-cream px-3 py-1 font-[family-name:var(--font-inter)] text-xs font-bold text-green-heading">
             Coming soon
           </span>
         )}
       </div>
       <div className="flex flex-1 flex-col p-6">
-        <p className="font-[family-name:var(--font-roboto)] text-xs font-bold uppercase tracking-[0.16em] text-gray-text/60">
+        <p className="font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.16em] text-gray-text/60">
           {article.tag} · {article.date}
         </p>
-        <h3 className="mt-3 font-[family-name:var(--font-playfair)] text-[26px] font-bold leading-[32px] text-green-heading">
+        <h3 className="mt-3 font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[26px] font-bold leading-[32px] text-green-heading">
           {article.title}
         </h3>
-        <p className="mt-4 flex-1 font-[family-name:var(--font-roboto)] text-base leading-7 text-gray-text">
+        <p className="mt-4 flex-1 font-[family-name:var(--font-inter)] text-base leading-7 text-gray-text">
           {article.summary}
         </p>
-        <p className="mt-6 font-[family-name:var(--font-roboto)] text-sm font-bold text-green-heading">
+        <p className="mt-6 font-[family-name:var(--font-inter)] text-sm font-bold text-green-heading">
           {published ? "Read essay ↗" : "Draft in progress"}
         </p>
       </div>
@@ -330,7 +330,7 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
 
   return (
     <>
-      <section className="px-5 md:px-28 mb-10 md:mb-14">
+      <section className="mb-10 md:mb-14">
         <FadeUp>
           <button
             onClick={() => handleClick(featured)}
@@ -341,21 +341,21 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
           >
             <div className="relative min-h-[320px] overflow-hidden md:min-h-full">
               <ArticleImage src={featured.image} alt={featured.title} priority />
-              <div className="absolute left-5 top-5 rounded-full bg-cream px-4 py-2 font-[family-name:var(--font-roboto)] text-xs font-bold uppercase tracking-[0.14em] text-green-heading">
+              <div className="absolute left-5 top-5 rounded-full bg-cream px-4 py-2 font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.14em] text-green-heading">
                 Featured essay
               </div>
             </div>
             <div className="flex flex-col justify-center p-7 md:p-12">
-              <p className="font-[family-name:var(--font-roboto)] text-xs font-bold uppercase tracking-[0.18em] text-gray-text/60">
+              <p className="font-[family-name:var(--font-inter)] text-xs font-bold uppercase tracking-[0.18em] text-gray-text/60">
                 {featured.tag} · {featured.date}
               </p>
-              <h2 className="mt-4 font-[family-name:var(--font-playfair)] text-[34px] font-bold leading-[40px] text-green-heading md:text-[52px] md:leading-[58px]">
+              <h2 className="mt-4 font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[34px] font-bold leading-[40px] text-green-heading md:text-[52px] md:leading-[58px]">
                 {featured.title}
               </h2>
-              <p className="mt-6 font-[family-name:var(--font-roboto)] text-base leading-8 text-gray-text md:text-[18px]">
+              <p className="mt-6 font-[family-name:var(--font-inter)] text-base leading-8 text-gray-text md:text-[18px]">
                 {featured.summary}
               </p>
-              <p className="mt-8 font-[family-name:var(--font-roboto)] text-base font-bold text-green-heading">
+              <p className="mt-8 font-[family-name:var(--font-inter)] text-base font-bold text-green-heading">
                 Read on Substack ↗
               </p>
             </div>
@@ -363,14 +363,14 @@ export default function ArticlesClient({ articles }: { articles: Article[] }) {
         </FadeUp>
       </section>
 
-      <section className="px-5 md:px-28 pb-16 md:pb-24">
+      <section className="pb-16 md:pb-24">
         <FadeUp>
           <div className="mb-8 flex flex-col gap-5 border-y border-gray-text/20 py-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="font-[family-name:var(--font-roboto)] text-sm font-bold uppercase tracking-[0.16em] text-gray-text/60">
+              <p className="font-[family-name:var(--font-inter)] text-sm font-bold uppercase tracking-[0.16em] text-gray-text/60">
                 Writing archive
               </p>
-              <p className="mt-2 font-[family-name:var(--font-roboto)] text-base leading-7 text-gray-text">
+              <p className="mt-2 font-[family-name:var(--font-inter)] text-base leading-7 text-gray-text">
                 Essays, field notes, and working thoughts on AI adoption.
               </p>
             </div>

@@ -20,18 +20,18 @@ const pillars = [
 
 export default function SystemLeadership() {
   return (
-    <section className="px-6 md:px-28 py-[40px]">
+    <section className="py-[40px]">
       <FadeUp>
         <div className="rounded-[28px] bg-cream-light px-6 py-8 md:px-12 md:py-12">
-          <p className="font-[family-name:var(--font-roboto)] text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-brown">
+          <p className="font-[family-name:var(--font-inter)] text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-brown">
             Enterprise Experience Focus
           </p>
 
           <div className="mt-6 grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-start">
-            <h2 className="font-[family-name:var(--font-playfair)] text-[30px] font-bold leading-[38px] text-green-heading md:text-[48px] md:leading-[56px]">
+            <h2 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[30px] font-bold leading-[38px] text-green-heading md:text-[48px] md:leading-[56px]">
               Systems that make quality easier to repeat.
             </h2>
-            <p className="font-[family-name:var(--font-roboto)] text-base leading-[28px] text-gray-text md:text-[18px] md:leading-[34px]">
+            <p className="font-[family-name:var(--font-inter)] text-base leading-[28px] text-gray-text md:text-[18px] md:leading-[34px]">
               The work was not only a component library. It was an operating model:
               defining patterns, creating contribution paths, coaching teams, and
               proving the system through adoption in real product workflows.
@@ -42,12 +42,12 @@ export default function SystemLeadership() {
             {pillars.map((pillar) => (
               <div
                 key={pillar.title}
-                className="rounded-[20px] border border-[#e6e0cf] bg-cream p-5 md:p-6"
+                className="rounded-[20px] border border-[#d4d4d4] bg-cream p-5 md:p-6"
               >
-                <h3 className="font-[family-name:var(--font-roboto)] text-lg font-bold text-green-dark">
+                <h3 className="font-[family-name:var(--font-inter)] text-lg font-bold text-green-dark">
                   {pillar.title}
                 </h3>
-                <p className="mt-3 font-[family-name:var(--font-roboto)] text-sm leading-[24px] text-gray-text md:text-base md:leading-[28px]">
+                <p className="mt-3 font-[family-name:var(--font-inter)] text-sm leading-[24px] text-gray-text md:text-base md:leading-[28px]">
                   {pillar.description}
                 </p>
               </div>

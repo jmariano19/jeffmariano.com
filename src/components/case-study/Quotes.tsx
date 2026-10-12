@@ -13,18 +13,18 @@ interface QuotesProps {
 
 export default function Quotes({ quotes }: QuotesProps) {
   return (
-    <section className="px-6 md:px-28 py-[40px]">
+    <section className="py-[40px]">
       <div className="flex flex-col gap-12">
         {quotes.map((quote, i) => (
           <FadeUp key={i} delay={i * 0.15}>
             {quote.author ? (
               <div className="flex gap-4 md:gap-6">
-                <GrowLine className="w-2 md:w-3 bg-[#e6e0cf] rounded-sm shrink-0 self-stretch" />
+                <GrowLine className="w-2 md:w-3 bg-[#d4d4d4] rounded-sm shrink-0 self-stretch" />
                 <div>
-                  <p className="font-[family-name:var(--font-playfair)] italic text-[20px] md:text-[28px] leading-[28px] md:leading-[38px] text-gray-text">
+                  <p className="font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[20px] md:text-[28px] leading-[28px] md:leading-[38px] text-gray-text">
                     &ldquo;{quote.text}&rdquo;
                   </p>
-                  <p className="mt-3 font-[family-name:var(--font-roboto)] text-sm text-brown">
+                  <p className="mt-3 font-[family-name:var(--font-inter)] text-sm text-brown">
                     — {quote.author}
                   </p>
                 </div>
@@ -32,7 +32,7 @@ export default function Quotes({ quotes }: QuotesProps) {
             ) : (
               <div className="text-center pt-[70px] pb-0">
                 {quote.lines && <div className="w-full h-px bg-gray-text opacity-20 mb-[40px]" />}
-                <p className="font-[family-name:var(--font-playfair)] italic text-[20px] md:text-[28px] leading-[28px] md:leading-[38px] text-gray-text">
+                <p className="font-[family-name:var(--font-inter)] tracking-[-0.03em] text-[20px] md:text-[28px] leading-[28px] md:leading-[38px] text-gray-text">
                   &ldquo;{quote.text}&rdquo;
                 </p>
                 {quote.lines && <div className="w-full h-px bg-gray-text opacity-20 mt-[40px]" />}
