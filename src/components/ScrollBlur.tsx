@@ -8,17 +8,22 @@ interface ScrollBlurProps {
   className?: string;
   /** Maximum blur in px once the element has scrolled out of view. */
   maxBlur?: number;
+  /** Viewport position the element's top must pass before the effect starts (e.g. "30%", "start"). */
+  start?: string;
 }
 
 /**
  * Blurs and fades its children as they scroll up and out of the viewport.
- * The effect starts when the top of the element passes 30% of the viewport height
+ * The effect starts when the top of the element passes `start` (30% of the viewport by default)
  * and finishes when its bottom does. Reduced-motion users get a plain fade.
  */
-export default function ScrollBlur({ children, className, maxBlur = 12 }: ScrollBlurProps) {
+export default function ScrollBlur({ children, className, maxBlur = 12, start = "30%" }: ScrollBlurProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 30%", "end start"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: [`start ${start}` as "start 30%", "end start"],
+  });
 
   const blurPx = useTransform(scrollYProgress, [0, 0.25, 1], [0, reduce ? 0 : maxBlur * 0.15, reduce ? 0 : maxBlur]);
   const filter = useTransform(blurPx, (v) => `blur(${v.toFixed(2)}px)`);
