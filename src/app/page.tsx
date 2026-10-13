@@ -134,10 +134,7 @@ export default function Home() {
             {projects.map((p, i) => {
               const card = (
                 <>
-                  <div className="mb-3 flex items-baseline justify-between gap-4 text-[17px] md:text-[20px] tracking-[-0.04em]">
-                    <h3 className="font-semibold">{p.label}</h3>
-                    <span className="text-[#9a9a9a]">{p.context}</span>
-                  </div>
+                  <h3 className="mb-3 text-[17px] md:text-[20px] font-semibold tracking-[-0.04em]">{p.label}</h3>
                   <div className="relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#e4e4e4]">
                     <Image
                       src={p.image}
