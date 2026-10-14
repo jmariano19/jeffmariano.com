@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import { SitePage } from "@/components/SiteChrome";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import CanvasLoop from "@/components/case-study/CanvasLoop";
-import Challenges from "@/components/case-study/Challenges";
-import { Chapter, StoryMap } from "@/components/case-study/Chapter";
+import { Chapter, ChallengeOverview } from "@/components/case-study/Chapter";
 import Outcomes from "@/components/case-study/Outcomes";
 import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
@@ -53,21 +52,18 @@ export default function AiConversationalCanvas() {
         }
       />
 
-      <Challenges
+      <ChallengeOverview
+        description="Every customer conversation sent reps across a different set of tools while the customer waited, and new AI features risked becoming one more tool to open. The goal: one place to work, for the rep on a store floor and the rep on a headset."
         stats={[
-          { number: "1", label: "canvas in place of a stack of separate rep apps" },
-          { number: "2", label: "channels served: tap in stores, type in contact centers" },
-          { number: "1", label: "approval instead of six manual steps for an upgrade" },
+          { number: "1", label: "canvas in place of a stack of rep apps" },
+          { number: "2", label: "channels: tap in stores, type in contact centers" },
+          { number: "1", label: "approval instead of six manual steps" },
         ]}
-        description="Every customer conversation sent reps across a different set of tools, and each switch cost time while the customer waited. New AI features risked becoming one more tool to open. The goal was to replace the stack with one place to work that fits both the rep on a store floor and the rep on a headset."
-      />
-
-      <StoryMap
         items={[
-          { id: "consolidate", n: "01", title: "One canvas", line: "A stack of separate apps becomes one place to ask." },
-          { id: "channels", n: "02", title: "Built for each channel", line: "Tap-first in stores, type-first in contact centers." },
-          { id: "generative-ui", n: "03", title: "Generative UI", line: "The answer is an interface, composed for the intent." },
-          { id: "agentic", n: "04", title: "Agentic workflows", line: "The agent does the follow-through. The rep approves." },
+          { id: "consolidate", n: "01", title: "One canvas", line: "Separate apps become one place to ask." },
+          { id: "channels", n: "02", title: "Built for each channel", line: "Tap in stores, type in contact centers." },
+          { id: "generative-ui", n: "03", title: "Generative UI", line: "The answer is an interface, not a paragraph." },
+          { id: "agentic", n: "04", title: "Agentic workflows", line: "The agent does the work. The rep approves." },
         ]}
       />
 
