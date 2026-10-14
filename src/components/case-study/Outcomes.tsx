@@ -7,14 +7,15 @@ interface OutcomeItem {
 
 interface OutcomesProps {
   items: OutcomeItem[];
+  title?: string;
 }
 
-export default function Outcomes({ items }: OutcomesProps) {
+export default function Outcomes({ items, title = "Outcomes" }: OutcomesProps) {
   return (
     <section className="py-[40px]">
       <FadeUp>
         <h2 className="font-[family-name:var(--font-inter)] tracking-[-0.03em] font-bold text-[30px] md:text-[38px] leading-[36px] md:leading-[45px] text-green-heading mb-8">
-          Outcomes
+          {title}
         </h2>
       </FadeUp>
 

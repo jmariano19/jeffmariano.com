@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 /**
  * How the generative UI decides what to show: three signals (the rep's
  * intent, the customer's moment, the channel) select and arrange components
- * from the library. Scenarios cycle on their own; visitors can pick one.
+ * from the library. A complete example is visible immediately; visitors pick requests.
  */
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -30,7 +30,7 @@ const SCENARIOS: Scenario[] = [
   {
     ask: "Why did my bill go up?",
     intent: "Explain a bill change",
-    moment: "Bill up $25 since January",
+    moment: "Bill up $20 since January",
     channel: "Customer service",
     mode: "Type-first · dense",
     blocks: ["trend", "breakdown", "history"],
@@ -74,64 +74,24 @@ const STEPS = [
 
 const RULES = [
   { k: "Intent", v: "decides what to show", e: "A bill question pulls bill components. An upgrade pulls deals and devices." },
-  { k: "Moment", v: "decides what leads", e: "A $25 jump leads with the trend. A churn risk leads with savings." },
+  { k: "Moment", v: "decides what leads", e: "A $20 jump leads with the trend. A churn risk leads with savings." },
   { k: "Channel", v: "decides how it's built", e: "Dense and keyboard-first on a desktop. Roomy and tap-first on a store tablet." },
 ];
-
-const CYCLE = 7000;
 
 export function IntentComposer() {
   const reduce = useReducedMotion();
   const [i, setI] = useState(0);
-  const [auto, setAuto] = useState(true);
-  const [stage, setStage] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.3 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  // Each scenario plays out in three beats: signals, components, composed interface.
-  useEffect(() => {
-    if (reduce) return;
-    if (!visible) return;
-    const t1 = setTimeout(() => setStage(1), 0);
-    const t2 = setTimeout(() => setStage(2), 900);
-    const t3 = setTimeout(() => setStage(3), 1900);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, [i, visible, reduce]);
-
-  useEffect(() => {
-    if (!auto || !visible || reduce) return;
-    const t = setTimeout(() => {
-      setStage(0);
-      setI((n) => (n + 1) % SCENARIOS.length);
-    }, CYCLE);
-    return () => clearTimeout(t);
-  }, [i, auto, visible, reduce]);
-
   const s = SCENARIOS[i];
   const retail = s.channel === "Retail store";
-  const shown = reduce ? 3 : stage;
+  const shown = 3;
 
   const pick = (n: number) => {
     if (n === i) return;
-    setStage(0);
     setI(n);
-    setAuto(false);
   };
 
   return (
-    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#cfc9ec] p-4 sm:p-6 md:p-[4.5%]">
+    <div className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#cfc9ec] p-4 sm:p-6 md:p-[4.5%]">
       <Image src="/images/case-studies/canvas/consolidation-bg.webp" alt="" fill unoptimized className="object-cover" />
 
       <div className="relative">
@@ -162,6 +122,7 @@ export function IntentComposer() {
           })}
         </ol>
 
+        <p className="mt-4 text-[13px] text-[#555]">Illustrative customer data · select a request to compare the composition rules.</p>
         {/* Pick a request */}
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <span className="mr-1 text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">Try a request</span>
@@ -176,15 +137,6 @@ export function IntentComposer() {
               }`}
             >
               “{sc.ask}”
-              {n === i && auto && visible && !reduce && (
-                <motion.span
-                  key={`bar-${i}`}
-                  className="absolute bottom-0 left-0 h-[2px] bg-white/60"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: CYCLE / 1000, ease: "linear" }}
-                />
-              )}
             </button>
           ))}
         </div>
@@ -204,7 +156,7 @@ export function IntentComposer() {
                     <motion.dd
                       key={v}
                       className="font-semibold leading-snug text-[#111]"
-                      initial={{ opacity: 0, y: 4 }}
+                      initial={reduce ? false : { opacity: 1, y: 4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.4, delay: n * 0.12, ease: EASE }}
@@ -271,7 +223,7 @@ export function IntentComposer() {
                   <motion.div
                     key="building"
                     className="absolute inset-0 flex flex-col gap-3"
-                    initial={{ opacity: 0 }}
+                    initial={false}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
@@ -295,7 +247,7 @@ export function IntentComposer() {
                       <motion.div
                         key={`${i}-${b}`}
                         className={`relative ${!retail && n === 0 && s.blocks.length === 3 ? "md:col-span-2" : ""}`}
-                        initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+                        initial={reduce ? false : { opacity: 1, y: 6 }}
                         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                         transition={{ duration: 0.6, delay: n * 0.15, ease: EASE }}
                       >
@@ -411,7 +363,7 @@ function TrendChart({ w }: { w: number }) {
       ))}
       <rect x={mid - 30} y="6" width="60" height="22" rx="6" fill="#eef2fb" />
       <text x={mid} y="21" textAnchor="middle" fontSize="13" fontWeight="700" fill={BLUE}>
-        +$25
+        +$20
       </text>
     </svg>
   );
@@ -436,9 +388,9 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
         <Card title="Bill by line">
           <div className="flex flex-col text-[13px]">
             {[
-              ["•••0234", "$137.22", "Plan, device, perks"],
-              ["•••0488", "$90.43", "Plan, device"],
-              ["•••0655", "$65.00", "Plan"],
+              ["•••0234", "$90.22", "Plan, device, perks"],
+              ["•••0488", "$65.00", "Plan, device"],
+              ["•••0655", "$45.00", "Plan"],
             ].map(([l, v, d]) => (
               <div key={l} className="flex items-baseline justify-between border-b border-[#eee] py-2 last:border-0">
                 <span className="text-[#444]">
@@ -535,7 +487,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
                     background: past ? `repeating-linear-gradient(45deg, ${BLUE} 0 2px, #fff 2px 6px)` : BLUE,
                     border: past ? `1.5px solid ${BLUE}` : undefined,
                   }}
-                  initial={{ height: 0 }}
+                  initial={{ height: h as number }}
                   animate={{ height: h as number }}
                   transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
                 />
