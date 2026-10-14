@@ -108,45 +108,53 @@ export function ContactSection() {
   return (
     <section id="contact" className="scroll-mt-8 pb-10 md:pb-14">
       <Reveal y={60}>
-        <div className="relative overflow-hidden rounded-[24px] bg-[#121212] text-white px-6 py-10 md:p-14 lg:p-16">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(255,255,255,0.10),transparent_60%)]"
+        <div className="relative overflow-hidden rounded-[28px] lg:rounded-[46px] bg-[#161616] text-white p-4 md:p-6 lg:p-[46px] lg:pl-[110px]">
+          <Image
+            src="/images/contact-silhouette.webp"
+            alt=""
+            width={1356}
+            height={1159}
+            sizes="(max-width: 1024px) 90vw, 660px"
+            className="pointer-events-none absolute bottom-0 right-0 w-[90%] h-auto opacity-30 lg:right-auto lg:left-[10.6%] lg:w-[50.3%] lg:opacity-45"
           />
-          <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16 lg:items-end">
-            <div>
-              <p className="flex items-center gap-2 text-[15px] text-white/60">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ade80] opacity-60 motion-reduce:animate-none" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#4ade80]" />
+          <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_389px] lg:gap-16 lg:min-h-[522px]">
+            <div className="flex flex-col justify-end px-2 pt-8 md:px-6 md:pt-10 lg:px-0 lg:pt-0 lg:pb-[30px]">
+              <p className="flex items-center gap-2.5 text-[17px] md:text-[21px] text-white/50">
+                <span className="text-[#4ade80]">
+                  <Asterisk size={12} />
                 </span>
                 Open to new work
               </p>
-              <h2 className="mt-6 text-[64px] sm:text-[96px] xl:text-[136px] leading-[0.92] font-semibold tracking-[-0.065em]">
-                Let&apos;s talk.
+              <h2 className="mt-3 text-[72px] sm:text-[104px] xl:text-[142px] leading-[0.95] font-bold tracking-[-0.055em]">
+                Let’s talk.
               </h2>
-              <p className="mt-6 max-w-[30rem] text-[18px] md:text-[22px] leading-[1.35] tracking-[-0.03em] text-white/70">
-                Rolling out AI your teams and customers need to actually adopt? I&apos;d be glad to help.
+              <p className="mt-5 max-w-[26rem] text-[18px] md:text-[20px] leading-[1.3] tracking-[-0.02em] text-white/50">
+                Rolling out AI your teams and customers need to actually adopt? I’d be glad to help.
               </p>
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[16px] tracking-[-0.02em]">
-                <a href="mailto:jmariano19@gmail.com" className="underline-offset-4 hover:underline">
+              <div className="mt-8 max-w-[593px] border-t border-white/15 pt-5 flex flex-wrap gap-x-8 gap-y-2 text-[14px] tracking-[-0.01em] text-white/50">
+                <a href="mailto:jmariano19@gmail.com" className="hover:text-white">
                   jmariano19@gmail.com
                 </a>
                 <a
                   href="https://www.linkedin.com/in/jeffrey-mariano-0b28722a/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/70 hover:text-white"
+                  className="underline underline-offset-2 hover:text-white"
                 >
                   LinkedIn ↗
                 </a>
               </div>
             </div>
-            <div className="rounded-[18px] bg-white p-4 md:p-5 text-[#111]">
-              <p className="mb-4 px-1 text-[20px] font-semibold tracking-[-0.04em]">
-                Have a project in mind?
+            <div className="flex flex-col justify-center rounded-[22px] lg:rounded-[27px] bg-[#262626] p-5 md:p-7 lg:px-[28px] lg:py-[40px]">
+              <p className="mb-7 flex items-center gap-2.5 px-1 text-[22px] md:text-[27px] font-bold tracking-[-0.03em]">
+                <span className="text-[#4ade80]">
+                  <Asterisk size={12} />
+                </span>
+                <span>
+                  Have a project <span className="text-[#c1c1c1]">in mind?</span>
+                </span>
               </p>
-              <ContactForm roomy />
+              <ContactForm roomy tone="dark" />
             </div>
           </div>
         </div>

@@ -19,7 +19,17 @@ function trackContact(label: string) {
  * Name / email / message form that emails Jeff through /api/contact.
  * Send stays disabled until there's a name and a valid email.
  */
-export function ContactForm({ autoFocus = false, roomy = false }: { autoFocus?: boolean; roomy?: boolean }) {
+export function ContactForm({
+  autoFocus = false,
+  roomy = false,
+  tone = "light",
+}: {
+  autoFocus?: boolean;
+  roomy?: boolean;
+  /** "dark" is the footer panel style: gray fields and a white pill button. */
+  tone?: "light" | "dark";
+}) {
+  const dark = tone === "dark";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -63,7 +73,7 @@ export function ContactForm({ autoFocus = false, roomy = false }: { autoFocus?: 
     return (
       <div className={`px-2 text-center ${roomy ? "py-16" : "py-8"}`} role="status">
         <p className="text-[20px] font-semibold tracking-[-0.03em]">Thanks, message sent.</p>
-        <p className="mt-2 text-[15px] text-black/60">I&apos;ll get back to you soon.</p>
+        <p className={`mt-2 text-[15px] ${dark ? "text-white/60" : "text-black/60"}`}>I&apos;ll get back to you soon.</p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
@@ -75,16 +85,18 @@ export function ContactForm({ autoFocus = false, roomy = false }: { autoFocus?: 
     );
   }
 
-  const field =
-    "w-full rounded-[10px] bg-[#f1f1f1] px-4 text-[15px] text-black placeholder:text-black/50 outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-black/20";
+  const field = dark
+    ? "w-full rounded-[8px] bg-[#909090] px-5 text-[17px] text-black placeholder:text-black/60 caret-black outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-white/60"
+    : "w-full rounded-[10px] bg-[#f1f1f1] px-4 text-[15px] text-black placeholder:text-black/50 outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-black/20";
+  const lineH = dark ? "h-[57px]" : "h-[52px]";
 
   return (
-    <form onSubmit={submit} noValidate className={`flex flex-col ${roomy ? "gap-3" : "gap-[14px]"}`}>
+    <form onSubmit={submit} noValidate className={`flex flex-col ${dark ? "gap-4" : roomy ? "gap-3" : "gap-[14px]"}`}>
       <label className="sr-only" htmlFor={`${id}-name`}>Name</label>
       <input
         ref={nameRef}
         id={`${id}-name`}
-        className={`${field} h-[52px]`}
+        className={`${field} ${lineH}`}
         placeholder="Name"
         autoComplete="name"
         maxLength={120}
@@ -94,7 +106,7 @@ export function ContactForm({ autoFocus = false, roomy = false }: { autoFocus?: 
       <label className="sr-only" htmlFor={`${id}-email`}>Email</label>
       <input
         id={`${id}-email`}
-        className={`${field} h-[52px]`}
+        className={`${field} ${lineH}`}
         placeholder="Email"
         type="email"
         autoComplete="email"
@@ -106,7 +118,7 @@ export function ContactForm({ autoFocus = false, roomy = false }: { autoFocus?: 
       <label className="sr-only" htmlFor={`${id}-message`}>Message</label>
       <textarea
         id={`${id}-message`}
-        className={`${field} ${roomy ? "h-[150px]" : "h-[122px]"} resize-none py-3.5`}
+        className={`${field} ${dark ? "h-[135px] py-3" : roomy ? "h-[150px] py-3.5" : "h-[122px] py-3.5"} resize-none`}
         placeholder="Message"
         maxLength={5000}
         value={message}
@@ -123,24 +135,36 @@ export function ContactForm({ autoFocus = false, roomy = false }: { autoFocus?: 
         name="company"
       />
 
-      {error && <p className="px-1 text-[14px] text-[#b42318]" role="alert">{error}</p>}
+      {error && <p className={`px-1 text-[14px] ${dark ? "text-[#ff9b8f]" : "text-[#b42318]"}`} role="alert">{error}</p>}
 
-      <button
-        type="submit"
-        disabled={!canSend}
-        className={`relative mt-1 h-[52px] w-full rounded-[10px] bg-black text-[18px] font-semibold tracking-[0.02em] text-white transition-opacity ${
-          canSend ? "opacity-100 hover:opacity-85" : "opacity-40 cursor-not-allowed"
-        }`}
-      >
-        {status === "sending" ? "SENDING…" : "SEND"}
-        <Image
-          src="/images/send.svg"
-          alt=""
-          width={36.4336}
-          height={35.5117}
-          className="absolute right-[8px] top-1/2 -translate-y-1/2"
-        />
-      </button>
+      {dark ? (
+        <button
+          type="submit"
+          disabled={!canSend}
+          className={`mt-1 h-[57px] w-full rounded-full bg-white text-[20px] font-bold tracking-[0.01em] text-black transition-opacity ${
+            canSend ? "opacity-100 hover:opacity-85" : "opacity-40 cursor-not-allowed"
+          }`}
+        >
+          {status === "sending" ? "SENDING…" : "SEND"}
+        </button>
+      ) : (
+        <button
+          type="submit"
+          disabled={!canSend}
+          className={`relative mt-1 h-[52px] w-full rounded-[10px] bg-black text-[18px] font-semibold tracking-[0.02em] text-white transition-opacity ${
+            canSend ? "opacity-100 hover:opacity-85" : "opacity-40 cursor-not-allowed"
+          }`}
+        >
+          {status === "sending" ? "SENDING…" : "SEND"}
+          <Image
+            src="/images/send.svg"
+            alt=""
+            width={36.4336}
+            height={35.5117}
+            className="absolute right-[8px] top-1/2 -translate-y-1/2"
+          />
+        </button>
+      )}
     </form>
   );
 }
