@@ -185,6 +185,7 @@ export default function AiConversationalCanvas() {
       </Chapter>
 
       <Outcomes
+        title="What the design enables"
         items={[
           { title: "One Entry Point", description: "A single canvas in place of separate apps for each task" },
           { title: "Channel-Native", description: "Tap-first in stores, type-first in contact centers, one shared model" },

@@ -203,7 +203,7 @@ export function IntentComposer() {
                       key={b}
                       initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      transition={{ duration: 0.6, delay: 0.35 + n * 0.15, ease: EASE }}
+                      transition={{ duration: 0.45, delay: 0.05 + n * 0.06, ease: EASE }}
                     >
                       <BlockView block={b} roomy order={n + 1} />
                     </motion.div>
@@ -219,7 +219,6 @@ export function IntentComposer() {
             <Glass>
               <div className="flex-1">
                 <AnimatePresence mode="wait" initial={false}>
-                  {done ? (
                     <motion.div key={`c-${i}`} className="grid gap-3 sm:grid-cols-2" exit={{ opacity: 0, filter: "blur(4px)" }} transition={{ duration: 0.3 }}>
                       <motion.div
                         className="sm:col-span-2"
@@ -235,7 +234,7 @@ export function IntentComposer() {
                           className={n === 0 && s.center.length !== 2 ? "sm:col-span-2" : ""}
                           initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
                           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                          transition={{ duration: 0.55, delay: 0.15 + n * 0.12, ease: EASE }}
+                          transition={{ duration: 0.45, delay: 0.05 + n * 0.06, ease: EASE }}
                         >
                           <BlockView block={b} roomy={false} order={n + 1} />
                         </motion.div>
@@ -244,25 +243,11 @@ export function IntentComposer() {
                         className="sm:col-span-2"
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.25 + s.center.length * 0.12, ease: EASE }}
+                        transition={{ duration: 0.45, delay: 0.1 + s.center.length * 0.06, ease: EASE }}
                       >
-                        <AgentNextStep key={`n-${i}`} next={s.next} start={reduce ? -1 : 900 + s.center.length * 120} />
+                        <AgentNextStep key={`n-${i}`} next={s.next} start={reduce ? -1 : 600} />
                       </motion.div>
                     </motion.div>
-                  ) : (
-                    <motion.div
-                      key={`p-${i}`}
-                      className="grid gap-3 sm:grid-cols-2"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      {s.center.map((b, n) => (
-                        <div key={b} className={`h-[150px] rounded-[14px] bg-white/80 ${n === 0 && s.center.length !== 2 ? "sm:col-span-2" : ""}`} />
-                      ))}
-                    </motion.div>
-                  )}
                 </AnimatePresence>
               </div>
 
@@ -353,7 +338,7 @@ function AgentNextStep({ next, start }: { next: NextStep; start: number }) {
                   <span className={`block h-[14px] w-[14px] rounded-full border-[1.5px] ${status === "approve" ? "border-[#e5262e]" : "border-[#c4c9d4]"}`} />
                 )}
               </span>
-              <span className={status === "queued" ? "text-[#9ca3af]" : "text-[#111]"}>{st}</span>
+              <span className="text-[#111]">{st}</span>
               {status === "approve" && (
                 <span className="ml-auto shrink-0 rounded-full bg-[#fde8e8] px-2 py-0.5 text-[11px] font-semibold text-[#b42318]">Needs rep approval</span>
               )}
@@ -479,9 +464,9 @@ function BlockView({ block, roomy, order }: { block: Block; roomy: boolean; orde
         <Card roomy={roomy} order={order} title="Bill by line">
           <div className={`flex flex-col ${t}`}>
             {[
-              ["•••0234", "Plan, device, perks", "$137.22"],
-              ["•••0488", "Plan, device", "$90.43"],
-              ["•••0655", "Plan", "$65.00"],
+              ["•••0234", "Plan, device, perks", "$110.22"],
+              ["•••0488", "Plan, device", "$55.00"],
+              ["•••0655", "Plan", "$35.00"],
             ].map(([l, d, v]) => (
               <div key={l} className={`flex items-baseline justify-between gap-3 border-b border-[#eee] last:border-0 ${row}`}>
                 <span className="text-[#111]">

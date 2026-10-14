@@ -97,7 +97,7 @@ export function AgentWorkflow() {
                 </li>
               ))}
             </ol>
-            <Tally items={["6 manual steps", "4 systems", "Notes after the call"]} muted />
+            <Tally items={["6 manual steps", "5 systems", "Notes after the call"]} muted />
           </Panel>
 
           {/* Now */}
@@ -105,7 +105,7 @@ export function AgentWorkflow() {
             <div className="flex justify-end">
               <motion.span
                 className="max-w-[90%] rounded-[16px] rounded-br-[6px] bg-[#111] px-4 py-2.5 text-[14.5px] text-white"
-                animate={{ opacity: now >= ASK_AT ? 1 : 0, y: now >= ASK_AT ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: EASE }}
               >
                 Upgrade Emily&apos;s line 0234 with her trade-in
@@ -116,18 +116,17 @@ export function AgentWorkflow() {
               {AGENT.map((st, n) => {
                 const done = now >= AT[n];
                 const active = !done && now >= AT[n] - 650 && now >= ASK_AT;
-                const show = done || active;
                 return (
                   <motion.li
                     key={st.text}
                     className={`flex items-center gap-3 rounded-[12px] px-4 py-3 ${
                       st.kind === "approve" ? "border border-[#f3b4b4] bg-[#fff6f6]" : "bg-white"
                     }`}
-                    animate={{ opacity: show ? 1 : 0.35 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: 0.35 }}
                   >
                     <StatusIcon state={done ? (st.kind === "approve" ? "approved" : "done") : active ? "working" : "queued"} />
-                    <span className={`flex-1 text-[14.5px] ${show ? "text-[#111]" : "text-[#9ca3af]"}`}>{st.text}</span>
+                    <span className="flex-1 text-[14.5px] text-[#111]">{st.text}</span>
                     <span
                       className={`shrink-0 rounded-full px-2.5 py-1 text-[11.5px] ${
                         st.kind === "approve" ? "bg-[#fde8e8] font-semibold text-[#b42318]" : "bg-[#eef2ff] text-[#3b4a8a]"
