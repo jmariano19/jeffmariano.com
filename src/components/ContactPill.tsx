@@ -86,7 +86,7 @@ export function ContactForm({
   }
 
   const field = dark
-    ? "w-full rounded-[8px] bg-[#909090] px-5 text-[17px] text-black placeholder:text-black/60 caret-black outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-white/60"
+    ? "w-full rounded-[8px] bg-[#909090] px-5 text-[17px] text-black placeholder:text-black/60 caret-black outline-none transition-colors duration-200 hover:bg-[#9c9c9c] focus:bg-white focus:placeholder:text-black/40"
     : "w-full rounded-[10px] bg-[#f1f1f1] px-4 text-[15px] text-black placeholder:text-black/50 outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-black/20";
   const lineH = dark ? "h-[57px]" : "h-[52px]";
 

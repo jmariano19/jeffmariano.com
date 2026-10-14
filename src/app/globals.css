@@ -26,3 +26,18 @@ body {
   color: #111;
   font-family: var(--font-inter), sans-serif;
 }
+
+/* "Online" status asterisk in the contact section */
+@keyframes online-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes online-halo {
+  0% { transform: scale(0.6); opacity: 0.45; }
+  70%, 100% { transform: scale(1.8); opacity: 0; }
+}
+.online-spin { animation: online-spin 8s linear infinite; }
+.online-halo { animation: online-halo 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .online-spin, .online-halo { animation: none; }
+  .online-halo { opacity: 0; }
+}

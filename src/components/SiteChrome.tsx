@@ -19,6 +19,18 @@ export function Asterisk({ size = 14 }: { size?: number }) {
   );
 }
 
+/** Green asterisk that slowly turns and pulses, signalling "online / available". */
+export function OnlineAsterisk() {
+  return (
+    <span className="relative inline-flex h-3 w-3 shrink-0 items-center justify-center text-[#4ade80]" aria-hidden="true">
+      <span className="online-halo absolute inset-[-2px] rounded-full bg-[#4ade80]" />
+      <span className="online-spin relative inline-flex drop-shadow-[0_0_4px_rgba(74,222,128,0.7)]">
+        <Asterisk size={12} />
+      </span>
+    </span>
+  );
+}
+
 export function SectionLabel({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
     <div id={id} className="scroll-mt-8 border-t border-[#d4d4d4] pt-4 mb-6 flex items-center gap-2 text-[15px] uppercase tracking-[0.02em] text-[#555]">
@@ -120,9 +132,7 @@ export function ContactSection() {
           <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_389px] lg:gap-16 lg:min-h-[522px]">
             <div className="flex flex-col justify-end px-2 pt-8 md:px-6 md:pt-10 lg:px-0 lg:pt-0 lg:pb-[30px]">
               <p className="flex items-center gap-2.5 text-[17px] md:text-[21px] text-white/50">
-                <span className="text-[#4ade80]">
-                  <Asterisk size={12} />
-                </span>
+                <OnlineAsterisk />
                 Open to new work
               </p>
               <h2 className="mt-3 text-[72px] sm:text-[104px] xl:text-[142px] leading-[0.95] font-bold tracking-[-0.055em]">
@@ -147,9 +157,7 @@ export function ContactSection() {
             </div>
             <div className="flex flex-col justify-center rounded-[22px] lg:rounded-[27px] bg-[#262626] p-5 md:p-7 lg:px-[28px] lg:py-[40px]">
               <p className="mb-7 flex items-center gap-2.5 px-1 text-[22px] md:text-[27px] font-bold tracking-[-0.03em]">
-                <span className="text-[#4ade80]">
-                  <Asterisk size={12} />
-                </span>
+                <OnlineAsterisk />
                 <span>
                   Have a project <span className="text-[#c1c1c1]">in mind?</span>
                 </span>
