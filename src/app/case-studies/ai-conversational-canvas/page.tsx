@@ -11,11 +11,11 @@ import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import {
   BarrierDecisions,
   ChannelAdapt,
-  Consolidation,
   ScreenShot,
   TapVisual,
   TypeVisual,
 } from "@/components/case-study/CanvasStory";
+import { Consolidation } from "@/components/case-study/Consolidation";
 
 export const metadata: Metadata = {
   title: "AI Conversational Canvas — Jeff Mariano",

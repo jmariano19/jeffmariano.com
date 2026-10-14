@@ -14,53 +14,6 @@ function Sparkle({ size = 16, color = "#e5262e" }: { size?: number; color?: stri
   );
 }
 
-/** Many separate rep tools on the left, one canvas on the right. */
-export function Consolidation({ tools }: { tools: string[] }) {
-  return (
-    <div className="grid items-center gap-6 rounded-[20px] bg-white p-6 md:grid-cols-[1fr_auto_1fr] md:gap-10 md:p-10">
-      <div>
-        <p className="mb-4 text-[13px] font-bold uppercase tracking-[2px] text-[#888]">Before · separate apps</p>
-        <div className="grid grid-cols-2 gap-2.5">
-          {tools.map((t, n) => (
-            <div
-              key={t}
-              className="rounded-[10px] border border-[#e2e2e2] bg-[#f6f6f6] px-3.5 py-3 text-[14px] text-[#444]"
-              style={{ transform: `rotate(${[-1.2, 0.8, 1.1, -0.6, 0.5, -1, 0.9, -0.4][n % 8]}deg)` }}
-            >
-              {t}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex justify-center text-[28px] text-[#999] md:flex-col">
-        <span className="md:hidden">↓</span>
-        <span className="hidden md:inline">→</span>
-      </div>
-      <div>
-        <p className="mb-4 text-[13px] font-bold uppercase tracking-[2px] text-[#888]">After · one canvas</p>
-        <div className="rounded-[16px] border border-[#e6e3de] bg-[#f6f5f3] p-5">
-          <p className="flex items-center gap-2 text-[17px] font-bold tracking-[-0.02em]">
-            <Sparkle /> How can I help you today?
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {["Credit check", "Plan upgrade", "Build quote"].map((c) => (
-              <span key={c} className="rounded-[8px] border-[1.5px] border-[#111] bg-white px-3 py-1.5 text-[13.5px]">
-                {c}
-              </span>
-            ))}
-          </div>
-          <div className="mt-4 rounded-full p-[2px]" style={{ background: GRADIENT }}>
-            <div className="rounded-full bg-white px-4 py-2.5 text-[14px] text-[#777]">Search or ask</div>
-          </div>
-          <p className="mt-4 text-[14px] leading-[1.6] text-[#555]">
-            The rep asks once. The canvas pulls in the customer&apos;s context and assembles the right tool for the task.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 type Channel = {
   name: string;
   mode: string;
