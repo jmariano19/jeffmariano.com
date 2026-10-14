@@ -10,12 +10,12 @@ import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import {
   BarrierDecisions,
-  ScreenShot,
   TapVisual,
   TypeVisual,
 } from "@/components/case-study/CanvasStory";
 import { Consolidation } from "@/components/case-study/Consolidation";
 import { ChannelAdapt } from "@/components/case-study/ChannelAdapt";
+import { IntentComposer } from "@/components/case-study/IntentComposer";
 
 export const metadata: Metadata = {
   title: "AI Conversational Canvas — Jeff Mariano",
@@ -115,22 +115,26 @@ export default function AiConversationalCanvas() {
 
       <ContentSection
         title="The AI Builds the Tool, Not a Reply"
-        tag="THE INTERACTION MODEL"
-        description="When a rep asks to build a quote, the canvas doesn't answer with a paragraph. It assembles a working quote flow, from offers to perks, with the steps it can complete from the account already checked. The rep reviews and decides at every step. AI recommendations are always marked, and nothing is selected on the rep's behalf."
-        explanation="The flow ends in a cart grouped by line and a cost breakdown that compares the current and new monthly bill. A 'View together' mode lets the rep turn the tablet and walk the customer through it, so the trust the tool builds extends to the customer too."
+        tag="GENERATIVE UI · THE COMPOSITION LOGIC"
+        description="When a rep asks for something, the canvas doesn't answer with a paragraph. It reads three signals: what the rep is trying to do, where the customer is in that moment, and which channel the conversation is happening in. Then it composes the interface from a shared library of components built for exactly this. I designed that composition logic: which components answer which intent, how the customer's moment changes what leads, and how each channel changes density and interaction."
+        explanation="So the same canvas produces different screens. A bill question in customer service opens the change, the line-by-line answer and what caused it, dense and ready for the keyboard. An upgrade in a store opens the offers the customer qualifies for and their current device, in large cards the rep can turn toward the customer. Recommendations are always marked as AI, and nothing is selected on the rep's behalf."
       >
-        <div className="grid gap-4 md:grid-cols-2 md:gap-6">
-          <ScreenShot
-            src="/images/case-studies/canvas/quote-offers.webp"
-            alt="Quote configuration with AI-recommended offers, the best one highlighted"
-            caption="Recommended offers, marked as AI suggestions. The rep makes the choice."
-          />
-          <ScreenShot
-            src="/images/case-studies/canvas/cost-breakdown.webp"
-            alt="Cost breakdown comparing current and estimated new monthly costs"
-            caption="A cost breakdown designed to be reviewed with the customer."
-          />
-        </div>
+        <IntentComposer />
+        <figure className="mt-6 md:mt-8">
+          <div className="overflow-hidden rounded-[22px] md:rounded-[36px]">
+            <Image
+              src="/images/case-studies/canvas/component-library.webp"
+              alt="A selection of the canvas components: bill trend, history, deals, recommendations, bill breakdown, bar chart and device card"
+              width={2400}
+              height={1887}
+              sizes="(max-width: 1440px) 100vw, 1304px"
+              className="h-auto w-full"
+            />
+          </div>
+          <figcaption className="mt-3 text-[14px] text-[#777]">
+            Part of the component library the canvas composes from: trends, history, deals, recommendations, bill breakdowns and device cards.
+          </figcaption>
+        </figure>
       </ContentSection>
 
       <ContentSection
