@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
@@ -66,310 +66,250 @@ const LIBRARY: { id: Block; label: string }[] = [
   { id: "forecast", label: "Bill forecast" },
 ];
 
-const STEPS = [
-  { n: "1", title: "Read the moment", body: "Intent, customer context and channel" },
-  { n: "2", title: "Pick from the library", body: "Only the components this moment needs" },
-  { n: "3", title: "Compose for the channel", body: "Order, density and interaction" },
-];
+const RULES: Record<"Intent" | "Moment" | "Channel", { v: string; e: string }> = {
+  Intent: { v: "decides what to show", e: "A bill question pulls bill components. An upgrade pulls deals and devices." },
+  Moment: { v: "decides what leads", e: "A $25 jump leads with the trend. A churn risk leads with savings." },
+  Channel: { v: "decides how it's built", e: "Dense and keyboard-first on a desktop. Roomy and tap-first on a store tablet." },
+};
 
-const RULES = [
-  { k: "Intent", v: "decides what to show", e: "A bill question pulls bill components. An upgrade pulls deals and devices." },
-  { k: "Moment", v: "decides what leads", e: "A $25 jump leads with the trend. A churn risk leads with savings." },
-  { k: "Channel", v: "decides how it's built", e: "Dense and keyboard-first on a desktop. Roomy and tap-first on a store tablet." },
-];
-
-const CYCLE = 7000;
+const CYCLE = 8000;
 
 export function IntentComposer() {
   const reduce = useReducedMotion();
   const [i, setI] = useState(0);
   const [auto, setAuto] = useState(true);
-  const [stage, setStage] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.3 });
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.2 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  // Each scenario plays out in three beats: signals, components, composed interface.
-  useEffect(() => {
-    if (reduce) return;
-    if (!visible) return;
-    const t1 = setTimeout(() => setStage(1), 0);
-    const t2 = setTimeout(() => setStage(2), 900);
-    const t3 = setTimeout(() => setStage(3), 1900);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, [i, visible, reduce]);
-
   useEffect(() => {
     if (!auto || !visible || reduce) return;
-    const t = setTimeout(() => {
-      setStage(0);
-      setI((n) => (n + 1) % SCENARIOS.length);
-    }, CYCLE);
+    const t = setTimeout(() => setI((n) => (n + 1) % SCENARIOS.length), CYCLE);
     return () => clearTimeout(t);
   }, [i, auto, visible, reduce]);
 
   const s = SCENARIOS[i];
   const retail = s.channel === "Retail store";
-  const shown = reduce ? 3 : stage;
-
-  const pick = (n: number) => {
-    if (n === i) return;
-    setStage(0);
-    setI(n);
-    setAuto(false);
-  };
+  const used = s.blocks;
+  const unused = LIBRARY.filter((c) => !used.includes(c.id));
+  const label = (id: Block) => LIBRARY.find((c) => c.id === id)!.label;
+  const signals: [keyof typeof RULES, string][] = [
+    ["Intent", s.intent],
+    ["Moment", s.moment],
+    ["Channel", `${s.channel} · ${s.mode}`],
+  ];
+  const swap = { initial: { opacity: 0, y: 6 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -6 } };
 
   return (
-    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#cfc9ec] p-4 sm:p-6 md:p-[4.5%]">
+    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#e7d4f4] p-4 sm:p-6 md:p-[56px]">
       <Image src="/images/case-studies/canvas/consolidation-bg.webp" alt="" fill unoptimized className="object-cover" />
 
-      <div className="relative">
-        {/* How it works, at a glance */}
-        <ol className="grid gap-2 sm:grid-cols-3">
-          {STEPS.map((st, n) => {
-            const on = shown >= n + 1;
-            return (
-              <li
-                key={st.n}
-                className={`flex items-center gap-3 rounded-[16px] px-4 py-3 transition-colors duration-500 ${
-                  on ? "bg-white shadow-[0_10px_30px_rgba(40,40,110,0.10)]" : "bg-white/45"
+      <div className="relative flex flex-col gap-6">
+        {/* Title and requests */}
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <p className="text-[26px] tracking-[-0.03em] text-[#111] md:text-[36px]">
+              From request to <span className="font-bold">rep experience</span>
+            </p>
+            <p className="text-[13px] font-semibold tracking-[0.04em] text-[#1d2550]/55 md:text-[14px]">READ → PICK → COMPOSE</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2.5 md:gap-3">
+            <span className="mr-1 text-[12px] font-bold uppercase text-[#374151]">Try a request</span>
+            {SCENARIOS.map((sc, n) => (
+              <button
+                key={sc.ask}
+                type="button"
+                onClick={() => {
+                  setI(n);
+                  setAuto(false);
+                }}
+                aria-pressed={n === i}
+                className={`relative overflow-hidden rounded-full border px-4 py-2.5 text-[14px] transition-colors md:px-5 md:py-[13px] md:text-[16px] ${
+                  n === i ? "border-[#111] bg-[#111] text-white" : "border-[#d1d5db] bg-white text-[#374151] hover:border-[#9ca3af]"
                 }`}
               >
-                <span
-                  className={`flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold transition-colors duration-500 ${
-                    on ? "bg-[#111] text-white" : "bg-white text-[#777]"
-                  }`}
-                >
-                  {st.n}
-                </span>
-                <span>
-                  <span className="block text-[14.5px] font-bold leading-tight">{st.title}</span>
-                  <span className="block text-[12.5px] leading-snug text-[#666]">{st.body}</span>
-                </span>
-              </li>
-            );
-          })}
-        </ol>
-
-        {/* Pick a request */}
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">Try a request</span>
-          {SCENARIOS.map((sc, n) => (
-            <button
-              key={sc.ask}
-              type="button"
-              onClick={() => pick(n)}
-              aria-pressed={n === i}
-              className={`relative overflow-hidden rounded-full px-4 py-2 text-[14px] transition-colors ${
-                n === i ? "bg-[#111] text-white" : "bg-white/85 text-[#333] hover:bg-white"
-              }`}
-            >
-              “{sc.ask}”
-              {n === i && auto && visible && !reduce && (
-                <motion.span
-                  key={`bar-${i}`}
-                  className="absolute bottom-0 left-0 h-[2px] bg-white/60"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: CYCLE / 1000, ease: "linear" }}
-                />
-              )}
-            </button>
-          ))}
+                “{sc.ask}”
+                {n === i && auto && visible && !reduce && (
+                  <motion.span
+                    key={`bar-${i}`}
+                    className="absolute bottom-0 left-0 h-[2px] bg-white/60"
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: CYCLE / 1000, ease: "linear" }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-4 grid gap-3 lg:grid-cols-[230px_200px_minmax(0,1fr)] lg:gap-4">
-          {/* 1. Signals */}
-          <Panel step="1" title="Signals" on={shown >= 1}>
-            <dl className="flex flex-col gap-3 text-[14px]">
-              {[
-                ["Intent", s.intent],
-                ["Moment", s.moment],
-                ["Channel", `${s.channel} · ${s.mode}`],
-              ].map(([k, v], n) => (
-                <div key={k}>
-                  <dt className="text-[12px] text-[#888]">{k}</dt>
+        {/* 01 Read the moment */}
+        <Step n="01" title="Read the moment" sub="Intent, customer context and channel" tag="Signals">
+          <div className="grid gap-3 md:grid-cols-3 md:gap-4">
+            {signals.map(([k, v], n) => (
+              <div key={k} className="flex flex-col gap-4 rounded-[12px] border border-[#eaeaea] bg-[#f9fafb] p-5">
+                <div className="min-h-[69px]">
+                  <p className="text-[14px] text-[#9ca3af]">{k}</p>
                   <AnimatePresence mode="wait" initial={false}>
-                    <motion.dd
+                    <motion.p
                       key={v}
-                      className="font-semibold leading-snug text-[#111]"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      transition={{ duration: 0.4, delay: n * 0.12, ease: EASE }}
+                      {...swap}
+                      transition={{ duration: 0.4, delay: n * 0.1, ease: EASE }}
+                      className="mt-2 text-[18px] leading-[1.4] text-[#111]"
                     >
                       {v}
-                    </motion.dd>
+                    </motion.p>
                   </AnimatePresence>
                 </div>
-              ))}
-            </dl>
-          </Panel>
-
-          {/* 2. Component library */}
-          <Panel step="2" title="Component library" on={shown >= 2}>
-            <ul className="flex flex-wrap gap-1.5 lg:flex-col">
-              {LIBRARY.map((c) => {
-                const order = s.blocks.indexOf(c.id);
-                const used = order >= 0 && shown >= 2;
-                return (
-                  <motion.li
-                    key={c.id}
-                    className="flex items-center justify-between gap-2 rounded-[10px] border px-3 py-2 text-[13px]"
-                    animate={{
-                      backgroundColor: used ? "#111111" : "#ffffff",
-                      borderColor: used ? "#111111" : "#e4e2de",
-                      color: used ? "#ffffff" : "#9a9a9a",
-                    }}
-                    transition={{ duration: 0.4, delay: used ? order * 0.15 : 0, ease: EASE }}
-                  >
-                    {c.label}
-                    {used && (
-                      <motion.span
-                        className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-white text-[11px] font-bold text-[#111]"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 0.3, delay: order * 0.15 + 0.1, ease: EASE }}
-                      >
-                        {order + 1}
-                      </motion.span>
-                    )}
-                  </motion.li>
-                );
-              })}
-            </ul>
-            <p className="mt-3 text-[12.5px] leading-snug text-[#666]">Numbers show the order they appear in.</p>
-          </Panel>
-
-          {/* 3. Composed interface */}
-          <div className="rounded-[20px] bg-white p-4 shadow-[0_24px_60px_rgba(40,40,110,0.16)] md:p-5">
-            <div className="flex items-center justify-between gap-3 border-b border-[#eee] pb-3">
-              <div className="flex items-center gap-2">
-                <StepBadge n="3" on={shown >= 3} />
-                <span className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">What the rep sees</span>
+                <div className="h-px bg-[#eaeaea]" />
+                <div>
+                  <p className="text-[15px] leading-[1.4] text-[#111]">
+                    <span className="font-bold">{k}</span> {RULES[k].v}
+                  </p>
+                  <p className="mt-2 text-[14px] leading-[1.5] text-[#6b7280]">{RULES[k].e}</p>
+                </div>
               </div>
-              <span className="rounded-full border border-[#ddd] px-3 py-1 text-[12px] text-[#555]">{retail ? "Store tablet · tap" : "Desktop · keyboard"}</span>
-            </div>
-            <div className="mt-3 flex items-center gap-2 rounded-full bg-[#111] px-3.5 py-1.5 text-[13.5px] text-white self-start w-fit">
-              <Sparkle color="#fff" size={13} />
-              {s.ask}
-            </div>
-            <div className="relative mt-3 min-h-[300px]">
-              <AnimatePresence>
-                {shown < 3 && (
-                  <motion.div
-                    key="building"
-                    className="absolute inset-0 flex flex-col gap-3"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <p className="flex items-center gap-2 text-[13px] text-[#777]">
-                      <span className="canvas-pulse inline-flex">
-                        <Sparkle size={13} />
-                      </span>
-                      Composing the interface…
-                    </p>
-                    {[1, 0.8, 0.6].map((w, n) => (
-                      <div key={n} className="canvas-shimmer h-[70px] rounded-[14px]" style={{ width: `${w * 100}%` }} />
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              {shown >= 3 && (
-                <LayoutGroup>
-                  <div className={`grid gap-3 ${retail ? "md:grid-cols-[1.2fr_1fr]" : "md:grid-cols-2"}`}>
-                    {s.blocks.map((b, n) => (
-                      <motion.div
-                        key={`${i}-${b}`}
-                        className={`relative ${!retail && n === 0 && s.blocks.length === 3 ? "md:col-span-2" : ""}`}
-                        initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
-                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                        transition={{ duration: 0.6, delay: n * 0.15, ease: EASE }}
-                      >
-                        <span className="absolute -left-1.5 -top-1.5 z-10 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#111] text-[11px] font-bold text-white">
-                          {n + 1}
-                        </span>
-                        <BlockView block={b} roomy={retail} />
-                      </motion.div>
-                    ))}
-                  </div>
-                </LayoutGroup>
-              )}
+            ))}
+          </div>
+        </Step>
+
+        {/* 02 Pick from the library */}
+        <Step n="02" title="Pick from the library" sub="Only the components this moment needs" tag="Component library">
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-2 text-[#6b7280]">
+              <p className="text-[12px] font-bold uppercase">Selected · display order</p>
+              <p className="text-[14px]">Numbers show the order they appear in.</p>
             </div>
             <AnimatePresence mode="wait" initial={false}>
-              <motion.p
-                key={s.why}
-                className="mt-4 border-t border-[#eee] pt-3 text-[13.5px] leading-[1.55] text-[#555]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
+              <motion.div key={`sel-${i}`} className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4" exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+                {used.map((b, n) => (
+                  <div key={b} className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:gap-4">
+                    <motion.div
+                      className="flex flex-1 items-center gap-3 rounded-[12px] bg-[#242424] p-4"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.15 + n * 0.15, ease: EASE }}
+                    >
+                      <OrderDot n={n + 1} light />
+                      <span className="text-[16px] font-semibold text-white md:text-[17px]">{label(b)}</span>
+                    </motion.div>
+                    {n < used.length - 1 && (
+                      <motion.span
+                        className="hidden text-[#9ca3af] md:block"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.4, delay: 0.3 + n * 0.15 }}
+                        aria-hidden="true"
+                      >
+                        <Arrow />
+                      </motion.span>
+                    )}
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center gap-2.5 md:gap-3">
+            <p className="mr-1 text-[12px] font-semibold uppercase text-[#6b7280]">Not used for this moment</p>
+            {unused.map((c) => (
+              <motion.span
+                key={c.id}
+                layout
+                className="rounded-[8px] border border-[#d1d5db] px-4 py-2.5 text-[14px] text-[#6b7280]"
+                transition={{ duration: 0.4, ease: EASE }}
               >
-                <span className="font-semibold text-[#111]">Why this layout: </span>
+                {c.label}
+              </motion.span>
+            ))}
+          </div>
+        </Step>
+
+        {/* 03 Compose for the channel */}
+        <Step n="03" title="Compose for the channel" sub="Order, density and interaction" tag="What the rep sees">
+          <div className="rounded-[12px] border border-[#eaeaea] bg-[#f9fafb] p-4 md:p-6">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <span className="flex items-center gap-2 rounded-full bg-[#111] px-4 py-2.5 text-[14px] text-white md:text-[15px]">
+                <Sparkle color="#fff" size={15} />
+                {s.ask}
+              </span>
+              <span className="rounded-full border border-[#0c4baa] bg-white px-3.5 py-2 text-[13px] text-[#6b7280]">
+                {retail ? "Store tablet · tap" : "Desktop · keyboard"}
+              </span>
+            </div>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={`ui-${i}`}
+                className={`grid gap-4 ${retail ? "md:grid-cols-[1.25fr_1fr]" : "md:grid-cols-2"}`}
+                exit={{ opacity: 0, filter: "blur(4px)" }}
+                transition={{ duration: 0.3 }}
+              >
+                {used.map((b, n) => (
+                  <motion.div
+                    key={b}
+                    className={!retail && n === 0 && used.length === 3 ? "md:col-span-2" : ""}
+                    initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.6, delay: 0.35 + n * 0.15, ease: EASE }}
+                  >
+                    <BlockView block={b} roomy={retail} order={n + 1} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="mt-6 flex items-start gap-3 rounded-[8px] border border-[#eaeaea] bg-[#f3f4f6] px-5 py-4">
+            <span className="mt-[3px] text-[#6b7280]" aria-hidden="true">
+              <Arrow />
+            </span>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.p key={s.why} {...swap} transition={{ duration: 0.4, ease: EASE }} className="text-[15px] leading-[1.5] text-[#111] md:text-[16px]">
+                <span className="font-bold">Why this layout: </span>
                 {s.why}
               </motion.p>
             </AnimatePresence>
           </div>
-        </div>
-
-        {/* The rules, in one line each */}
-        <div className="mt-4 grid gap-2 sm:grid-cols-3 lg:gap-4">
-          {RULES.map((r) => (
-            <div key={r.k} className="rounded-[16px] bg-white/85 px-4 py-3.5 backdrop-blur">
-              <p className="text-[15px] font-bold tracking-[-0.02em]">
-                {r.k} <span className="font-normal text-[#555]">{r.v}</span>
-              </p>
-              <p className="mt-1 text-[13px] leading-snug text-[#666]">{r.e}</p>
-            </div>
-          ))}
-        </div>
+        </Step>
       </div>
     </div>
   );
 }
 
-function StepBadge({ n, on }: { n: string; on: boolean }) {
+function Arrow() {
   return (
-    <span
-      className={`flex h-[22px] w-[22px] items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-500 ${
-        on ? "bg-[#111] text-white" : "bg-[#eee] text-[#888]"
-      }`}
-    >
-      {n}
-    </span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
   );
 }
 
-function Panel({ step, title, on, children }: { step: string; title: string; on: boolean; children: ReactNode }) {
+function Step({ n, title, sub, tag, children }: { n: string; title: string; sub: string; tag: string; children: ReactNode }) {
   return (
-    <div
-      className={`rounded-[20px] bg-white/90 p-4 backdrop-blur transition-shadow duration-500 md:p-5 ${
-        on ? "shadow-[0_14px_40px_rgba(40,40,110,0.14)]" : "shadow-none"
-      }`}
+    <motion.section
+      className="rounded-[20px] bg-white p-5 shadow-[0_2px_12px_rgba(0,0,0,0.07)] md:p-8"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.8, ease: EASE }}
     >
-      <div className="mb-3 flex items-center gap-2">
-        <StepBadge n={step} on={on} />
-        <p className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">{title}</p>
+      <div className="mb-6 flex items-center gap-4">
+        <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#aabdfd] text-[22px] text-white">{n}</span>
+        <div className="min-w-0 flex-1">
+          <p className="text-[20px] tracking-[-0.02em] text-[#111] md:text-[24px]">{title}</p>
+          <p className="mt-1 text-[14px] text-[#6b7280] md:text-[16px]">{sub}</p>
+        </div>
+        <p className="hidden shrink-0 text-[12px] font-bold uppercase text-[#9ca3af] sm:block">{tag}</p>
       </div>
       {children}
-    </div>
+    </motion.section>
   );
 }
-
-/* ---------- Library components, drawn simply ---------- */
 
 function Sparkle({ size = 15, color = "#e5262e" }: { size?: number; color?: string }) {
   return (
@@ -380,10 +320,27 @@ function Sparkle({ size = 15, color = "#e5262e" }: { size?: number; color?: stri
   );
 }
 
-function Card({ title, children, roomy }: { title?: string; children: ReactNode; roomy?: boolean }) {
+function OrderDot({ n, light }: { n: number; light?: boolean }) {
   return (
-    <div className={`h-full rounded-[16px] border border-[#ecebe8] bg-[#fbfbfa] ${roomy ? "p-5" : "p-4"}`}>
-      {title && <p className={`mb-3 font-bold tracking-[-0.02em] ${roomy ? "text-[17px]" : "text-[15px]"}`}>{title}</p>}
+    <span
+      className={`flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold ${
+        light ? "bg-white text-[#111]" : "bg-[#111] text-white"
+      }`}
+    >
+      {n}
+    </span>
+  );
+}
+
+function Card({ title, children, roomy, order }: { title?: string; children: ReactNode; roomy?: boolean; order?: number }) {
+  return (
+    <div className={`h-full rounded-[12px] border border-[#eaeaea] bg-white ${roomy ? "p-6" : "p-5"}`}>
+      {title && (
+        <div className="mb-3 flex items-center gap-2.5">
+          {order !== undefined && <OrderDot n={order} />}
+          <p className={`tracking-[-0.02em] text-[#111] ${roomy ? "text-[19px] font-semibold" : "text-[17px]"}`}>{title}</p>
+        </div>
+      )}
       {children}
     </div>
   );
@@ -417,11 +374,11 @@ function TrendChart({ w }: { w: number }) {
   );
 }
 
-function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
+function BlockView({ block, roomy, order }: { block: Block; roomy: boolean; order?: number }) {
   switch (block) {
     case "trend":
       return (
-        <Card title="Current total: $200.22">
+        <Card order={order} title="Current total: $200.22">
           {/* Wide on desktop, compact on phones so labels stay readable. */}
           <div className="hidden md:block">
             <TrendChart w={840} />
@@ -433,7 +390,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
       );
     case "breakdown":
       return (
-        <Card title="Bill by line">
+        <Card order={order} title="Bill by line">
           <div className="flex flex-col text-[13px]">
             {[
               ["•••0234", "$137.22", "Plan, device, perks"],
@@ -452,7 +409,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
       );
     case "history":
       return (
-        <Card title="Recent history">
+        <Card order={order} title="Recent history">
           <div className="flex flex-col gap-2 text-[13px] text-[#444]">
             <p>Feb · New device on line •••0234</p>
             <p>Feb · Promo credit ended</p>
@@ -464,7 +421,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
       );
     case "deals":
       return (
-        <Card title="Deals for this account" roomy={roomy}>
+        <Card order={order} title="Deals for this account" roomy={roomy}>
           <div className="flex flex-col gap-2.5">
             <div className="relative rounded-[12px] p-[2px]" style={{ background: GRADIENT }}>
               <div className="flex items-center justify-between rounded-[10px] bg-white px-4 py-3.5">
@@ -486,7 +443,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
       );
     case "device":
       return (
-        <Card title="Current device" roomy={roomy}>
+        <Card order={order} title="Current device" roomy={roomy}>
           <div className="flex gap-4">
             <span className="block h-[92px] w-[50px] shrink-0 rounded-[10px] border-[3px] border-[#222] bg-[#3f7f8a]" />
             <div className="text-[14px]">
@@ -501,7 +458,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
       );
     case "savings":
       return (
-        <Card title="Savings to apply now">
+        <Card order={order} title="Savings to apply now">
           <div className="flex flex-col gap-2 text-[13px]">
             {[
               ["Streaming bundle swap", "Save $9.99/mo"],
@@ -521,7 +478,7 @@ function BlockView({ block, roomy }: { block: Block; roomy: boolean }) {
       );
     case "forecast":
       return (
-        <Card title="Next bills">
+        <Card order={order} title="Next bills">
           <div className="flex h-[118px] items-end justify-around gap-3 border-b border-[#ddd] pb-0">
             {[
               ["May", 55, true],
