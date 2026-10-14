@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
@@ -40,8 +40,8 @@ const T = {
   applyTradeIn: 16600,
   allDone: 17300,
   cart: 18000,
-  fadeOut: 23200,
-  end: 24000,
+  fadeOut: 22200,
+  end: 23500,
 };
 
 // Fixed geometry for the quote card, so taps land where the controls are.
@@ -69,7 +69,24 @@ function phaseAt(t: number): Phase {
   return "cart";
 }
 
-const clamp = (v: number) => Math.max(0, Math.min(1, v));
+// Every moment something on screen changes. The clock only re-renders the
+// screen when it crosses one of these (or types a character), and the
+// motion in between is left to the animation library, which keeps it smooth.
+const CHANGES = [
+  ...Object.values(T),
+  T.think + 650, T.think + 700, T.think + 1350, T.think + 1400, T.think + 2050,
+  T.build + 500, T.build + 750, T.build + 1600,
+  T.pickOffer + 120, T.toDevice + 300, T.pickDevice + 120, T.pickDevice + 200,
+  T.toTradeIn + 300, T.applyTradeIn + 120, T.applyTradeIn + 300, T.cart + 2200,
+  ...TAPS.flatMap((tap) => [tap.t - 700, tap.t, tap.t + 180, tap.t + 420]),
+].sort((a, b) => a - b);
+
+function signature(t: number) {
+  let passed = 0;
+  while (passed < CHANGES.length && CHANGES[passed] <= t) passed++;
+  const typedLen = t >= T.type && t < T.think ? Math.floor((t - T.type) / 42) : -1;
+  return passed * 1000 + typedLen;
+}
 
 export default function CanvasLoop() {
   const reduce = useReducedMotion();
@@ -91,15 +108,21 @@ export default function CanvasLoop() {
     };
   }, []);
 
-  // One clock drives the whole sequence; it only runs while on screen.
+  // One clock drives the sequence; it only runs while on screen.
+  const clock = useRef(0);
   useEffect(() => {
     if (reduce || !visible) return;
     let raf = 0;
     let last = performance.now();
+    let sig = signature(clock.current);
     const tick = (now: number) => {
-      const dt = Math.min(now - last, 100);
+      clock.current = (clock.current + Math.min(now - last, 100)) % T.end;
       last = now;
-      setT((v) => (v + dt) % T.end);
+      const next = signature(clock.current);
+      if (next !== sig) {
+        sig = next;
+        setT(clock.current);
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -108,11 +131,20 @@ export default function CanvasLoop() {
 
   // People who prefer reduced motion see one representative frame.
   const now = reduce ? T.pickOffer + 300 : t;
-  const phase = phaseAt(now);
-  const typed = PROMPT.slice(0, Math.max(0, Math.floor((now - T.type) / 42)));
-  const fading = now > T.fadeOut;
+  // After the cart, everything settles back to the starting screen, so the loop restarts seamlessly.
+  const resetting = now >= T.fadeOut;
+  const phase: Phase = resetting ? "home" : phaseAt(now);
+  const homeT = resetting ? 0 : now;
+  const typed = PROMPT.slice(0, Math.max(0, Math.floor((homeT - T.type) / 42)));
   // The phone goes in first; the plan and perk carried over from the account join it once the quote is complete.
-  const cartCount = now >= T.allDone ? 3 : now >= T.pickDevice + 200 ? 1 : 0;
+  const cartCount = resetting ? 0 : now >= T.allDone ? 3 : now >= T.pickDevice + 200 ? 1 : 0;
+
+  // A touch point that glides to each control just before it's tapped.
+  const tapIdx = TAPS.findIndex((tap) => now >= tap.t - 700 && now < tap.t + 420);
+  const target = tapIdx >= 0 ? TAPS[tapIdx] : null;
+  const pressed = target ? now >= target.t && now < target.t + 180 : false;
+  const [lastTarget, setLastTarget] = useState(TAPS[0]);
+  if (target && target !== lastTarget) setLastTarget(target);
 
   return (
     <div
@@ -122,110 +154,137 @@ export default function CanvasLoop() {
       role="img"
       aria-label="Animated walkthrough: a rep types a request, the AI canvas reads the account and builds a quote flow, and the rep picks the recommended offer, device and trade-in before reviewing the savings in the cart."
     >
-      <motion.div
-        className="absolute left-0 top-0 origin-top-left font-[family-name:var(--font-inter)] text-[#111]"
+      <div
+        className="absolute left-0 top-0 origin-top-left font-[family-name:var(--font-inter)] text-[#111] will-change-transform"
         style={{ width: W, height: H, transform: `scale(${scale})`, opacity: scale ? 1 : 0 }}
       >
-        <motion.div className="absolute inset-0" animate={{ opacity: fading ? 0 : 1 }} transition={{ duration: 0.6 }}>
-          <StatusBar />
-          <TopBar />
-          <Rail />
+        <StatusBar />
+        <TopBar />
+        <Rail />
 
-          {/* Customer context steps aside once the canvas starts working. */}
-          <motion.div
-            className="absolute left-[98px] top-[112px] h-[663px] w-[288px] overflow-hidden"
-            animate={{ opacity: phase === "home" ? 1 : 0, x: phase === "home" ? 0 : -30 }}
-            transition={{ duration: 0.5, ease: EASE }}
-          >
-            <CustomerPanel />
-          </motion.div>
-
-          <AnimatePresence>
-            {phase === "home" && (
-              <motion.div key="home" className="absolute inset-0" exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-                <Home typed={typed} focused={now >= T.focus} caret={now >= T.focus && now < T.send} canSend={now >= T.typeEnd} sending={now >= T.send} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {phase !== "home" && phase !== "cart" && <RepMessage />}
-
-          {/* A soft glow behind the card while the canvas is generating. */}
-          <motion.div
-            className="pointer-events-none absolute rounded-[40px]"
-            style={{ left: CARD.x + 40, top: CARD.y + 40, width: CARD.w - 80, height: 380, background: GRADIENT, filter: "blur(60px)" }}
-            animate={{ opacity: phase === "think" ? 0.28 : now < T.build + 1600 && phase === "offers" ? 0.12 : 0 }}
-            transition={{ duration: 0.8 }}
-          />
-
-          <AnimatePresence>
-            {phase === "think" && (
-              <motion.div
-                key="think"
-                className="absolute"
-                style={{ left: CARD.x, top: CARD.y, width: CARD.w }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.4, ease: EASE }}
-              >
-                <Thinking t={now - T.think} />
-              </motion.div>
-            )}
-            {(phase === "offers" || phase === "devices" || phase === "tradein") && (
-              <motion.div
-                key="quote"
-                className="absolute"
-                style={{ left: CARD.x, top: CARD.y, width: CARD.w }}
-                initial={{ opacity: 0, y: 24, scale: 0.985 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.6, ease: EASE }}
-              >
-                <QuoteCard t={now} phase={phase} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <CartButton count={cartCount} />
-
-          <AnimatePresence>
-            {phase === "cart" && (
-              <motion.div
-                key="cart"
-                className="absolute inset-0 top-[36px] bg-black/35 backdrop-blur-[2px]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                <motion.div
-                  className="absolute left-[230px] top-[44px] w-[720px]"
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
-                >
-                  <Cart t={now - T.cart} />
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {!reduce &&
-            TAPS.map((tap) =>
-              now >= tap.t && now < tap.t + 520 ? (
-                <motion.span
-                  key={tap.t}
-                  className="pointer-events-none absolute h-[46px] w-[46px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/20 ring-2 ring-white/90"
-                  style={{ left: tap.x, top: tap.y }}
-                  initial={{ scale: 0.3, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.18 }}
-                />
-              ) : null,
-            )}
+        {/* Customer context steps aside once the canvas starts working. */}
+        <motion.div
+          className="absolute left-[98px] top-[112px] h-[663px] w-[288px] overflow-hidden"
+          initial={false}
+          animate={{ opacity: phase === "home" ? 1 : 0, x: phase === "home" ? 0 : -40 }}
+          transition={{ duration: 0.7, ease: EASE }}
+        >
+          <CustomerPanel />
         </motion.div>
-      </motion.div>
+
+        <AnimatePresence>
+          {phase === "home" && (
+            <motion.div
+              key="home"
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: EASE }}
+            >
+              <Home
+                typed={typed}
+                focused={homeT >= T.focus}
+                caret={homeT >= T.focus && homeT < T.send}
+                canSend={homeT >= T.typeEnd}
+                sending={homeT >= T.send}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>{phase !== "home" && phase !== "cart" && <RepMessage key="msg" />}</AnimatePresence>
+
+        {/* A soft glow behind the card while the canvas is generating. */}
+        <motion.div
+          className="pointer-events-none absolute rounded-[40px]"
+          style={{ left: CARD.x + 40, top: CARD.y + 40, width: CARD.w - 80, height: 380, background: GRADIENT, filter: "blur(60px)" }}
+          initial={false}
+          animate={{ opacity: phase === "think" ? 0.28 : phase === "offers" && now < T.build + 1600 ? 0.12 : 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+
+        <AnimatePresence>
+          {phase === "think" && (
+            <motion.div
+              key="think"
+              className="absolute"
+              style={{ left: CARD.x, top: CARD.y, width: CARD.w }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, filter: "blur(6px)" }}
+              transition={{ duration: 0.6, ease: EASE }}
+            >
+              <Thinking t={now - T.think} />
+            </motion.div>
+          )}
+          {(phase === "offers" || phase === "devices" || phase === "tradein") && (
+            <motion.div
+              key="quote"
+              className="absolute"
+              style={{ left: CARD.x, top: CARD.y, width: CARD.w }}
+              initial={{ opacity: 0, y: 28, scale: 0.98, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -12, scale: 0.99 }}
+              transition={{ duration: 0.8, ease: EASE }}
+            >
+              <QuoteCard t={now} phase={phase} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <CartButton count={cartCount} />
+
+        <AnimatePresence>
+          {phase === "cart" && (
+            <motion.div
+              key="cart"
+              className="absolute inset-0 top-[36px] bg-black/30"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <motion.div
+                className="absolute left-[230px] top-[44px] w-[720px]"
+                initial={{ y: 48, opacity: 0, scale: 0.98 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                exit={{ y: 24, opacity: 0 }}
+                transition={{ duration: 0.7, ease: EASE }}
+              >
+                <Cart t={now - T.cart} />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {!reduce && (
+          <motion.div
+            className="pointer-events-none absolute left-0 top-0"
+            initial={false}
+            animate={{ x: lastTarget.x, y: lastTarget.y, opacity: target ? 1 : 0 }}
+            transition={{ x: { duration: 0.65, ease: EASE }, y: { duration: 0.65, ease: EASE }, opacity: { duration: 0.3 } }}
+          >
+            <motion.span
+              className="absolute -left-[22px] -top-[22px] block h-[44px] w-[44px] rounded-full bg-[#111]/15 ring-[1.5px] ring-white shadow-[0_4px_14px_rgba(0,0,0,0.18)] backdrop-blur-[1px]"
+              animate={{ scale: pressed ? 0.78 : 1 }}
+              transition={{ type: "spring", stiffness: 500, damping: 26 }}
+            />
+            <AnimatePresence>
+              {pressed && (
+                <motion.span
+                  key={lastTarget.t}
+                  className="absolute -left-[22px] -top-[22px] block h-[44px] w-[44px] rounded-full border-2 border-[#111]/30"
+                  initial={{ scale: 0.8, opacity: 0.8 }}
+                  animate={{ scale: 1.9, opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                />
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }
@@ -288,14 +347,10 @@ function StatusBar() {
 function TopBar() {
   return (
     <div className="absolute inset-x-0 top-[36px] h-[64px] bg-[#f6f5f3]">
-      {/* Neutral product mark in place of the client logo */}
-      <span className="absolute left-[20px] top-[16px] flex h-[32px] w-[32px] items-center justify-center rounded-[9px] bg-[#111]">
-        <Sparkle size={18} color="#fff" />
-      </span>
-      <span className="absolute left-[84px] top-[20px]">
+      <span className="absolute left-[30px] top-[20px]">
         <Icon d={<><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>} />
       </span>
-      <div className="absolute left-[150px] top-[10px] h-[54px] w-[170px] rounded-t-[12px] bg-white px-4 pt-[9px]">
+      <div className="absolute left-[98px] top-[10px] h-[54px] w-[170px] rounded-t-[12px] bg-white px-4 pt-[9px]">
         <p className="text-[12.5px] font-semibold leading-tight">Emily Jean Stone</p>
         <p className="text-[12px] leading-tight text-[#444]">XXX-XXX-0324</p>
       </div>
@@ -419,9 +474,10 @@ function RepMessage() {
     <motion.div
       className="absolute flex justify-end"
       style={{ left: CARD.x, top: 124, width: CARD.w }}
-      initial={{ opacity: 0, y: 160, scale: 0.96 }}
+      initial={{ opacity: 0, y: 190, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.55, ease: EASE }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.75, ease: EASE }}
     >
       <span className="rounded-[18px] rounded-br-[6px] bg-[#111] px-4 py-2.5 text-[14.5px] text-white">{PROMPT}</span>
     </motion.div>
@@ -517,19 +573,19 @@ function QuoteCard({ t, phase }: { t: number; phase: "offers" | "devices" | "tra
       </div>
 
       <div className="relative h-[262px] overflow-hidden">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           {phase === "offers" && (
-            <motion.div key="offers" className="absolute inset-0" exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }}>
+            <motion.div key="offers" className="absolute inset-0" exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.55, ease: EASE }}>
               <Offers picked={t >= T.pickOffer + 120} />
             </motion.div>
           )}
           {phase === "devices" && (
-            <motion.div key="devices" className="absolute inset-0" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.35 }}>
+            <motion.div key="devices" className="absolute inset-0" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.55, ease: EASE }}>
               <Devices picked={t >= T.pickDevice + 120} />
             </motion.div>
           )}
           {phase === "tradein" && (
-            <motion.div key="tradein" className="absolute inset-0" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.35 }}>
+            <motion.div key="tradein" className="absolute inset-0" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.55, ease: EASE }}>
               <TradeIn applied={t >= T.applyTradeIn + 120} />
             </motion.div>
           )}
@@ -743,7 +799,12 @@ function Cart({ t }: { t: number }) {
     { n: "Unlimited plan", s: "Kept from the account", p: "$55/mo", c: "#e5262e" },
     { n: "Streaming bundle", s: "Perk", p: "$10/mo", c: "#1b3a57" },
   ];
-  const savings = (clamp((t - 1300) / 900) * 50).toFixed(2);
+  const savings = useMotionValue(0);
+  const savingsText = useTransform(savings, (v) => `$${v.toFixed(2)}/mo`);
+  useEffect(() => {
+    const run = animate(savings, 50, { delay: 1.2, duration: 1.1, ease: EASE });
+    return () => run.stop();
+  }, [savings]);
   return (
     <div className="overflow-hidden rounded-[18px] bg-[#f6f5f3] shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
       <div className="flex items-center justify-between px-5 py-4">
@@ -799,7 +860,7 @@ function Cart({ t }: { t: number }) {
               />
             )}
             <p className="relative text-[#1a9e4b]">Savings</p>
-            <p className="relative text-[17px] font-bold tabular-nums text-[#1a9e4b]">${savings}/mo</p>
+            <motion.p className="relative text-[17px] font-bold tabular-nums text-[#1a9e4b]">{savingsText}</motion.p>
           </div>
         </div>
       </div>
