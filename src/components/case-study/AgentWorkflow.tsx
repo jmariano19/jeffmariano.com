@@ -72,8 +72,8 @@ export function AgentWorkflow() {
   const finished = doneCount === AGENT.length;
 
   return (
-    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#e6d7bf] p-4 sm:p-6 md:p-12">
-      <Image src="/images/case-studies/canvas/channels-bg.webp" alt="" fill unoptimized className="object-cover" />
+    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#d8d4f6] p-4 sm:p-6 md:p-12">
+      <Image src="/images/case-studies/canvas/agentic-bg.webp" alt="" fill unoptimized className="object-cover" />
 
       <div className="relative">
         <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
