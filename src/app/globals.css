@@ -41,3 +41,22 @@ body {
   .online-spin, .online-halo { animation: none; }
   .online-halo { opacity: 0; }
 }
+
+/* AI Conversational Canvas loop */
+@keyframes canvas-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+.canvas-shimmer {
+  background: linear-gradient(90deg, #f1efeb 25%, #fbeee4 45%, #fde8e6 55%, #f1efeb 75%);
+  background-size: 200% 100%;
+  animation: canvas-shimmer 1.4s linear infinite;
+}
+@keyframes canvas-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.18) rotate(12deg); }
+}
+.canvas-pulse { animation: canvas-pulse 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .canvas-shimmer, .canvas-pulse { animation: none; }
+}
