@@ -1,5 +1,4 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
 
 /* Visuals for the AI Conversational Canvas case study. */
 
@@ -11,40 +10,6 @@ function Sparkle({ size = 16, color = "#e5262e" }: { size?: number; color?: stri
       <path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" fill={color} />
       <path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill={color} />
     </svg>
-  );
-}
-
-type Channel = {
-  name: string;
-  mode: string;
-  setting: string;
-  visual: ReactNode;
-  points: string[];
-};
-
-/** The same canvas, adapted to how each channel works. */
-export function ChannelAdapt({ channels }: { channels: Channel[] }) {
-  return (
-    <div className="grid gap-4 md:grid-cols-2 md:gap-6">
-      {channels.map((c) => (
-        <div key={c.name} className="flex flex-col rounded-[20px] bg-white p-6 md:p-8">
-          <div className="flex items-baseline justify-between gap-4">
-            <p className="text-[22px] font-bold tracking-[-0.03em]">{c.name}</p>
-            <span className="rounded-full bg-[#111] px-3 py-1 text-[13px] font-semibold text-white">{c.mode}</span>
-          </div>
-          <p className="mt-1 text-[15px] text-[#666]">{c.setting}</p>
-          <div className="mt-5 rounded-[14px] bg-[#f3f2ef] p-5">{c.visual}</div>
-          <ul className="mt-5 flex flex-col gap-2.5">
-            {c.points.map((p) => (
-              <li key={p} className="flex gap-2.5 text-[15.5px] leading-[1.55] text-[#444]">
-                <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#111]" />
-                {p}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
   );
 }
 
