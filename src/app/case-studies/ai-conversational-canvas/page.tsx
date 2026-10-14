@@ -16,6 +16,7 @@ import {
 import { Consolidation } from "@/components/case-study/Consolidation";
 import { ChannelAdapt } from "@/components/case-study/ChannelAdapt";
 import { IntentComposer } from "@/components/case-study/IntentComposer";
+import { AgentWorkflow } from "@/components/case-study/AgentWorkflow";
 
 export const metadata: Metadata = {
   title: "AI Conversational Canvas — Jeff Mariano",
@@ -120,6 +121,15 @@ export default function AiConversationalCanvas() {
         explanation="So the same canvas produces different screens. A bill question in customer service opens the change, the line-by-line answer and what caused it, dense and ready for the keyboard. An upgrade in a store opens the offers the customer qualifies for and their current device, in large cards the rep can turn toward the customer. Recommendations are always marked as AI, and nothing is selected on the rep's behalf."
       >
         <IntentComposer />
+      </ContentSection>
+
+      <ContentSection
+        title="From Answers to Actions"
+        tag="AGENTIC WORKFLOWS"
+        description="Answering the question was only half the job. After every answer, reps still had to carry out the work across several systems: build the quote, apply the credits, place the order, write the notes. The canvas now hands that work to an agent. The rep says what needs to happen, the agent plans the steps and runs them across those systems, and it stops for the rep's approval whenever money or the customer is involved."
+        explanation="The result is a different job for the rep. Instead of operating tools while the customer waits, they stay in the conversation and make the decisions, and the busywork after the call is already done when it ends."
+      >
+        <AgentWorkflow />
       </ContentSection>
 
       <ContentSection
