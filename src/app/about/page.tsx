@@ -30,7 +30,7 @@ export default function About() {
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 498px"
-                className="object-cover object-top grayscale"
+                className="object-cover object-top"
               />
             </div>
           </Reveal>
