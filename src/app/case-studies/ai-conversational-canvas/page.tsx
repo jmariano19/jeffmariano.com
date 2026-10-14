@@ -34,17 +34,18 @@ export default function AiConversationalCanvas() {
         summary="Reps were jumping between separate apps to help a single customer. We consolidated them into one AI canvas that assembles the right tool when a rep asks, and adapts to how each channel works: tapping in retail stores, typing in customer service."
         meta="Role: Associate Director, UX · owner of the agent interaction model | Channels: Retail stores · Customer service | Platform: AI canvas with generative UI"
         media={
-          <div className="relative overflow-hidden rounded-[22px] md:rounded-[40px] bg-[#c9a9b8] px-[4%] py-[8%] md:px-[17.25%] md:py-[6.45%]">
+          <div className="relative overflow-hidden rounded-[22px] md:rounded-[40px] bg-[#b99a90] px-[4%] py-[8%] md:px-[17.25%] md:py-[6.45%]">
+            {/* Zoomed toward the right so the teal crescent peeks out beside the tablet */}
             <Image
               src="/images/case-studies/canvas/hero-bg.webp"
               alt=""
               fill
               priority
-              sizes="(max-width: 1440px) 100vw, 1304px"
-              className="object-cover"
+              unoptimized
+              className="object-cover scale-[1.4] origin-[100%_50%]"
             />
             {/* A light tablet resting on the gradient */}
-            <div className="relative rounded-[20px] md:rounded-[38px] bg-white p-[5px] md:p-[11px] shadow-[0_30px_80px_rgba(60,30,80,0.28)]">
+            <div className="relative rounded-[20px] md:rounded-[38px] bg-white p-[5px] md:p-[11px] shadow-[0_30px_90px_rgba(20,35,80,0.35)]">
               <CanvasLoop />
             </div>
           </div>
