@@ -13,7 +13,7 @@ const projects = [
     logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180, size: "w-[24%] max-w-[151px]" },
     description: "An AI platform that unifies every assisted customer service channel.",
     image: "/images/home/cortex.jpg",
-    href: null,
+    href: "/case-studies/ai-conversational-canvas",
   },
   {
     name: "Systems",

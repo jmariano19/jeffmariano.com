@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import Reveal from "../Reveal";
 import ScrollBlur from "../ScrollBlur";
 import { Asterisk } from "../SiteChrome";
@@ -7,13 +8,15 @@ interface CaseStudyHeroProps {
   tag: string;
   title: string;
   meta: string;
-  image: string;
+  image?: string;
+  /** Custom hero visual (e.g. an animated loop) shown instead of the image. */
+  media?: ReactNode;
   /** Optional one-line framing shown under the title. */
   summary?: string;
   imageAlt?: string;
 }
 
-export default function CaseStudyHero({ tag, title, meta, image, summary, imageAlt }: CaseStudyHeroProps) {
+export default function CaseStudyHero({ tag, title, meta, image, media, summary, imageAlt }: CaseStudyHeroProps) {
   return (
     <section className="pt-16 md:pt-[110px] pb-10 md:pb-14">
       {/* Text and image each blur and fade as they scroll away, as on the homepage hero. */}
@@ -48,13 +51,20 @@ export default function CaseStudyHero({ tag, title, meta, image, summary, imageA
         </dl>
       </Reveal>
       </ScrollBlur>
-      <ScrollBlur>
-      <Reveal onLoad delay={0.35} blur y={60}>
-        <div className="relative mt-10 md:mt-14 w-full h-[280px] md:h-[600px] overflow-hidden rounded-[14px] bg-[#e4e4e4]">
-          <Image src={image} alt={imageAlt ?? title} fill sizes="(max-width: 1440px) 100vw, 1304px" className="object-cover" priority />
-        </div>
-      </Reveal>
-      </ScrollBlur>
+      {/* An animated hero stays sharp while it plays; a still image blurs away like the text. */}
+      {media ? (
+        <Reveal onLoad delay={0.35} blur y={60}>
+          <div className="mt-10 md:mt-14 w-full">{media}</div>
+        </Reveal>
+      ) : image ? (
+        <ScrollBlur>
+          <Reveal onLoad delay={0.35} blur y={60}>
+            <div className="relative mt-10 md:mt-14 w-full h-[280px] md:h-[600px] overflow-hidden rounded-[14px] bg-[#e4e4e4]">
+              <Image src={image} alt={imageAlt ?? title} fill sizes="(max-width: 1440px) 100vw, 1304px" className="object-cover" priority />
+            </div>
+          </Reveal>
+        </ScrollBlur>
+      ) : null}
     </section>
   );
 }

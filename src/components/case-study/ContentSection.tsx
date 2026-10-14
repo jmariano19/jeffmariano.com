@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import FadeUp from "../FadeUp";
+import type { ReactNode } from "react";
 
 interface ContentSectionProps {
   title: string;
@@ -19,6 +20,8 @@ interface ContentSectionProps {
     before: string;
     after: string;
   };
+  /** Custom visual rendered below the text, in place of an image. */
+  children?: ReactNode;
 }
 
 export default function ContentSection({
@@ -33,6 +36,7 @@ export default function ContentSection({
   imageHeight = "h-[240px] md:h-[400px]",
   imagePlaceholder,
   beforeAfter,
+  children,
 }: ContentSectionProps) {
   return (
     <section className="py-[40px]">
@@ -106,6 +110,12 @@ export default function ContentSection({
               Image placeholder
             </p>
           </div>
+        </FadeUp>
+      )}
+
+      {children && (
+        <FadeUp delay={0.2}>
+          <div className="mt-8">{children}</div>
         </FadeUp>
       )}
 
