@@ -7,6 +7,8 @@ import type { ReactNode } from "react";
 
 interface ContentSectionProps {
   title: string;
+  /** Lead with a short takeaway and visual; put supporting detail below. */
+  visualFirst?: boolean;
   subtitle?: string;
   tag?: string;
   description: string;
@@ -26,6 +28,7 @@ interface ContentSectionProps {
 
 export default function ContentSection({
   title,
+  visualFirst = false,
   subtitle,
   tag,
   description,
@@ -38,6 +41,27 @@ export default function ContentSection({
   beforeAfter,
   children,
 }: ContentSectionProps) {
+  const supportingText = (
+    <>
+      {explanation && (
+        <FadeUp delay={0.2}>
+          <p className="mt-6 font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
+            {explanation}
+          </p>
+        </FadeUp>
+      )}
+
+      {explanation2 && (
+        <FadeUp delay={0.25}>
+          <p className="mt-6 font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
+            {explanation2}
+          </p>
+        </FadeUp>
+      )}
+
+    </>
+  );
+
   return (
     <section className="py-[40px]">
       <FadeUp>
@@ -66,21 +90,7 @@ export default function ContentSection({
         </p>
       </FadeUp>
 
-      {explanation && (
-        <FadeUp delay={0.2}>
-          <p className="mt-6 font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
-            {explanation}
-          </p>
-        </FadeUp>
-      )}
-
-      {explanation2 && (
-        <FadeUp delay={0.25}>
-          <p className="mt-6 font-[family-name:var(--font-inter)] text-base md:text-[17px] leading-[28px] md:leading-[32px] text-gray-text max-w-[900px]">
-            {explanation2}
-          </p>
-        </FadeUp>
-      )}
+      {!visualFirst && supportingText}
 
       {/* Image or placeholder */}
       {image && (
@@ -113,11 +123,15 @@ export default function ContentSection({
         </FadeUp>
       )}
 
-      {children && (
+      {children && (visualFirst ? (
+        <div className="mt-8">{children}</div>
+      ) : (
         <FadeUp delay={0.2}>
           <div className="mt-8">{children}</div>
         </FadeUp>
-      )}
+      ))}
+
+      {visualFirst && supportingText}
 
       {/* Before/After */}
       {beforeAfter && (

@@ -45,7 +45,7 @@ export function Consolidation({ tools }: { tools: string[] }) {
           {/* The card decides when its tiles appear, so they all settle together. */}
           <motion.div
             className="rounded-[22px] bg-white p-3.5 shadow-[0_20px_50px_rgba(40,40,110,0.12)] md:p-4"
-            initial={reduce ? false : "scattered"}
+            initial={false}
             whileInView="settled"
             viewport={view}
             variants={{ scattered: { opacity: 0, y: 16 }, settled: { opacity: 1, y: 0 } }}
@@ -58,7 +58,7 @@ export function Consolidation({ tools }: { tools: string[] }) {
                   className="rounded-[12px] border border-[#dcdcdc] bg-[#f4f4f4] px-3.5 py-3.5 text-[14px] text-[#333] shadow-[0_1px_2px_rgba(0,0,0,0.04)] md:px-4 md:py-[18px] md:text-[16px]"
                   variants={{
                     // Each tile drifts down a few pixels and eases into its slight tilt.
-                    scattered: { opacity: 0, y: -10, rotate: 0, filter: "blur(4px)" },
+                    scattered: { opacity: 1, y: -4, rotate: 0, filter: "blur(0px)" },
                     settled: {
                       opacity: 1,
                       y: 0,
@@ -80,7 +80,7 @@ export function Consolidation({ tools }: { tools: string[] }) {
           <p className="mb-4 text-[13px] font-bold uppercase tracking-[0.04em] text-[#1d2550]">After: one canvas</p>
           <motion.div
             className="flex h-[calc(100%-33px)] flex-col justify-center rounded-[22px] border border-white/70 bg-[#f4f3f1]/95 p-5 shadow-[0_20px_50px_rgba(40,40,110,0.12)] md:p-7"
-            initial={reduce ? false : { opacity: 0, y: 14 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={view}
             transition={{ duration: 1.1, delay: reduce ? 0 : settleEnd, ease: EASE }}
@@ -93,7 +93,7 @@ export function Consolidation({ tools }: { tools: string[] }) {
                 <motion.span
                   key={c}
                   className="rounded-[10px] border-[1.5px] border-[#111] bg-white px-3.5 py-2 text-[14px] md:px-4 md:text-[16px]"
-                  initial={reduce ? false : { opacity: 0 }}
+                  initial={false}
                   whileInView={{ opacity: 1 }}
                   viewport={view}
                   transition={{ duration: 0.8, delay: reduce ? 0 : settleEnd + 0.3 + n * 0.08, ease: EASE }}
@@ -105,7 +105,7 @@ export function Consolidation({ tools }: { tools: string[] }) {
             <motion.div
               className="mt-5 rounded-full p-[2px]"
               style={{ background: GRADIENT }}
-              initial={reduce ? false : { opacity: 0 }}
+              initial={false}
               whileInView={{ opacity: 1 }}
               viewport={view}
               transition={{ duration: 0.9, delay: reduce ? 0 : settleEnd + 0.5, ease: EASE }}
@@ -114,7 +114,7 @@ export function Consolidation({ tools }: { tools: string[] }) {
             </motion.div>
             <motion.p
               className="mt-5 text-[15px] leading-[1.65] text-[#444] md:text-[16px]"
-              initial={reduce ? false : { opacity: 0 }}
+              initial={false}
               whileInView={{ opacity: 1 }}
               viewport={view}
               transition={{ duration: 0.9, delay: reduce ? 0 : settleEnd + 0.7, ease: EASE }}

@@ -56,13 +56,14 @@ export function TypeVisual() {
 }
 
 /** One card per adoption barrier, each with the design decision that answers it. */
-export function BarrierDecisions({ items }: { items: { barrier: string; decision: string }[] }) {
+export function BarrierDecisions({ items }: { items: { barrier: string; title?: string; decision: string }[] }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((it, n) => (
         <div key={it.barrier} className="flex flex-col rounded-[18px] bg-white p-6">
           <span className="text-[13px] tabular-nums text-[#999]">0{n + 1}</span>
-          <p className="mt-3 text-[20px] font-bold tracking-[-0.03em]">{it.barrier}</p>
+          <p className="mt-3 text-[20px] font-bold tracking-[-0.03em]">{it.title ?? it.barrier}</p>
+          {it.title && <p className="mt-1 text-[13px] text-[#777]">{it.barrier}</p>}
           <p className="mt-2 text-[15.5px] leading-[1.6] text-[#555]">{it.decision}</p>
         </div>
       ))}

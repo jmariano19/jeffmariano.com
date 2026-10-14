@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -19,7 +19,6 @@ type Channel = {
  * gradient that rise in one after the other, their details following.
  */
 export function ChannelAdapt({ channels }: { channels: Channel[] }) {
-  const reduce = useReducedMotion();
 
   return (
     <div className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#e6d7bf] px-4 py-10 sm:px-8 md:px-[8%] md:py-[8%]">
@@ -32,7 +31,7 @@ export function ChannelAdapt({ channels }: { channels: Channel[] }) {
             <motion.div
               key={c.name}
               className="flex flex-col rounded-[22px] border border-white/70 bg-white p-6 shadow-[0_20px_50px_rgba(60,70,60,0.12)] md:p-8"
-              initial={reduce ? false : "hidden"}
+              initial={false}
               whileInView="shown"
               viewport={{ once: true, amount: 0.3 }}
               variants={{
