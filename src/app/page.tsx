@@ -78,30 +78,33 @@ export default function Home() {
   return (
     <div id="top" className="min-h-screen bg-[#f2f2f2] text-[#111] font-[family-name:var(--font-inter)] tracking-[-0.02em]">
       <div className="max-w-[1440px] mx-auto px-5 md:px-[68px]">
-        <SiteHeader />
+        {/* Landing: header + hero fill the first screen; the cards start below the fold. */}
+        <div className="flex min-h-[100svh] flex-col">
+          <SiteHeader />
 
-        {/* Hero */}
-        <section className="pt-24 md:pt-[180px] pb-14 md:pb-20">
-          <ScrollBlur>
-            <Reveal onLoad delay={0.1}>
-              <h1 className="text-[44px] md:text-[64px] xl:text-[80px] 2xl:text-[88px] leading-[1.02] font-semibold tracking-[-0.055em]">
-                <span className="text-[#a8a8a8]">
-                  <span className="xl:block">I design intelligent</span> systems that connect{" "}
-                </span>
-                <span className="xl:block">people, workflows and AI.</span>
-              </h1>
-            </Reveal>
-            <Reveal onLoad delay={0.25}>
-              <p className="mt-8 md:mt-10 text-[18px] md:text-[22px] leading-[1.45] tracking-[-0.03em] max-w-[40rem] text-[#3a3a3a]">
-                I help organizations build AI that their teams and customers actually adopt, using behavioral design
-                and rapid experiments shaped by years in retail, customer service, and health.
-              </p>
-            </Reveal>
-          </ScrollBlur>
-        </section>
+          <section className="flex flex-1 flex-col justify-end pt-24 pb-16 md:pt-32 md:pb-[90px]">
+            <ScrollBlur>
+              <Reveal onLoad delay={0.1}>
+                <h1 className="max-w-[960px] text-[44px] md:text-[64px] xl:text-[81px] leading-[1.02] xl:leading-[0.99] font-bold tracking-[-0.045em]">
+                  <span className="text-[#b0b0b0] xl:block">I design intelligent</span>{" "}
+                  <span className="xl:block">
+                    systems <span className="text-[#b0b0b0]">that connect</span>
+                  </span>{" "}
+                  <span className="xl:block">people, workflows and AI.</span>
+                </h1>
+              </Reveal>
+              <Reveal onLoad delay={0.25}>
+                <p className="mt-6 md:mt-8 max-w-[803px] text-[17px] md:text-[18px] leading-[1.75] md:leading-[35px] tracking-[-0.01em] text-[#141414]">
+                  I help organizations build AI that their teams and customers actually adopt, using behavioral design
+                  and rapid experiments shaped by years in retail, customer service, and health.
+                </p>
+              </Reveal>
+            </ScrollBlur>
+          </section>
+        </div>
 
         {/* Proof */}
-        <section aria-label="At a glance" className="pb-24 md:pb-36">
+        <section aria-label="At a glance" className="pt-4 md:pt-6 pb-24 md:pb-36">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
             {stats.map((s, i) => (
               <Reveal key={s.label} y={40} delay={i * 0.07} className="h-full">
