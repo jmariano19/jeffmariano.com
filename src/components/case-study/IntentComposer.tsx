@@ -123,15 +123,17 @@ export function IntentComposer() {
   const shownAsk = reduce ? s.ask : s.ask.slice(0, typed);
 
   return (
-    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#d9cdf3] p-4 sm:p-6 md:p-[56px]">
+    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#d9cdf3] p-4 sm:p-6 md:p-12">
       <Image src="/images/case-studies/canvas/consolidation-bg.webp" alt="" fill unoptimized className="object-cover" />
 
       <div className="relative">
-        <p className="text-[26px] tracking-[-0.03em] text-[#111] md:text-[38px]">
+        {/* Title and requests share a row on wide screens */}
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+        <p className="text-[26px] tracking-[-0.03em] text-[#111] md:text-[34px]">
           From request to <span className="font-bold">rep experience</span>
         </p>
 
-        <div className="mt-5 flex flex-wrap items-center gap-2.5 md:gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <span className="mr-1 text-[12px] font-bold uppercase text-[#374151]">Try a request</span>
           {SCENARIOS.map((sc, n) => (
             <button
@@ -142,7 +144,7 @@ export function IntentComposer() {
                 setAuto(false);
               }}
               aria-pressed={n === i}
-              className={`relative overflow-hidden rounded-full border px-4 py-2.5 text-[14px] transition-colors md:px-5 md:py-3 md:text-[16px] ${
+              className={`relative overflow-hidden rounded-full border px-4 py-2.5 text-[14px] transition-colors md:text-[15px] ${
                 n === i ? "border-[#111] bg-[#111] text-white" : "border-[#d1d5db] bg-white text-[#374151] hover:border-[#9ca3af]"
               }`}
             >
@@ -160,19 +162,18 @@ export function IntentComposer() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-[22px] font-semibold tracking-[-0.02em] text-[#111] md:mt-12 md:text-[28px]">
+        </div>
+
+        <p className="mt-7 text-center text-[22px] font-semibold tracking-[-0.02em] text-[#111] md:text-[26px]">
           Generative UI based on intent
         </p>
-        <p className="mx-auto mt-2 max-w-[34rem] text-center text-[14px] leading-[1.5] text-[#374151] md:text-[15px]">
-          Same request, same component library. Each channel gets the layout that fits how the rep works.
-        </p>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <div className="mt-6 grid gap-5 lg:grid-cols-2">
           {/* Retail: tap, roomy */}
           <div className="flex flex-col">
             <ColumnLabel title="Retail" note="Rep taps · roomy cards to review with the customer" />
             <Glass>
-              <div className="mb-4 flex items-center gap-2">
+              <div className="mb-3 flex items-center gap-2">
                 <span className="text-[12px] font-semibold uppercase tracking-[0.05em] text-[#4b5563]">Rep tapped</span>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
@@ -189,7 +190,7 @@ export function IntentComposer() {
                 </AnimatePresence>
               </div>
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div key={`r-${i}`} className="flex flex-col gap-4" exit={{ opacity: 0, filter: "blur(4px)" }} transition={{ duration: 0.3 }}>
+                <motion.div key={`r-${i}`} className="flex flex-col gap-3" exit={{ opacity: 0, filter: "blur(4px)" }} transition={{ duration: 0.3 }}>
                   <motion.div
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -265,7 +266,7 @@ export function IntentComposer() {
                 </AnimatePresence>
               </div>
 
-              <div className="mt-6 flex items-center gap-3 rounded-[16px] border border-white/70 bg-white/60 px-5 py-4 backdrop-blur">
+              <div className="mt-4 flex items-center gap-3 rounded-[16px] border border-white/70 bg-white/60 px-5 py-3.5 backdrop-blur">
                 <Sparkle size={16} />
                 <p className="min-w-0 flex-1 text-[15px] text-[#111] md:text-[17px]">
                   {shownAsk}
@@ -297,11 +298,11 @@ const AI_BORDER = "linear-gradient(90deg, #f7c948, #f08a24 45%, #e5262e)";
 function Insight({ text, roomy }: { text: string; roomy: boolean }) {
   return (
     <div className="rounded-[14px] p-[1.5px]" style={{ background: AI_BORDER }}>
-      <div className={`rounded-[13px] bg-white ${roomy ? "px-5 py-4 md:px-6" : "px-4 py-3"}`}>
+      <div className={`rounded-[13px] bg-white ${roomy ? "px-5 py-3.5" : "px-4 py-3"}`}>
         <p className={`flex items-center gap-1.5 font-semibold uppercase tracking-[0.05em] text-[#e5262e] ${roomy ? "text-[12px]" : "text-[11px]"}`}>
           <Sparkle size={roomy ? 14 : 12} /> Insight
         </p>
-        <p className={`mt-1.5 leading-[1.5] text-[#111] ${roomy ? "text-[16px] md:text-[17px]" : "text-[13.5px]"}`}>{text}</p>
+        <p className={`mt-1 leading-[1.5] text-[#111] ${roomy ? "text-[15px] md:text-[16px]" : "text-[13.5px]"}`}>{text}</p>
       </div>
     </div>
   );
@@ -383,7 +384,7 @@ function ColumnLabel({ title, note }: { title: string; note: string }) {
 
 function Glass({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-1 flex-col rounded-[24px] border border-white/60 bg-white/35 p-4 shadow-[0_20px_60px_rgba(60,50,140,0.10)] backdrop-blur-xl md:p-8 lg:min-h-[760px]">
+    <div className="flex flex-1 flex-col rounded-[24px] border border-white/60 bg-white/35 p-4 shadow-[0_20px_60px_rgba(60,50,140,0.10)] backdrop-blur-xl md:p-6">
       {children}
     </div>
   );
@@ -419,8 +420,8 @@ function OrderDot({ n, roomy }: { n: number; roomy: boolean }) {
 
 function Card({ title, children, roomy, order }: { title: ReactNode; children: ReactNode; roomy: boolean; order?: number }) {
   return (
-    <div className={`h-full rounded-[14px] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.05)] ${roomy ? "p-5 md:p-6" : "p-4"}`}>
-      <div className={`flex items-center gap-2.5 ${roomy ? "mb-4" : "mb-3"}`}>
+    <div className={`h-full rounded-[14px] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.05)] ${roomy ? "p-5" : "p-4"}`}>
+      <div className={`flex items-center gap-2.5 "mb-3"`}>
         {order !== undefined && <OrderDot n={order} roomy={roomy} />}
         <p className={`tracking-[-0.02em] text-[#111] ${roomy ? "text-[18px] md:text-[20px]" : "text-[14.5px] font-semibold"}`}>{title}</p>
       </div>
@@ -437,7 +438,7 @@ function TrendChart({ roomy }: { roomy: boolean }) {
   const end = w - 12;
   return (
     <div>
-      <svg viewBox={`0 0 ${w} 86`} className="h-auto w-full" aria-hidden="true">
+      <svg viewBox={`0 0 ${w} 80`} className="h-auto w-full" aria-hidden="true">
         <path d={`M12 70 L${mid} 40 L${mid + 70} 32 L${end} 32`} fill="none" stroke={BLUE} strokeWidth="2.2" strokeDasharray="5 6" />
         <circle cx="12" cy="70" r="7" fill={BLUE} />
         <circle cx={mid} cy="40" r="7" fill={BLUE} />
@@ -457,7 +458,7 @@ function TrendChart({ roomy }: { roomy: boolean }) {
 
 function BlockView({ block, roomy, order }: { block: Block; roomy: boolean; order?: number }) {
   const t = roomy ? "text-[15px] md:text-[16px]" : "text-[13px]";
-  const row = roomy ? "py-3" : "py-2";
+  const row = roomy ? "py-2.5" : "py-1.5";
   switch (block) {
     case "trend":
       return (
@@ -509,8 +510,8 @@ function BlockView({ block, roomy, order }: { block: Block; roomy: boolean; orde
             </span>
           }
         >
-          <div className={`flex flex-col ${roomy ? "gap-3" : "gap-2"} ${t}`}>
-            {(roomy ? items : items.slice(0, 3)).map(([ic, x, d]) => (
+          <div className={`flex flex-col ${roomy ? "gap-2.5" : "gap-2"} ${t}`}>
+            {items.slice(0, 3).map(([ic, x, d]) => (
               <div key={x} className="flex items-start gap-3">
                 <HistoryIcon kind={ic} />
                 <span className="flex-1 text-[#111]">{x}</span>
@@ -590,7 +591,7 @@ function BlockView({ block, roomy, order }: { block: Block; roomy: boolean; orde
     case "forecast":
       return (
         <Card roomy={roomy} order={order} title="Next bills">
-          <div className={`flex items-end justify-around gap-3 border-b border-[#e5e7eb] ${roomy ? "h-[150px]" : "h-[96px]"}`}>
+          <div className={`flex items-end justify-around gap-3 border-b border-[#e5e7eb] ${roomy ? "h-[124px]" : "h-[90px]"}`}>
             {(
               [
                 ["May", 0.55, true, "$200"],
@@ -607,7 +608,7 @@ function BlockView({ block, roomy, order }: { block: Block; roomy: boolean; orde
                     border: past ? `1.5px solid ${BLUE}` : undefined,
                   }}
                   initial={{ height: 0 }}
-                  animate={{ height: h * (roomy ? 110 : 62) }}
+                  animate={{ height: h * (roomy ? 88 : 58) }}
                   transition={{ duration: 0.8, ease: EASE, delay: 0.4 }}
                 />
               </div>
