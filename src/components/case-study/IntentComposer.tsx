@@ -56,10 +56,35 @@ const SCENARIOS: Scenario[] = [
   },
 ];
 
+const LIBRARY: { id: Block; label: string }[] = [
+  { id: "trend", label: "Bill trend" },
+  { id: "breakdown", label: "Bill by line" },
+  { id: "history", label: "Account history" },
+  { id: "deals", label: "Deals" },
+  { id: "device", label: "Device card" },
+  { id: "savings", label: "Savings offers" },
+  { id: "forecast", label: "Bill forecast" },
+];
+
+const STEPS = [
+  { n: "1", title: "Read the moment", body: "Intent, customer context and channel" },
+  { n: "2", title: "Pick from the library", body: "Only the components this moment needs" },
+  { n: "3", title: "Compose for the channel", body: "Order, density and interaction" },
+];
+
+const RULES = [
+  { k: "Intent", v: "decides what to show", e: "A bill question pulls bill components. An upgrade pulls deals and devices." },
+  { k: "Moment", v: "decides what leads", e: "A $25 jump leads with the trend. A churn risk leads with savings." },
+  { k: "Channel", v: "decides how it's built", e: "Dense and keyboard-first on a desktop. Roomy and tap-first on a store tablet." },
+];
+
+const CYCLE = 7000;
+
 export function IntentComposer() {
   const reduce = useReducedMotion();
   const [i, setI] = useState(0);
   const [auto, setAuto] = useState(true);
+  const [stage, setStage] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -71,70 +96,118 @@ export function IntentComposer() {
     return () => io.disconnect();
   }, []);
 
+  // Each scenario plays out in three beats: signals, components, composed interface.
+  useEffect(() => {
+    if (reduce) return;
+    if (!visible) return;
+    const t1 = setTimeout(() => setStage(1), 0);
+    const t2 = setTimeout(() => setStage(2), 900);
+    const t3 = setTimeout(() => setStage(3), 1900);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [i, visible, reduce]);
+
   useEffect(() => {
     if (!auto || !visible || reduce) return;
-    const t = setTimeout(() => setI((n) => (n + 1) % SCENARIOS.length), 6000);
+    const t = setTimeout(() => {
+      setStage(0);
+      setI((n) => (n + 1) % SCENARIOS.length);
+    }, CYCLE);
     return () => clearTimeout(t);
   }, [i, auto, visible, reduce]);
 
   const s = SCENARIOS[i];
   const retail = s.channel === "Retail store";
+  const shown = reduce ? 3 : stage;
+
+  const pick = (n: number) => {
+    if (n === i) return;
+    setStage(0);
+    setI(n);
+    setAuto(false);
+  };
 
   return (
-    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#cfc9ec] p-4 sm:p-6 md:p-[5%]">
+    <div ref={ref} className="relative overflow-hidden rounded-[22px] md:rounded-[36px] bg-[#cfc9ec] p-4 sm:p-6 md:p-[4.5%]">
       <Image src="/images/case-studies/canvas/consolidation-bg.webp" alt="" fill unoptimized className="object-cover" />
 
-      <div className="relative grid gap-4 lg:grid-cols-[300px_1fr] lg:gap-6">
-        {/* The signals the canvas reads */}
-        <div className="flex flex-col gap-3">
-          <div className="rounded-[20px] bg-white/90 p-4 shadow-[0_14px_40px_rgba(40,40,110,0.10)] backdrop-blur md:p-5">
-            <p className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">The rep asks</p>
-            <div className="mt-3 flex flex-col gap-2">
-              {SCENARIOS.map((sc, n) => (
-                <button
-                  key={sc.ask}
-                  type="button"
-                  onClick={() => {
-                    setI(n);
-                    setAuto(false);
-                  }}
-                  className={`relative overflow-hidden rounded-[12px] px-3.5 py-2.5 text-left text-[14.5px] transition-colors ${
-                    n === i ? "bg-[#111] text-white" : "bg-[#f3f2ef] text-[#333] hover:bg-[#ebe9e5]"
+      <div className="relative">
+        {/* How it works, at a glance */}
+        <ol className="grid gap-2 sm:grid-cols-3">
+          {STEPS.map((st, n) => {
+            const on = shown >= n + 1;
+            return (
+              <li
+                key={st.n}
+                className={`flex items-center gap-3 rounded-[16px] px-4 py-3 transition-colors duration-500 ${
+                  on ? "bg-white shadow-[0_10px_30px_rgba(40,40,110,0.10)]" : "bg-white/45"
+                }`}
+              >
+                <span
+                  className={`flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold transition-colors duration-500 ${
+                    on ? "bg-[#111] text-white" : "bg-white text-[#777]"
                   }`}
                 >
-                  “{sc.ask}”
-                  {n === i && auto && visible && !reduce && (
-                    <motion.span
-                      key={`bar-${i}`}
-                      className="absolute bottom-0 left-0 h-[2px] bg-white/60"
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 6, ease: "linear" }}
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
+                  {st.n}
+                </span>
+                <span>
+                  <span className="block text-[14.5px] font-bold leading-tight">{st.title}</span>
+                  <span className="block text-[12.5px] leading-snug text-[#666]">{st.body}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ol>
 
-          <div className="rounded-[20px] bg-white/90 p-4 shadow-[0_14px_40px_rgba(40,40,110,0.10)] backdrop-blur md:p-5">
-            <p className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">Signals the canvas reads</p>
-            <dl className="mt-3 flex flex-col gap-3 text-[14px]">
+        {/* Pick a request */}
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">Try a request</span>
+          {SCENARIOS.map((sc, n) => (
+            <button
+              key={sc.ask}
+              type="button"
+              onClick={() => pick(n)}
+              aria-pressed={n === i}
+              className={`relative overflow-hidden rounded-full px-4 py-2 text-[14px] transition-colors ${
+                n === i ? "bg-[#111] text-white" : "bg-white/85 text-[#333] hover:bg-white"
+              }`}
+            >
+              “{sc.ask}”
+              {n === i && auto && visible && !reduce && (
+                <motion.span
+                  key={`bar-${i}`}
+                  className="absolute bottom-0 left-0 h-[2px] bg-white/60"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: CYCLE / 1000, ease: "linear" }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-4 grid gap-3 lg:grid-cols-[230px_200px_minmax(0,1fr)] lg:gap-4">
+          {/* 1. Signals */}
+          <Panel step="1" title="Signals" on={shown >= 1}>
+            <dl className="flex flex-col gap-3 text-[14px]">
               {[
                 ["Intent", s.intent],
                 ["Moment", s.moment],
                 ["Channel", `${s.channel} · ${s.mode}`],
-              ].map(([k, v]) => (
+              ].map(([k, v], n) => (
                 <div key={k}>
                   <dt className="text-[12px] text-[#888]">{k}</dt>
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.dd
                       key={v}
-                      className="font-semibold text-[#111]"
+                      className="font-semibold leading-snug text-[#111]"
                       initial={{ opacity: 0, y: 4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
-                      transition={{ duration: 0.35, ease: EASE }}
+                      transition={{ duration: 0.4, delay: n * 0.12, ease: EASE }}
                     >
                       {v}
                     </motion.dd>
@@ -142,6 +215,100 @@ export function IntentComposer() {
                 </div>
               ))}
             </dl>
+          </Panel>
+
+          {/* 2. Component library */}
+          <Panel step="2" title="Component library" on={shown >= 2}>
+            <ul className="flex flex-wrap gap-1.5 lg:flex-col">
+              {LIBRARY.map((c) => {
+                const order = s.blocks.indexOf(c.id);
+                const used = order >= 0 && shown >= 2;
+                return (
+                  <motion.li
+                    key={c.id}
+                    className="flex items-center justify-between gap-2 rounded-[10px] border px-3 py-2 text-[13px]"
+                    animate={{
+                      backgroundColor: used ? "#111111" : "#ffffff",
+                      borderColor: used ? "#111111" : "#e4e2de",
+                      color: used ? "#ffffff" : "#9a9a9a",
+                    }}
+                    transition={{ duration: 0.4, delay: used ? order * 0.15 : 0, ease: EASE }}
+                  >
+                    {c.label}
+                    {used && (
+                      <motion.span
+                        className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-white text-[11px] font-bold text-[#111]"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.3, delay: order * 0.15 + 0.1, ease: EASE }}
+                      >
+                        {order + 1}
+                      </motion.span>
+                    )}
+                  </motion.li>
+                );
+              })}
+            </ul>
+            <p className="mt-3 text-[12.5px] leading-snug text-[#666]">Numbers show the order they appear in.</p>
+          </Panel>
+
+          {/* 3. Composed interface */}
+          <div className="rounded-[20px] bg-white p-4 shadow-[0_24px_60px_rgba(40,40,110,0.16)] md:p-5">
+            <div className="flex items-center justify-between gap-3 border-b border-[#eee] pb-3">
+              <div className="flex items-center gap-2">
+                <StepBadge n="3" on={shown >= 3} />
+                <span className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">What the rep sees</span>
+              </div>
+              <span className="rounded-full border border-[#ddd] px-3 py-1 text-[12px] text-[#555]">{retail ? "Store tablet · tap" : "Desktop · keyboard"}</span>
+            </div>
+            <div className="mt-3 flex items-center gap-2 rounded-full bg-[#111] px-3.5 py-1.5 text-[13.5px] text-white self-start w-fit">
+              <Sparkle color="#fff" size={13} />
+              {s.ask}
+            </div>
+            <div className="relative mt-3 min-h-[300px]">
+              <AnimatePresence>
+                {shown < 3 && (
+                  <motion.div
+                    key="building"
+                    className="absolute inset-0 flex flex-col gap-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p className="flex items-center gap-2 text-[13px] text-[#777]">
+                      <span className="canvas-pulse inline-flex">
+                        <Sparkle size={13} />
+                      </span>
+                      Composing the interface…
+                    </p>
+                    {[1, 0.8, 0.6].map((w, n) => (
+                      <div key={n} className="canvas-shimmer h-[70px] rounded-[14px]" style={{ width: `${w * 100}%` }} />
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              {shown >= 3 && (
+                <LayoutGroup>
+                  <div className={`grid gap-3 ${retail ? "md:grid-cols-[1.2fr_1fr]" : "md:grid-cols-2"}`}>
+                    {s.blocks.map((b, n) => (
+                      <motion.div
+                        key={`${i}-${b}`}
+                        className={`relative ${!retail && n === 0 && s.blocks.length === 3 ? "md:col-span-2" : ""}`}
+                        initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.6, delay: n * 0.15, ease: EASE }}
+                      >
+                        <span className="absolute -left-1.5 -top-1.5 z-10 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#111] text-[11px] font-bold text-white">
+                          {n + 1}
+                        </span>
+                        <BlockView block={b} roomy={retail} />
+                      </motion.div>
+                    ))}
+                  </div>
+                </LayoutGroup>
+              )}
+            </div>
             <AnimatePresence mode="wait" initial={false}>
               <motion.p
                 key={s.why}
@@ -151,51 +318,53 @@ export function IntentComposer() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
+                <span className="font-semibold text-[#111]">Why this layout: </span>
                 {s.why}
               </motion.p>
             </AnimatePresence>
           </div>
         </div>
 
-        {/* The interface it composes */}
-        <div className="rounded-[22px] bg-white p-4 shadow-[0_24px_60px_rgba(40,40,110,0.16)] md:p-5">
-          <div className="flex items-center justify-between gap-3 border-b border-[#eee] pb-3">
-            <div className="flex items-center gap-2 rounded-full bg-[#111] px-3.5 py-1.5 text-[13.5px] text-white">
-              <Sparkle color="#fff" size={13} />
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span key={s.ask} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-                  {s.ask}
-                </motion.span>
-              </AnimatePresence>
+        {/* The rules, in one line each */}
+        <div className="mt-4 grid gap-2 sm:grid-cols-3 lg:gap-4">
+          {RULES.map((r) => (
+            <div key={r.k} className="rounded-[16px] bg-white/85 px-4 py-3.5 backdrop-blur">
+              <p className="text-[15px] font-bold tracking-[-0.02em]">
+                {r.k} <span className="font-normal text-[#555]">{r.v}</span>
+              </p>
+              <p className="mt-1 text-[13px] leading-snug text-[#666]">{r.e}</p>
             </div>
-            <span className="rounded-full border border-[#ddd] px-3 py-1 text-[12px] text-[#555]">{retail ? "Tablet · tap" : "Desktop · keyboard"}</span>
-          </div>
-
-          <LayoutGroup>
-            <motion.div
-              layout
-              className={`mt-4 grid gap-3 ${retail ? "md:grid-cols-[1.2fr_1fr]" : "md:grid-cols-2"}`}
-              transition={{ duration: 0.6, ease: EASE }}
-            >
-              <AnimatePresence mode="popLayout" initial={false}>
-                {s.blocks.map((b, n) => (
-                  <motion.div
-                    key={`${i}-${b}`}
-                    layout
-                    className={!retail && n === 0 && s.blocks.length === 3 ? "md:col-span-2" : ""}
-                    initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
-                    transition={{ duration: 0.6, delay: 0.1 + n * 0.12, ease: EASE }}
-                  >
-                    <BlockView block={b} roomy={retail} />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          </LayoutGroup>
+          ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+function StepBadge({ n, on }: { n: string; on: boolean }) {
+  return (
+    <span
+      className={`flex h-[22px] w-[22px] items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-500 ${
+        on ? "bg-[#111] text-white" : "bg-[#eee] text-[#888]"
+      }`}
+    >
+      {n}
+    </span>
+  );
+}
+
+function Panel({ step, title, on, children }: { step: string; title: string; on: boolean; children: ReactNode }) {
+  return (
+    <div
+      className={`rounded-[20px] bg-white/90 p-4 backdrop-blur transition-shadow duration-500 md:p-5 ${
+        on ? "shadow-[0_14px_40px_rgba(40,40,110,0.14)]" : "shadow-none"
+      }`}
+    >
+      <div className="mb-3 flex items-center gap-2">
+        <StepBadge n={step} on={on} />
+        <p className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#1d2550]">{title}</p>
+      </div>
+      {children}
     </div>
   );
 }

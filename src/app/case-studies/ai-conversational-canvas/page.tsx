@@ -116,25 +116,10 @@ export default function AiConversationalCanvas() {
       <ContentSection
         title="The AI Builds the Tool, Not a Reply"
         tag="GENERATIVE UI · THE COMPOSITION LOGIC"
-        description="When a rep asks for something, the canvas doesn't answer with a paragraph. It reads three signals: what the rep is trying to do, where the customer is in that moment, and which channel the conversation is happening in. Then it composes the interface from a shared library of components built for exactly this. I designed that composition logic: which components answer which intent, how the customer's moment changes what leads, and how each channel changes density and interaction."
+        description="Most AI tools answer with a paragraph. The canvas answers with an interface. For every request it reads three signals, picks the components that moment needs from a shared library, and arranges them for the channel. I designed that composition logic: which components answer which intent, how the customer's situation changes what leads, and how each channel changes density and interaction."
         explanation="So the same canvas produces different screens. A bill question in customer service opens the change, the line-by-line answer and what caused it, dense and ready for the keyboard. An upgrade in a store opens the offers the customer qualifies for and their current device, in large cards the rep can turn toward the customer. Recommendations are always marked as AI, and nothing is selected on the rep's behalf."
       >
         <IntentComposer />
-        <figure className="mt-6 md:mt-8">
-          <div className="overflow-hidden rounded-[22px] md:rounded-[36px]">
-            <Image
-              src="/images/case-studies/canvas/component-library.webp"
-              alt="A selection of the canvas components: bill trend, history, deals, recommendations, bill breakdown, bar chart and device card"
-              width={2400}
-              height={1887}
-              sizes="(max-width: 1440px) 100vw, 1304px"
-              className="h-auto w-full"
-            />
-          </div>
-          <figcaption className="mt-3 text-[14px] text-[#777]">
-            Part of the component library the canvas composes from: trends, history, deals, recommendations, bill breakdowns and device cards.
-          </figcaption>
-        </figure>
       </ContentSection>
 
       <ContentSection
