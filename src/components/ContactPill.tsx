@@ -137,34 +137,15 @@ export function ContactForm({
 
       {error && <p className={`px-1 text-[14px] ${dark ? "text-[#ff9b8f]" : "text-[#b42318]"}`} role="alert">{error}</p>}
 
-      {dark ? (
-        <button
-          type="submit"
-          disabled={!canSend}
-          className={`mt-1 h-[57px] w-full rounded-full bg-white text-[20px] font-bold tracking-[0.01em] text-black transition-opacity ${
-            canSend ? "opacity-100 hover:opacity-85" : "opacity-40 cursor-not-allowed"
-          }`}
-        >
-          {status === "sending" ? "SENDING…" : "SEND"}
-        </button>
-      ) : (
-        <button
-          type="submit"
-          disabled={!canSend}
-          className={`relative mt-1 h-[52px] w-full rounded-[10px] bg-black text-[18px] font-semibold tracking-[0.02em] text-white transition-opacity ${
-            canSend ? "opacity-100 hover:opacity-85" : "opacity-40 cursor-not-allowed"
-          }`}
-        >
-          {status === "sending" ? "SENDING…" : "SEND"}
-          <Image
-            src="/images/send.svg"
-            alt=""
-            width={36.4336}
-            height={35.5117}
-            className="absolute right-[8px] top-1/2 -translate-y-1/2"
-          />
-        </button>
-      )}
+      <button
+        type="submit"
+        disabled={!canSend}
+        className={`mt-1 w-full rounded-full font-bold tracking-[0.01em] transition-opacity ${
+          dark ? "h-[57px] bg-white text-[20px] text-black" : "h-[52px] bg-black text-[18px] text-white"
+        } ${canSend ? "opacity-100 hover:opacity-85" : "opacity-40 cursor-not-allowed"}`}
+      >
+        {status === "sending" ? "SENDING…" : "SEND"}
+      </button>
     </form>
   );
 }
