@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { SitePage } from "@/components/SiteChrome";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
@@ -33,8 +34,17 @@ export default function AiConversationalCanvas() {
         summary="Reps were jumping between separate apps to help a single customer. We consolidated them into one AI canvas that assembles the right tool when a rep asks, and adapts to how each channel works: tapping in retail stores, typing in customer service."
         meta="Role: Associate Director, UX · owner of the agent interaction model | Channels: Retail stores · Customer service | Platform: AI canvas with generative UI"
         media={
-          <div className="rounded-[22px] md:rounded-[32px] bg-[#161616] p-3 md:p-8 lg:p-12">
-            <div className="mx-auto max-w-[1040px] rounded-[22px] md:rounded-[34px] bg-[#050505] p-[6px] md:p-[12px] shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+          <div className="relative overflow-hidden rounded-[22px] md:rounded-[40px] bg-[#c9a9b8] px-[4%] py-[8%] md:px-[17.25%] md:py-[6.45%]">
+            <Image
+              src="/images/case-studies/canvas/hero-bg.webp"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1440px) 100vw, 1304px"
+              className="object-cover"
+            />
+            {/* A light tablet resting on the gradient */}
+            <div className="relative rounded-[20px] md:rounded-[38px] bg-white p-[5px] md:p-[11px] shadow-[0_30px_80px_rgba(60,30,80,0.28)]">
               <CanvasLoop />
             </div>
           </div>
