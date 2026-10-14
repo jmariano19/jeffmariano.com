@@ -4,7 +4,7 @@ import { SitePage } from "@/components/SiteChrome";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import CanvasLoop from "@/components/case-study/CanvasLoop";
 import Challenges from "@/components/case-study/Challenges";
-import ContentSection from "@/components/case-study/ContentSection";
+import { Chapter, StoryMap } from "@/components/case-study/Chapter";
 import Outcomes from "@/components/case-study/Outcomes";
 import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
@@ -32,8 +32,8 @@ export default function AiConversationalCanvas() {
       <CaseStudyHero
         tag="VERIZON · AI CONVERSATIONAL CANVAS · OMNICHANNEL"
         title="One AI Canvas for Every Way Reps Help Customers"
-        summary="Reps were jumping between separate apps to help a single customer. We consolidated them into one AI canvas that assembles the right tool when a rep asks, and adapts to how each channel works: tapping in retail stores, typing in customer service."
-        meta="Role: Associate Director, UX · owner of the agent interaction model | Channels: Retail stores · Customer service | Platform: AI canvas with generative UI"
+        summary="Reps juggled a stack of separate apps to help one customer. I led the design of one AI canvas that replaces them: it builds the right interface for each request, adapts to the channel, and lets an agent do the follow-through while the rep stays in control."
+        meta="Role: Associate Director, UX · owner of the agent interaction model | Channels: Retail stores · Contact centers | Platform: AI canvas with generative UI"
         media={
           <div className="relative overflow-hidden rounded-[22px] md:rounded-[40px] bg-[#b99a90] px-[4%] py-[8%] md:px-[17.25%] md:py-[6.45%]">
             {/* Zoomed toward the right so the teal crescent peeks out beside the tablet */}
@@ -55,17 +55,29 @@ export default function AiConversationalCanvas() {
 
       <Challenges
         stats={[
-          { number: "1", label: "canvas replacing a stack of separate rep apps" },
-          { number: "2", label: "channels with different ways of working: tap and type" },
-          { number: "6", label: "quote steps assembled in a single guided flow" },
+          { number: "1", label: "canvas in place of a stack of separate rep apps" },
+          { number: "2", label: "channels served: tap in stores, type in contact centers" },
+          { number: "1", label: "approval instead of six manual steps for an upgrade" },
         ]}
-        description="Every customer conversation pulled reps across a different set of tools: one to look up the account, another to check credit, another for offers, another to build the order. Each switch cost time and attention while the customer waited, and the AI capabilities we were adding risked becoming one more tool to open. The goal wasn't to add AI to the stack. It was to replace the stack with one place to work, and to make that place fit both the rep on a store floor and the rep on a headset."
+        description="Every customer conversation sent reps across a different set of tools, and each switch cost time while the customer waited. New AI features risked becoming one more tool to open. The goal was to replace the stack with one place to work that fits both the rep on a store floor and the rep on a headset."
       />
 
-      <ContentSection
-        title="From a Stack of Apps to One Canvas"
-        tag="THE CONSOLIDATION"
-        description="Instead of a home screen of app icons, the canvas opens with a single question: how can I help you today? The rep can tap a suggested action or ask in their own words. The canvas brings in the customer's context and assembles the tool for that task, so the rep never has to remember which system does what."
+      <StoryMap
+        items={[
+          { id: "consolidate", n: "01", title: "One canvas", line: "A stack of separate apps becomes one place to ask." },
+          { id: "channels", n: "02", title: "Built for each channel", line: "Tap-first in stores, type-first in contact centers." },
+          { id: "generative-ui", n: "03", title: "Generative UI", line: "The answer is an interface, composed for the intent." },
+          { id: "agentic", n: "04", title: "Agentic workflows", line: "The agent does the follow-through. The rep approves." },
+        ]}
+      />
+
+      <Chapter
+        id="consolidate"
+        n="01"
+        kicker="The consolidation"
+        title="From a stack of apps to one canvas"
+        takeaway="Reps stopped hunting for the right app. They ask once, and the canvas brings the tool to them."
+        body="Instead of a home screen of app icons, the canvas opens with one question: how can I help you today? The rep taps a suggested action or asks in their own words, and the canvas pulls in the customer's context and assembles the tool for that task."
       >
         <Consolidation
           tools={[
@@ -79,12 +91,15 @@ export default function AiConversationalCanvas() {
             "Knowledge base",
           ]}
         />
-      </ContentSection>
+      </Chapter>
 
-      <ContentSection
-        title="Same Canvas, Different Channel"
-        tag="RESEARCH-LED ADAPTATION"
-        description="One canvas didn't mean one experience. Research with reps in both channels showed they work in fundamentally different ways. In a store, the rep is standing next to the customer with a tablet, often sharing the screen. In customer service, the rep is on a headset or in a chat, typing fast and juggling several windows. So the canvas keeps the same model and components, but changes how the rep drives it."
+      <Chapter
+        id="channels"
+        n="02"
+        kicker="Research-led adaptation"
+        title="Same canvas, different channel"
+        takeaway="Research showed store reps and contact center reps work in opposite ways, so the canvas changes how it's driven, not what it is."
+        body="In a store, the rep stands beside the customer with a tablet, often sharing the screen. In a contact center, the rep is on a headset or in chat, typing fast across several windows. Both use the same model and components."
       >
         <ChannelAdapt
           channels={[
@@ -100,7 +115,7 @@ export default function AiConversationalCanvas() {
               ],
             },
             {
-              name: "Customer service",
+              name: "Contact centers",
               mode: "Type-first",
               setting: "Desktop, headset or chat, several windows open",
               visual: <TypeVisual />,
@@ -112,30 +127,36 @@ export default function AiConversationalCanvas() {
             },
           ]}
         />
-      </ContentSection>
+      </Chapter>
 
-      <ContentSection
-        title="The AI Builds the Tool, Not a Reply"
-        tag="GENERATIVE UI · THE COMPOSITION LOGIC"
-        description="Most AI tools answer with a paragraph. The canvas answers with an interface. For every request it reads three signals, picks the components that moment needs from a shared library, and arranges them for the channel. I designed that composition logic: which components answer which intent, how the customer's situation changes what leads, and how each channel changes density and interaction."
-        explanation="So the same canvas produces different screens. A bill question in customer service opens the change, the line-by-line answer and what caused it, dense and ready for the keyboard. An upgrade in a store opens the offers the customer qualifies for and their current device, in large cards the rep can turn toward the customer. Recommendations are always marked as AI, and nothing is selected on the rep's behalf."
+      <Chapter
+        id="generative-ui"
+        n="03"
+        kicker="Generative UI · the composition logic I designed"
+        title="The AI builds the tool, not a reply"
+        takeaway="Most AI tools answer with a paragraph. The canvas answers with an interface, composed for the request and the channel."
+        body="For every request it reads the rep's intent, the customer's situation and the channel, then picks components from a shared library and arranges them. Insights explain the answer in a line, and AI recommendations are always marked. Try a request below."
       >
         <IntentComposer />
-      </ContentSection>
+      </Chapter>
 
-      <ContentSection
-        title="From Answers to Actions"
-        tag="AGENTIC WORKFLOWS"
-        description="Answering the question was only half the job. After every answer, reps still had to carry out the work across several systems: build the quote, apply the credits, place the order, write the notes. The canvas now hands that work to an agent. The rep says what needs to happen, the agent plans the steps and runs them across those systems, and it stops for the rep's approval whenever money or the customer is involved."
-        explanation="The result is a different job for the rep. Instead of operating tools while the customer waits, they stay in the conversation and make the decisions, and the busywork after the call is already done when it ends."
+      <Chapter
+        id="agentic"
+        n="04"
+        kicker="Agentic workflows"
+        title="From answers to actions"
+        takeaway="The agent carries out the work across systems. The rep stays with the customer and approves anything that touches the bill."
+        body="Reps used to finish every answer by hand: build the quote, apply credits, place the order, write the notes. Now the rep says what needs to happen, the agent plans and runs the steps, and the notes are written when the call ends."
       >
         <AgentWorkflow />
-      </ContentSection>
+      </Chapter>
 
-      <ContentSection
-        title="Designed Around the Barriers to Adoption"
-        tag="KEY DESIGN DECISIONS"
-        description="A capable AI tool still fails if reps don't trust it or don't want to use it in front of a customer. Each major decision answered one of the five behavioral barriers I design around."
+      <Chapter
+        id="adoption"
+        n="05"
+        kicker="Key design decisions"
+        title="Designed around the barriers to adoption"
+        takeaway="A capable AI tool still fails if reps don't trust it. Each decision answers one of the five behavioral barriers I design around."
       >
         <BarrierDecisions
           items={[
@@ -145,30 +166,30 @@ export default function AiConversationalCanvas() {
             },
             {
               barrier: "Identity threat",
-              decision: "The AI recommends but never selects. The rep makes every choice, and 'View all offers' is always one tap away.",
+              decision: "The AI recommends and the agent proposes, but the rep makes every call that matters, and every option stays one tap away.",
             },
             {
               barrier: "Cognitive load",
-              decision: "One guided flow replaces switching between systems, and steps the AI can complete arrive already filled in for review.",
+              decision: "One canvas replaces switching between systems, and steps the AI can complete arrive already filled in for review.",
             },
             {
               barrier: "Delayed reward",
-              decision: "Value shows up immediately: savings in the cart, and the new monthly bill next to the current one.",
+              decision: "Value shows up immediately: a one-line insight with the answer, and savings next to the current bill.",
             },
             {
               barrier: "Behavioral friction",
-              decision: "Thumbs up and down on every recommendation, so the system learns from reps without adding steps to their work.",
+              decision: "The agent writes the notes and follow-ups, and feedback on every recommendation takes a single tap.",
             },
           ]}
         />
-      </ContentSection>
+      </Chapter>
 
       <Outcomes
         items={[
           { title: "One Entry Point", description: "A single canvas in place of separate apps for each task" },
-          { title: "Channel-Native", description: "Tap-first in stores, type-first in customer service, one shared model" },
-          { title: "Rep in Control", description: "AI recommends, the rep decides at every step" },
-          { title: "Built to Learn", description: "Feedback on every recommendation feeds the system" },
+          { title: "Channel-Native", description: "Tap-first in stores, type-first in contact centers, one shared model" },
+          { title: "Answers as Interfaces", description: "Generative UI composed for each intent and channel" },
+          { title: "Rep in Control", description: "The agent does the work, the rep approves what matters" },
         ]}
       />
 

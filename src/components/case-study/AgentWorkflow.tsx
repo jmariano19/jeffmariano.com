@@ -78,11 +78,9 @@ export function AgentWorkflow() {
       <div className="relative">
         <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
           <p className="text-[26px] tracking-[-0.03em] text-[#111] md:text-[34px]">
-            From answers to <span className="font-bold">actions</span>
+            Same task, <span className="font-bold">two ways</span>
           </p>
-          <p className="text-[14px] text-[#374151] md:text-[15px]">
-            Same task: upgrade a line with a trade-in
-          </p>
+          <p className="text-[14px] text-[#374151] md:text-[15px]">Upgrade a line with a trade-in</p>
         </div>
 
         <div className="mt-7 grid gap-5 lg:grid-cols-[1fr_1.25fr]">
