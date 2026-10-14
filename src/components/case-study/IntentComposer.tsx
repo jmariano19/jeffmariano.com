@@ -18,12 +18,17 @@ const TYPE_MS = 34;
 
 type Block = "trend" | "breakdown" | "history" | "deals" | "device" | "savings" | "forecast";
 
+type NextStep = { title: string; steps: string[]; approval: string };
+
 type Scenario = {
   label: string;
   tap: string;
   retail: Block[];
   ask: string;
   center: Block[];
+  insightRetail: string;
+  insightCenter: string;
+  next: NextStep;
 };
 
 const SCENARIOS: Scenario[] = [
@@ -33,6 +38,14 @@ const SCENARIOS: Scenario[] = [
     retail: ["trend", "breakdown", "history"],
     ask: "Why did this customer's bill go up?",
     center: ["trend", "breakdown", "history"],
+    insightRetail:
+      "The bill went up $25 for two reasons: a $15 promo credit on line 0234 ended in February, and turning off Autopay removed a $10 discount. Nothing else changed.",
+    insightCenter: "+$25 vs Jan: $15 promo credit on •••0234 ended Feb 1, and $10 Autopay discount lost Jan 15. No plan or usage change.",
+    next: {
+      title: "Bring the bill back down",
+      steps: ["Check loyalty credit eligibility", "Re-enroll Autopay to restore $10/mo", "Text the customer a summary of the change"],
+      approval: "Approve & run",
+    },
   },
   {
     label: "Upgrade a line",
@@ -40,6 +53,14 @@ const SCENARIOS: Scenario[] = [
     retail: ["deals", "device"],
     ask: "Which upgrade offers is line 0234 eligible for?",
     center: ["deals", "device"],
+    insightRetail:
+      "Line 0234 is eligible to upgrade today. Trading in the current phone covers the full price of the new Pro model, so the top offer costs nothing extra.",
+    insightCenter: "•••0234 upgrade eligible since Mar 1. $400 trade-in covers the top offer in full. No plan change required.",
+    next: {
+      title: "Prepare the upgrade",
+      steps: ["Pull trade-in value for the current phone", "Build a quote with the top offer", "Send the quote to the customer to confirm"],
+      approval: "Approve & send",
+    },
   },
   {
     label: "Help me lower my bill",
@@ -47,6 +68,14 @@ const SCENARIOS: Scenario[] = [
     retail: ["savings", "forecast"],
     ask: "How can this customer lower their bill?",
     center: ["savings", "breakdown", "forecast"],
+    insightRetail:
+      "Three changes would save $34.99 a month without dropping a line. Enrolling in Autopay is the quickest win, and the next bills show the drop.",
+    insightCenter: "3 savings found, $34.99/mo total. Churn risk high: lead with Autopay ($10) and the plan switch on •••0655 ($15).",
+    next: {
+      title: "Apply the savings",
+      steps: ["Enroll in Autopay & paperless billing", "Switch line •••0655 to a lower plan", "Email the customer their new bill estimate"],
+      approval: "Approve & apply",
+    },
   },
 ];
 
@@ -161,12 +190,19 @@ export function IntentComposer() {
               </div>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div key={`r-${i}`} className="flex flex-col gap-4" exit={{ opacity: 0, filter: "blur(4px)" }} transition={{ duration: 0.3 }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
+                  >
+                    <Insight text={s.insightRetail} roomy />
+                  </motion.div>
                   {s.retail.map((b, n) => (
                     <motion.div
                       key={b}
                       initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      transition={{ duration: 0.6, delay: 0.25 + n * 0.15, ease: EASE }}
+                      transition={{ duration: 0.6, delay: 0.35 + n * 0.15, ease: EASE }}
                     >
                       <BlockView block={b} roomy order={n + 1} />
                     </motion.div>
@@ -184,6 +220,14 @@ export function IntentComposer() {
                 <AnimatePresence mode="wait" initial={false}>
                   {done ? (
                     <motion.div key={`c-${i}`} className="grid gap-3 sm:grid-cols-2" exit={{ opacity: 0, filter: "blur(4px)" }} transition={{ duration: 0.3 }}>
+                      <motion.div
+                        className="sm:col-span-2"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
+                      >
+                        <Insight text={s.insightCenter} roomy={false} />
+                      </motion.div>
                       {s.center.map((b, n) => (
                         <motion.div
                           key={b}
@@ -195,6 +239,14 @@ export function IntentComposer() {
                           <BlockView block={b} roomy={false} order={n + 1} />
                         </motion.div>
                       ))}
+                      <motion.div
+                        className="sm:col-span-2"
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.25 + s.center.length * 0.12, ease: EASE }}
+                      >
+                        <AgentNextStep key={`n-${i}`} next={s.next} start={reduce ? -1 : 900 + s.center.length * 120} />
+                      </motion.div>
                     </motion.div>
                   ) : (
                     <motion.div
@@ -233,6 +285,86 @@ export function IntentComposer() {
             </Glass>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- AI insight and agentic next step ---------- */
+
+const AI_BORDER = "linear-gradient(90deg, #f7c948, #f08a24 45%, #e5262e)";
+
+function Insight({ text, roomy }: { text: string; roomy: boolean }) {
+  return (
+    <div className="rounded-[14px] p-[1.5px]" style={{ background: AI_BORDER }}>
+      <div className={`rounded-[13px] bg-white ${roomy ? "px-5 py-4 md:px-6" : "px-4 py-3"}`}>
+        <p className={`flex items-center gap-1.5 font-semibold uppercase tracking-[0.05em] text-[#e5262e] ${roomy ? "text-[12px]" : "text-[11px]"}`}>
+          <Sparkle size={roomy ? 14 : 12} /> Insight
+        </p>
+        <p className={`mt-1.5 leading-[1.5] text-[#111] ${roomy ? "text-[16px] md:text-[17px]" : "text-[13.5px]"}`}>{text}</p>
+      </div>
+    </div>
+  );
+}
+
+function AgentNextStep({ next, start }: { next: NextStep; start: number }) {
+  // The agent works through its plan, then stops for the rep's approval on the last step.
+  const [progress, setProgress] = useState(start < 0 ? 2 : 0);
+  useEffect(() => {
+    if (start < 0) return;
+    const a = setTimeout(() => setProgress(1), start + 700);
+    const b = setTimeout(() => setProgress(2), start + 1500);
+    return () => {
+      clearTimeout(a);
+      clearTimeout(b);
+    };
+  }, [start]);
+
+  return (
+    <div className="rounded-[14px] border border-[#dfe3fb] bg-[#f5f7ff] p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="flex items-center gap-2 text-[14.5px] font-semibold text-[#111]">
+          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#111] text-white">
+            <Sparkle size={11} color="#fff" />
+          </span>
+          Next step · {next.title}
+        </p>
+        <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-[#4b5563]">Agent plan</span>
+      </div>
+      <ol className="mt-3 flex flex-col gap-2">
+        {next.steps.map((st, n) => {
+          const status = n < progress ? "done" : n === progress && n < next.steps.length - 1 ? "working" : n === next.steps.length - 1 && progress >= n ? "approve" : "queued";
+          return (
+            <li key={st} className="flex items-center gap-2.5 text-[13px]">
+              <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center">
+                {status === "done" ? (
+                  <motion.svg initial={{ scale: 0.5 }} animate={{ scale: 1 }} width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" fill="#1a9e4b" />
+                    <path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </motion.svg>
+                ) : status === "working" ? (
+                  <motion.span
+                    className="block h-[15px] w-[15px] rounded-full border-2 border-[#2f6fe4]/25 border-t-[#2f6fe4]"
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+                  />
+                ) : (
+                  <span className={`block h-[14px] w-[14px] rounded-full border-[1.5px] ${status === "approve" ? "border-[#e5262e]" : "border-[#c4c9d4]"}`} />
+                )}
+              </span>
+              <span className={status === "queued" ? "text-[#9ca3af]" : "text-[#111]"}>{st}</span>
+              {status === "approve" && (
+                <span className="ml-auto shrink-0 rounded-full bg-[#fde8e8] px-2 py-0.5 text-[11px] font-semibold text-[#b42318]">Needs rep approval</span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      <div className="mt-3.5 flex flex-wrap gap-2">
+        <span className={`rounded-full px-4 py-2 text-[13px] font-semibold transition-colors duration-500 ${progress >= 2 ? "bg-[#111] text-white" : "bg-[#e5e7eb] text-[#9ca3af]"}`}>
+          {next.approval}
+        </span>
+        <span className="rounded-full border border-[#d1d5db] bg-white px-4 py-2 text-[13px] text-[#374151]">Edit plan</span>
       </div>
     </div>
   );
@@ -315,7 +447,7 @@ function TrendChart({ roomy }: { roomy: boolean }) {
         </text>
       </svg>
       <div className={`mt-2 flex justify-between text-[#6b7280] ${roomy ? "text-[14px]" : "text-[12px]"}`}>
-        <span>Jan $180.22</span>
+        <span>Jan $175.22</span>
         <span>Feb $200.22</span>
         <span>Mar $200.22</span>
       </div>
