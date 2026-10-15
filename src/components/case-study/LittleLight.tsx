@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 /* A Little Light: a companion lamp whose character responds to the rhythms
    of your day. Everything visual here is code: the character, its light, the
@@ -227,40 +227,87 @@ export function Questions() {
 /* ------------------------------------------------------------------ */
 /* 02 · Health app → mood → lamp                                       */
 
+const FLOW = [
+  {
+    id: "tired", mood: "Tired", why: "short, restless night", light: "Soft pink, dimmed, eyes closed",
+    tint: "#ffe3f1", accent: "#e0559c", ink: "#b2357a",
+    stats: [["Sleep", "5h 40m", "restless"], ["Movement", "2,140 steps", "quiet day"], ["Routine", "Wind-down 10pm", "on time"]],
+  },
+  {
+    id: "happy", mood: "Happy", why: "rested and active", light: "Warm yellow, bright, smiling",
+    tint: "#fff3cf", accent: "#e8b21f", ink: "#8a6300",
+    stats: [["Sleep", "8h 10m", "rested"], ["Movement", "9,820 steps", "active"], ["Routine", "Wind-down 10pm", "on time"]],
+  },
+  {
+    id: "sleepy", mood: "Sleepy", why: "past your wind-down time", light: "Cool blue, low, settling in",
+    tint: "#e1f0ff", accent: "#4f9cf0", ink: "#22609f",
+    stats: [["Sleep", "7h 30m", "steady"], ["Movement", "6,200 steps", "moderate"], ["Routine", "It's 10:45pm", "late"]],
+  },
+  {
+    id: "sick", mood: "Sick", why: "body asking for rest", light: "Calm green, gentle",
+    tint: "#e2f8e6", accent: "#3fbf64", ink: "#1f7a3a",
+    stats: [["Sleep", "9h 20m", "long"], ["Movement", "1,020 steps", "resting"], ["Resting heart", "+8 bpm", "higher"]],
+  },
+  {
+    id: "grumpy", mood: "Grumpy", why: "a broken night", light: "Coral red, steady",
+    tint: "#ffe3df", accent: "#f0604f", ink: "#a8352a",
+    stats: [["Sleep", "4h 55m", "broken"], ["Movement", "3,400 steps", "low"], ["Routine", "Wind-down 1am", "late"]],
+  },
+] as const;
+
 export function HealthFlow() {
   const reduce = useReducedMotion();
-  const stats = [
-    ["Sleep", "5h 40m", "restless"],
-    ["Movement", "2,140 steps", "quiet day"],
-    ["Routine", "Wind-down 10pm", "on time"],
-  ];
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const f = FLOW[i];
+
+  useEffect(() => {
+    if (reduce || paused) return;
+    const t = setTimeout(() => setI((n) => (n + 1) % FLOW.length), 3600);
+    return () => clearTimeout(t);
+  }, [i, paused, reduce]);
+
   const flow = (
-    <div className="relative hidden h-px flex-1 bg-[#e7c9d8] md:block">
+    <div className="relative hidden h-px flex-1 md:block" style={{ background: `${f.accent}55` }}>
       {!reduce &&
-        [0, 1, 2].map((i) => (
+        [0, 1, 2].map((k) => (
           <motion.span
-            key={i}
-            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full bg-[#f28cc0]"
+            key={k}
+            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full"
+            style={{ background: f.accent }}
             animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.8, ease: "linear" }}
+            transition={{ duration: 2.4, repeat: Infinity, delay: k * 0.8, ease: "linear" }}
           />
         ))}
     </div>
   );
+
   return (
-    <div className="mb-3 overflow-hidden rounded-[22px] bg-white p-5 md:rounded-[36px] md:p-10">
+    <motion.div
+      className="mb-3 overflow-hidden rounded-[22px] p-5 md:rounded-[36px] md:p-10"
+      animate={{ backgroundColor: f.tint }}
+      transition={{ duration: 0.8, ease: EASE }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="flex flex-col items-center gap-6 md:flex-row md:gap-6">
         {/* Health app */}
-        <div className="w-full max-w-[260px] rounded-[28px] border-[6px] border-[#ece9e4] bg-[#f7f5f2] p-4 text-[#1c140e]">
+        <div className="w-full max-w-[270px] rounded-[28px] border-[6px] border-white/70 bg-white/60 p-4 text-[#1c140e] backdrop-blur">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#999]">Your health app · today</p>
           <div className="mt-3 flex flex-col gap-2">
-            {stats.map(([k, v, tag]) => (
+            {f.stats.map(([k, v, tag]) => (
               <div key={k} className="flex items-center justify-between rounded-[12px] bg-white px-3 py-2">
                 <span>
                   <span className="block text-[11px] text-[#999]">{k}</span>
-                  <span className="block text-[15px] font-semibold">{v}</span>
+                  <AnimatePresence mode="wait">
+                    <motion.span key={v} className="block text-[15px] font-semibold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+                      {v}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
-                <span className="rounded-full bg-[#ffe3f1] px-2 py-0.5 text-[11px] font-semibold text-[#b2357a]">{tag}</span>
+                <span className="rounded-full px-2 py-0.5 text-[11px] font-semibold transition-colors duration-700" style={{ background: f.tint, color: f.ink }}>
+                  {tag}
+                </span>
               </div>
             ))}
           </div>
@@ -269,10 +316,16 @@ export function HealthFlow() {
         {flow}
 
         {/* The mood it reads */}
-        <div className="w-full max-w-[220px] rounded-[20px] bg-[#ffe3f1] p-4 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#b2357a]/70">Mood</p>
-          <p className="mt-1 text-[22px] font-bold tracking-[-0.02em] text-[#111]">Tired</p>
-          <p className="mt-1 text-[13px] text-[#666]">short, restless night</p>
+        <div className="w-full max-w-[220px] rounded-[20px] bg-white/70 p-4 text-center backdrop-blur">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-700" style={{ color: f.ink }}>
+            Mood
+          </p>
+          <AnimatePresence mode="wait">
+            <motion.div key={f.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.3 }}>
+              <p className="mt-1 text-[24px] font-bold tracking-[-0.02em] text-[#111]">{f.mood}</p>
+              <p className="mt-1 text-[13px] text-[#666]">{f.why}</p>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {flow}
@@ -280,13 +333,30 @@ export function HealthFlow() {
         {/* The lamp */}
         <figure className="flex flex-col items-center gap-2">
           <div className="relative h-[200px] w-[200px] overflow-hidden rounded-[24px] md:h-[220px] md:w-[220px]">
-            <Image src="/images/case-studies/little-light/mood-tired.webp" alt="The lamp glowing soft pink with its eyes closed" fill sizes="220px" className="object-cover" />
+            <AnimatePresence initial={false}>
+              <motion.div key={f.id} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+                <Image src={`/images/case-studies/little-light/mood-${f.id}.webp`} alt={`The lamp: ${f.light.toLowerCase()}`} fill sizes="220px" className="object-cover" />
+              </motion.div>
+            </AnimatePresence>
           </div>
-          <figcaption className="text-[13px] text-[#666]">Soft pink, dimmed, eyes closed</figcaption>
+          <figcaption className="text-[13px] text-[#555]">{f.light}</figcaption>
         </figure>
       </div>
-      <p className="mt-8 text-center text-[13px] text-[#888]">No buttons, no logging. It reads the day you&apos;re already having.</p>
-    </div>
+
+      {/* Which day we're looking at */}
+      <div className="mt-8 flex justify-center gap-2">
+        {FLOW.map((x, n) => (
+          <button
+            key={x.id}
+            type="button"
+            onClick={() => setI(n)}
+            aria-label={`Show a ${x.mood.toLowerCase()} day`}
+            className="h-2 rounded-full transition-all duration-500"
+            style={{ width: n === i ? 28 : 8, background: n === i ? f.accent : "rgba(0,0,0,0.15)" }}
+          />
+        ))}
+      </div>
+    </motion.div>
   );
 }
 
