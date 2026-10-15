@@ -89,3 +89,6 @@ body {
   .eli-shimmer, .eli-heartbeat, .eli-ripple { animation: none; }
   .eli-shimmer { color: rgba(243,226,189,0.7); }
 }
+
+/* Little Light: the active dot fills like a progress bar, then the next slide comes in */
+@keyframes ll-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }

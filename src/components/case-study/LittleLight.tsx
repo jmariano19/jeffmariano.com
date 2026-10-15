@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 
 /* A Little Light: a companion lamp whose character responds to the rhythms
    of your day. Everything visual here is code: the character, its light, the
@@ -261,11 +261,8 @@ export function HealthFlow() {
   const [paused, setPaused] = useState(false);
   const f = FLOW[i];
 
-  useEffect(() => {
-    if (reduce || paused) return;
-    const t = setTimeout(() => setI((n) => (n + 1) % FLOW.length), 3600);
-    return () => clearTimeout(t);
-  }, [i, paused, reduce]);
+  // The active dot's fill is the timer: when it finishes, the next day comes in.
+  const next = () => setI((n) => (n + 1) % FLOW.length);
 
   const flow = (
     <div className="relative hidden h-px flex-1 md:block" style={{ background: `${f.accent}55` }}>
@@ -343,17 +340,31 @@ export function HealthFlow() {
         </figure>
       </div>
 
-      {/* Which day we're looking at */}
-      <div className="mt-8 flex justify-center gap-2">
+      {/* Which day we're looking at: the active dot grows into a bar and fills, then hands off */}
+      <div className="mt-8 flex items-center justify-center gap-2">
         {FLOW.map((x, n) => (
           <button
             key={x.id}
             type="button"
             onClick={() => setI(n)}
             aria-label={`Show a ${x.mood.toLowerCase()} day`}
-            className="h-2 rounded-full transition-all duration-500"
-            style={{ width: n === i ? 28 : 8, background: n === i ? f.accent : "rgba(0,0,0,0.15)" }}
-          />
+            aria-current={n === i}
+            className="relative h-2 overflow-hidden rounded-full transition-[width,background-color] duration-500"
+            style={{ width: n === i ? 44 : 8, background: n === i ? `${f.accent}40` : "rgba(0,0,0,0.15)" }}
+          >
+            {n === i && (
+              <span
+                key={i}
+                className="absolute inset-0 origin-left rounded-full"
+                style={{
+                  background: f.accent,
+                  animation: reduce ? undefined : "ll-progress 3.6s linear forwards",
+                  animationPlayState: paused ? "paused" : "running",
+                }}
+                onAnimationEnd={next}
+              />
+            )}
+          </button>
         ))}
       </div>
     </motion.div>
