@@ -249,16 +249,34 @@ export default function Home() {
           <Reveal blur y={60}>
             <Link
               href="/case-studies/little-light"
-              className="group relative mt-4 block aspect-[2400/962] overflow-hidden rounded-[16px] bg-[#3a2416] md:mt-6"
+              className="group relative mt-4 block overflow-hidden rounded-[16px] bg-[#2a1a0e] sm:aspect-[2600/1016] md:mt-6"
             >
-              <Image
-                src="/images/home/little-light.webp"
-                alt=""
-                fill
-                sizes="(max-width: 1440px) 100vw, 1304px"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-              />
-              <h3 className="sr-only">A Little Light for Your Day, a companion lamp</h3>
+              {/* Phones: photo on top, words below on the lamp's warm brown. sm up: words over the photo. */}
+              <div className="relative aspect-[4/3] overflow-hidden sm:absolute sm:inset-0 sm:aspect-auto">
+                <Image
+                  src="/images/home/little-light-bg.webp"
+                  alt=""
+                  fill
+                  sizes="(max-width: 1440px) 100vw, 1304px"
+                  className="object-cover object-[48%_center] transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:object-center"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-[linear-gradient(to_top,#2a1a0e,transparent_35%)] sm:bg-[linear-gradient(to_right,rgba(28,16,8,0.78),rgba(28,16,8,0.4)_32%,transparent_55%)]"
+                />
+              </div>
+              <div className="relative px-6 pb-7 pt-1 text-[#fff4e2] sm:absolute sm:left-[5%] sm:top-1/2 sm:w-[34%] sm:-translate-y-1/2 sm:p-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#ffd9a0] md:text-[12px]">Experiment · Connected object</p>
+                <h3 className="mt-2 text-[30px] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[clamp(26px,3.4vw,48px)]">
+                  A little light for your day
+                </h3>
+                <p className="mt-3 max-w-[30ch] text-[15px] leading-[1.45] text-[#fff4e2]/80 md:text-[17px]">
+                  A lamp whose mood follows your sleep, movement and routine.
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#fff4e2] px-4 py-2 text-[13.5px] font-semibold text-[#2a1a0e] transition-transform group-hover:translate-x-0.5">
+                  See the experiment <span aria-hidden="true">→</span>
+                </span>
+              </div>
             </Link>
           </Reveal>
         </section>
