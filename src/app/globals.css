@@ -74,3 +74,18 @@ body {
 }
 .eli-heartbeat { animation: eli-heartbeat 1.6s ease-in-out infinite; transform-origin: center; }
 .eli-ripple { animation: eli-ripple 1.6s ease-out infinite; }
+
+/* Eli's "remembering" status: a slow warm shimmer across the text */
+.eli-shimmer {
+  background: linear-gradient(90deg, rgba(243,226,189,0.35) 0%, rgba(255,226,179,0.95) 50%, rgba(243,226,189,0.35) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: eli-shimmer 1.8s linear infinite;
+}
+@keyframes eli-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .eli-shimmer, .eli-heartbeat, .eli-ripple { animation: none; }
+  .eli-shimmer { color: rgba(243,226,189,0.7); }
+}
