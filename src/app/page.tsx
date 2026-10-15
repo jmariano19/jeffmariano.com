@@ -246,21 +246,25 @@ export default function Home() {
               <h3 className="sr-only">Eli&apos;s Last Experiment, a narrative game</h3>
             </Link>
           </Reveal>
-        </section>
-
-        {/* Personal concept: health companion lamp */}
-        <section className="pb-24 md:pb-36" aria-label="Companion lamp experiment">
-          <Reveal blur y={60}>
-            <Link href="/case-studies/health-companion" className="group block rounded-[24px] bg-[#e8e3dc] p-7 md:p-12">
-              <p className="text-[13px] uppercase tracking-[0.06em] text-[#655e55]">Personal experiment · Early concept</p>
-              <div className="mt-8 flex items-end justify-between gap-6">
-                <h3 className="max-w-[14ch] text-[42px] leading-[1.02] tracking-[-0.05em] md:text-[64px]">A Little Light, A Little Life</h3>
-                <Arrow />
+          <Reveal blur y={60} className="mt-4 md:mt-6">
+            <Link
+              href="/case-studies/health-companion"
+              aria-label="Explore A Little Light, A Little Life, a companion lamp concept"
+              className="group relative flex aspect-[4/3] items-center overflow-hidden rounded-[16px] bg-[linear-gradient(115deg,#221e19_0%,#3c3025_65%,#806041_100%)] text-[#fff8ec] outline-offset-4 sm:aspect-[1576/666] focus-visible:outline-2 focus-visible:outline-[#655e55]"
+              data-ga-event="case_study_click"
+              data-ga-category="experiments"
+              data-ga-label="Health companion lamp"
+            >
+              <div className="relative z-10 w-[88%] px-[6%] py-8 sm:w-[65%]">
+                <p className="text-[12px] uppercase tracking-[0.08em] text-[#e2cdb1] md:text-[14px]">Companion lamp · Concept in progress</p>
+                <h3 className="mt-4 max-w-[12ch] text-[36px] font-semibold leading-[0.98] tracking-[-0.05em] sm:text-[48px] lg:text-[68px]">
+                  A Little Light,<br />A Little Life
+                </h3>
+                <p className="mt-5 max-w-[29rem] text-[15px] leading-relaxed text-[#e2cdb1] md:text-[17px]">
+                  Sleep and movement, expressed through a little companion.
+                </p>
               </div>
-              <p className="mt-6 max-w-[36rem] text-[17px] leading-relaxed text-[#655e55]">
-                Exploring a companion lamp that turns sleep and daily movement into light, expression, and personality.
-              </p>
-              <p className="mt-5 text-[14px] text-[#655e55] underline underline-offset-4">Follow the concept →</p>
+              <span className="absolute bottom-4 right-4"><Arrow /></span>
             </Link>
           </Reveal>
         </section>
