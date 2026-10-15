@@ -108,36 +108,24 @@ export function ChallengeOverview({
   );
 }
 
-/** The story at a glance: each chapter in one line, linking down the page. */
+/** The story at a glance: each chapter as a quiet text link down the page. */
 export function StoryMap({ items }: { items: { id: string; n: string; title: string; line: string }[] }) {
   return (
-    <section className="pb-12 md:pb-16" aria-label="The story at a glance">
+    <nav className="pb-12 md:pb-16" aria-label="The story at a glance">
       <FadeUp>
-        <p className="mb-4 text-[13px] font-bold uppercase tracking-[0.12em] text-[#555]">The story at a glance</p>
-      </FadeUp>
-      <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((it, i) => (
-          <FadeUp key={it.id} delay={i * 0.08} className="h-full">
-            <li className="h-full">
-              <a
-                href={`#${it.id}`}
-                className="group flex h-full flex-col rounded-[18px] bg-white p-5 transition-shadow hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] md:p-6"
-              >
-                <span className="flex items-center justify-between">
-                  <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#111] text-[12px] font-bold text-white">
-                    {it.n}
-                  </span>
-                  <span className="text-[18px] text-[#999] transition-transform group-hover:translate-y-0.5" aria-hidden="true">
-                    ↓
-                  </span>
-                </span>
-                <span className="mt-4 text-[18px] font-bold leading-[1.25] tracking-[-0.02em] text-[#111]">{it.title}</span>
-                <span className="mt-1.5 text-[14.5px] leading-[1.5] text-[#555]">{it.line}</span>
+        <p className="mb-5 text-[13px] font-bold uppercase tracking-[0.12em] text-[#888]">The story in {items.length} parts</p>
+        <ol className="grid gap-x-8 sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none">
+          {items.map((it) => (
+            <li key={it.id}>
+              <a href={`#${it.id}`} className="group block border-t-2 border-[#d4d4d4] pt-4 pb-6 transition-colors hover:border-[#111]">
+                <span className="text-[13px] font-semibold tabular-nums text-[#999] transition-colors group-hover:text-[#111]">{it.n}</span>
+                <span className="mt-2 block text-[18px] font-bold leading-[1.25] tracking-[-0.02em] text-[#111]">{it.title}</span>
+                <span className="mt-1 block text-[15px] leading-[1.5] text-[#666]">{it.line}</span>
               </a>
             </li>
-          </FadeUp>
-        ))}
-      </ol>
-    </section>
+          ))}
+        </ol>
+      </FadeUp>
+    </nav>
   );
 }
