@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { SitePage } from "@/components/SiteChrome";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
@@ -58,6 +59,16 @@ export default function LittleLight() {
         title="Your day becomes its mood"
         takeaway="The lamp connects to your health app. It follows your sleep, movement and routine, and its mood shifts with your natural behavior."
       >
+        <div className="mb-3 overflow-hidden rounded-[22px] bg-[#3a2416] md:rounded-[36px]">
+          <Image
+            src="/images/case-studies/little-light/app-connect.webp"
+            alt="The cat lamp glowing on a bedside table next to a phone showing its companion app, connected"
+            width={1672}
+            height={941}
+            sizes="(max-width: 1440px) 100vw, 1304px"
+            className="h-auto w-full"
+          />
+        </div>
         <HealthFlow />
         <SignalMap />
       </Chapter>
