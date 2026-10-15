@@ -248,6 +248,23 @@ export default function Home() {
           </Reveal>
         </section>
 
+        {/* Personal concept: health companion lamp */}
+        <section className="pb-24 md:pb-36" aria-label="Companion lamp experiment">
+          <Reveal blur y={60}>
+            <Link href="/case-studies/health-companion" className="group block rounded-[24px] bg-[#e8e3dc] p-7 md:p-12">
+              <p className="text-[13px] uppercase tracking-[0.06em] text-[#655e55]">Personal experiment · Early concept</p>
+              <div className="mt-8 flex items-end justify-between gap-6">
+                <h3 className="max-w-[14ch] text-[42px] leading-[1.02] tracking-[-0.05em] md:text-[64px]">A Little Light, A Little Life</h3>
+                <Arrow />
+              </div>
+              <p className="mt-6 max-w-[36rem] text-[17px] leading-relaxed text-[#655e55]">
+                Exploring a companion lamp that turns sleep and daily movement into light, expression, and personality.
+              </p>
+              <p className="mt-5 text-[14px] text-[#655e55] underline underline-offset-4">Follow the concept →</p>
+            </Link>
+          </Reveal>
+        </section>
+
         {/* Experience */}
         <section className="pb-24 md:pb-36">
           <SectionTitle
