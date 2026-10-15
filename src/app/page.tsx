@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { ContactSection, SectionTitle, SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import ScrollBlur from "@/components/ScrollBlur";
+import { LampCharacter } from "@/components/LampExperience";
 
 // Placeholder images were cropped from the design mockup; swap in the full-resolution originals.
 const projects = [
@@ -217,7 +218,7 @@ export default function Home() {
             id="side-projects"
             title="Experiments"
             kicker="Side projects"
-            aside="Where I test how people form trust with AI, outside of client work."
+            aside="Personal explorations in character, interaction, and making things feel alive."
           />
           <Reveal blur y={60}>
             <Link
@@ -244,6 +245,20 @@ export default function Home() {
                 />
               </div>
               <h3 className="sr-only">Eli&apos;s Last Experiment, a narrative game</h3>
+            </Link>
+          </Reveal>
+        </section>
+
+        <section className="pb-24 md:pb-36" aria-label="Companion lamp experiment">
+          <Reveal blur y={60}>
+            <Link href="/case-studies/companion-lamp" className="group grid overflow-hidden rounded-[20px] bg-[#211b18] text-[#fff4df] md:grid-cols-2">
+              <div className="p-6 md:p-10"><LampCharacter /></div>
+              <div className="flex flex-col justify-center px-7 pb-10 md:p-12">
+                <p className="text-xs uppercase tracking-[.14em] text-[#d8bda8]">Personal experiment · Concept in progress</p>
+                <h3 className="mt-5 text-4xl font-semibold leading-tight tracking-[-.04em] md:text-5xl">A little light<br />for your day.</h3>
+                <p className="mt-5 max-w-md text-lg leading-relaxed text-[#e0cbbb]">Exploring a companion lamp that turns sleep, movement, and daily rhythms into light and expression.</p>
+                <span className="mt-7 text-sm underline underline-offset-4">Meet the concept →</span>
+              </div>
             </Link>
           </Reveal>
         </section>
