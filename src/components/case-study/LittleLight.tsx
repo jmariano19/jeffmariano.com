@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState, type ReactNode } from "react";
 
@@ -230,16 +231,16 @@ export function HealthFlow() {
   const reduce = useReducedMotion();
   const stats = [
     ["Sleep", "5h 40m", "restless"],
-    ["Movement", "9,820 steps", "active"],
+    ["Movement", "2,140 steps", "quiet day"],
     ["Routine", "Wind-down 10pm", "on time"],
   ];
-  const dots = (
-    <div className="relative hidden h-px flex-1 bg-[#fbe9cf]/15 md:block">
+  const flow = (
+    <div className="relative hidden h-px flex-1 bg-[#e7c9d8] md:block">
       {!reduce &&
         [0, 1, 2].map((i) => (
           <motion.span
             key={i}
-            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full bg-[#ffb38a]"
+            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full bg-[#f28cc0]"
             animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
             transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.8, ease: "linear" }}
           />
@@ -247,72 +248,79 @@ export function HealthFlow() {
     </div>
   );
   return (
-    <div className="mb-3 overflow-hidden rounded-[22px] bg-[#1c140e] p-5 text-[#fbe9cf] md:rounded-[36px] md:p-10">
+    <div className="mb-3 overflow-hidden rounded-[22px] bg-white p-5 md:rounded-[36px] md:p-10">
       <div className="flex flex-col items-center gap-6 md:flex-row md:gap-6">
         {/* Health app */}
-        <div className="w-full max-w-[260px] rounded-[28px] border-[6px] border-[#2e2219] bg-[#fbf6ee] p-4 text-[#1c140e] shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#9a7b5f]">Your health app · today</p>
+        <div className="w-full max-w-[260px] rounded-[28px] border-[6px] border-[#ece9e4] bg-[#f7f5f2] p-4 text-[#1c140e]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#999]">Your health app · today</p>
           <div className="mt-3 flex flex-col gap-2">
             {stats.map(([k, v, tag]) => (
               <div key={k} className="flex items-center justify-between rounded-[12px] bg-white px-3 py-2">
                 <span>
-                  <span className="block text-[11px] text-[#9a8a7a]">{k}</span>
+                  <span className="block text-[11px] text-[#999]">{k}</span>
                   <span className="block text-[15px] font-semibold">{v}</span>
                 </span>
-                <span className="rounded-full bg-[#ffe7cf] px-2 py-0.5 text-[11px] font-semibold text-[#9a4d12]">{tag}</span>
+                <span className="rounded-full bg-[#ffe3f1] px-2 py-0.5 text-[11px] font-semibold text-[#b2357a]">{tag}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {dots}
+        {flow}
 
         {/* The mood it reads */}
-        <div className="w-full max-w-[240px] rounded-[20px] border border-[#fbe9cf]/12 bg-white/[0.04] p-4 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#fbe9cf]/55">Mood</p>
-          <p className="mt-1 text-[18px] font-semibold leading-snug">Tired, but proud</p>
-          <p className="mt-1 text-[13px] text-[#fbe9cf]/60">restless night + active afternoon</p>
+        <div className="w-full max-w-[220px] rounded-[20px] bg-[#ffe3f1] p-4 text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#b2357a]/70">Mood</p>
+          <p className="mt-1 text-[22px] font-bold tracking-[-0.02em] text-[#111]">Tired</p>
+          <p className="mt-1 text-[13px] text-[#666]">short, restless night</p>
         </div>
 
-        {dots}
+        {flow}
 
         {/* The lamp */}
-        <div className="flex flex-col items-center gap-2">
-          <LampCharacter face="happy" color="#ffc79a" glow={0.75} size={150} />
-          <p className="text-[13px] text-[#fbe9cf]/70">Soft peach glow, a gentle smile</p>
-        </div>
+        <figure className="flex flex-col items-center gap-2">
+          <div className="relative h-[200px] w-[200px] overflow-hidden rounded-[24px] md:h-[220px] md:w-[220px]">
+            <Image src="/images/case-studies/little-light/mood-tired.webp" alt="The lamp glowing soft pink with its eyes closed" fill sizes="220px" className="object-cover" />
+          </div>
+          <figcaption className="text-[13px] text-[#666]">Soft pink, dimmed, eyes closed</figcaption>
+        </figure>
       </div>
-      <p className="mt-8 text-center text-[13px] text-[#fbe9cf]/50">No buttons, no logging. It reads the day you&apos;re already having.</p>
+      <p className="mt-8 text-center text-[13px] text-[#888]">No buttons, no logging. It reads the day you&apos;re already having.</p>
     </div>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* 02 · Signals → behaviors                                            */
+/* 02b · Signals → behaviors                                           */
 
 export function SignalMap() {
   const rows = [
-    { signal: "Sleep", from: "Restless night", to: "Soft glow, sleepy eyes", face: "sleepy" as Face, color: "#f4c27a" },
-    { signal: "Movement", from: "Active afternoon", to: "Brighter color, a small celebration", face: "celebrate" as Face, color: "#ffb38a" },
-    { signal: "Routine", from: "Evening approaches", to: "Warm light, relaxed face", face: "calm" as Face, color: "#f0a35e" },
+    { signal: "Sleep", from: "Restless night", to: "Soft pink, eyes closed", img: "tired", tint: "#ffe3f1" },
+    { signal: "Movement", from: "Active afternoon", to: "Bright yellow, a smile", img: "happy", tint: "#fff3cf" },
+    { signal: "Routine", from: "Wind-down time", to: "Cool blue, settling in", img: "sleepy", tint: "#e1f0ff" },
   ];
   return (
-    <div className="overflow-hidden rounded-[22px] bg-[#1c140e] p-4 text-[#fbe9cf] md:rounded-[36px] md:p-8">
-      <div className="grid gap-3">
-        {rows.map((r) => (
-          <div key={r.signal} className="grid grid-cols-[1fr_auto] items-center gap-4 rounded-[18px] bg-white/[0.04] p-4 md:grid-cols-[150px_1fr_auto_1fr_120px] md:gap-6 md:p-5">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#fbe9cf]/55 md:text-[13px]">{r.signal}</p>
-            <div className="col-span-2 row-start-2 md:col-span-1 md:row-start-auto">
-              <p className="text-[17px] font-semibold">{r.from}</p>
-            </div>
-            <span className="hidden text-[#fbe9cf]/35 md:block">→</span>
-            <p className="col-span-2 row-start-3 text-[15px] text-[#fbe9cf]/80 md:col-span-1 md:row-start-auto">{r.to}</p>
-            <div className="col-start-2 row-start-1 flex justify-end md:col-start-auto md:row-start-auto">
-              <LampCharacter face={r.face} color={r.color} glow={r.face === "sleepy" ? 0.35 : r.face === "calm" ? 0.55 : 0.9} size={76} />
-            </div>
+    <div className="grid gap-3 md:grid-cols-3">
+      {rows.map((r, i) => (
+        <motion.div
+          key={r.signal}
+          className="overflow-hidden rounded-[22px] p-3"
+          style={{ background: r.tint }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, delay: i * 0.08, ease: EASE }}
+        >
+          <div className="relative aspect-square overflow-hidden rounded-[16px]">
+            <Image src={`/images/case-studies/little-light/mood-${r.img}.webp`} alt={`The lamp: ${r.to.toLowerCase()}`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
           </div>
-        ))}
-      </div>
+          <div className="px-2 pb-2 pt-4">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#111]/45">{r.signal}</p>
+            <p className="mt-1 text-[19px] font-bold tracking-[-0.02em] text-[#111]">{r.from}</p>
+            <p className="mt-0.5 text-[15px] text-[#555]">→ {r.to}</p>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }
