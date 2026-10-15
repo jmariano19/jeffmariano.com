@@ -21,6 +21,9 @@ export default function EliLastExperiment() {
         meta="Role: Designer & builder · narrative, interaction, animation | Platform: Mobile · Rive · Claude API | Status: Prototype 4, in progress"
         media={<EliStory />}
       />
+
+      {/* Where the story continues: the design sections are added here next */}
+      <div id="eli-design" className="scroll-mt-8" />
     </SitePage>
   );
 }
