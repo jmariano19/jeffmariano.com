@@ -18,24 +18,18 @@ type Face = "sleepy" | "awake" | "happy" | "celebrate" | "nudge" | "rest" | "cal
 export function LittleLightHero() {
   const reduce = useReducedMotion();
   return (
-    <div className="relative overflow-hidden rounded-[22px] bg-[#3a2416] md:rounded-[40px]">
-      <Image
-        src="/images/case-studies/little-light/hero.webp"
-        alt="A small cat-shaped lamp glowing warmly on a stack of books beside a bed"
-        width={2400}
-        height={962}
-        priority
-        sizes="(max-width: 1440px) 100vw, 1304px"
-        className="h-auto w-full"
+    <div className="relative aspect-[1470/630] overflow-hidden rounded-[22px] bg-[#3a2416] md:rounded-[40px]">
+      <video
+        src="/videos/little-light/top.mp4"
+        poster="/images/case-studies/little-light/top-poster.webp"
+        autoPlay={!reduce}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label="The lamp shifting through warm, pink, lavender and teal light on a bedside table"
+        className="absolute inset-0 h-full w-full object-cover"
       />
-      {!reduce && (
-        <motion.div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-[52.6%] top-[40%] h-[70%] w-[34%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,214,150,0.45),rgba(255,170,90,0.15)_55%,transparent)] mix-blend-screen"
-          animate={{ opacity: [0.35, 0.8, 0.35], scale: [0.97, 1.03, 0.97] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        />
-      )}
     </div>
   );
 }
