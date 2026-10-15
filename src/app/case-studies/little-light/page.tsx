@@ -5,6 +5,7 @@ import { Chapter, StoryMap } from "@/components/case-study/Chapter";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import {
   DaySimulator,
+  HealthFlow,
   LittleLightHero,
   Principles,
   Process,
@@ -25,7 +26,7 @@ export default function LittleLight() {
       <CaseStudyHero
         tag="SIDE PROJECT · CONNECTED OBJECT · CONCEPT"
         title="A Little Light for Your Day"
-        summary="What if the rhythms of your day could give a little character its personality? A companion lamp that responds to sleep, movement and routine through color, light and facial expressions."
+        summary="What if the rhythms of your day could give a little character its personality? A companion lamp connected to your health app that responds to sleep, movement and routine through color, light and facial expressions."
         meta="Role: Designer & maker · character, animation, hardware | Platform: Screen prototype inside a lamp · health data | Status: Concept exploration"
         media={<LittleLightHero />}
       />
@@ -33,7 +34,7 @@ export default function LittleLight() {
       <StoryMap
         items={[
           { id: "questions", n: "01", title: "The questions", line: "What a glance can say." },
-          { id: "signals", n: "02", title: "Signals to behavior", line: "Your day becomes its mood." },
+          { id: "signals", n: "02", title: "Connected to your health", line: "Your day becomes its mood." },
           { id: "day", n: "03", title: "A day with the light", line: "Try it." },
           { id: "principles", n: "04", title: "Principles", line: "Encouraging, never judging." },
           { id: "process", n: "05", title: "Process", line: "From character to object." },
@@ -53,10 +54,11 @@ export default function LittleLight() {
       <Chapter
         id="signals"
         n="02"
-        kicker="Behavior design"
+        kicker="Connected to your health app"
         title="Your day becomes its mood"
-        takeaway="Three everyday signals, each mapped to light, color and expression."
+        takeaway="The lamp connects to your health app. It follows your sleep, movement and routine, and its mood shifts with your natural behavior."
       >
+        <HealthFlow />
         <SignalMap />
       </Chapter>
 

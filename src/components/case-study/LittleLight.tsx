@@ -195,6 +195,70 @@ export function Questions() {
 }
 
 /* ------------------------------------------------------------------ */
+/* 02 · Health app → mood → lamp                                       */
+
+export function HealthFlow() {
+  const reduce = useReducedMotion();
+  const stats = [
+    ["Sleep", "5h 40m", "restless"],
+    ["Movement", "9,820 steps", "active"],
+    ["Routine", "Wind-down 10pm", "on time"],
+  ];
+  const dots = (
+    <div className="relative hidden h-px flex-1 bg-[#fbe9cf]/15 md:block">
+      {!reduce &&
+        [0, 1, 2].map((i) => (
+          <motion.span
+            key={i}
+            className="absolute -top-[3px] h-[7px] w-[7px] rounded-full bg-[#ffb38a]"
+            animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
+            transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.8, ease: "linear" }}
+          />
+        ))}
+    </div>
+  );
+  return (
+    <div className="mb-3 overflow-hidden rounded-[22px] bg-[#1c140e] p-5 text-[#fbe9cf] md:rounded-[36px] md:p-10">
+      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-6">
+        {/* Health app */}
+        <div className="w-full max-w-[260px] rounded-[28px] border-[6px] border-[#2e2219] bg-[#fbf6ee] p-4 text-[#1c140e] shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#9a7b5f]">Your health app · today</p>
+          <div className="mt-3 flex flex-col gap-2">
+            {stats.map(([k, v, tag]) => (
+              <div key={k} className="flex items-center justify-between rounded-[12px] bg-white px-3 py-2">
+                <span>
+                  <span className="block text-[11px] text-[#9a8a7a]">{k}</span>
+                  <span className="block text-[15px] font-semibold">{v}</span>
+                </span>
+                <span className="rounded-full bg-[#ffe7cf] px-2 py-0.5 text-[11px] font-semibold text-[#9a4d12]">{tag}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {dots}
+
+        {/* The mood it reads */}
+        <div className="w-full max-w-[240px] rounded-[20px] border border-[#fbe9cf]/12 bg-white/[0.04] p-4 text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#fbe9cf]/55">Mood</p>
+          <p className="mt-1 text-[18px] font-semibold leading-snug">Tired, but proud</p>
+          <p className="mt-1 text-[13px] text-[#fbe9cf]/60">restless night + active afternoon</p>
+        </div>
+
+        {dots}
+
+        {/* The lamp */}
+        <div className="flex flex-col items-center gap-2">
+          <LampCharacter face="happy" color="#ffc79a" glow={0.75} size={150} />
+          <p className="text-[13px] text-[#fbe9cf]/70">Soft peach glow, a gentle smile</p>
+        </div>
+      </div>
+      <p className="mt-8 text-center text-[13px] text-[#fbe9cf]/50">No buttons, no logging. It reads the day you&apos;re already having.</p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* 02 · Signals → behaviors                                            */
 
 export function SignalMap() {
