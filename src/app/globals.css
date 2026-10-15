@@ -60,3 +60,17 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .canvas-shimmer, .canvas-pulse { animation: none; }
 }
+
+/* Eli's story: a heart that beats twice and rests, with a soft ripple */
+@keyframes eli-heartbeat {
+  0%, 40%, 100% { transform: scale(1); }
+  8% { transform: scale(1.18); }
+  16% { transform: scale(1); }
+  24% { transform: scale(1.14); }
+}
+@keyframes eli-ripple {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  60%, 100% { transform: scale(1.9); opacity: 0; }
+}
+.eli-heartbeat { animation: eli-heartbeat 1.6s ease-in-out infinite; transform-origin: center; }
+.eli-ripple { animation: eli-ripple 1.6s ease-out infinite; }
