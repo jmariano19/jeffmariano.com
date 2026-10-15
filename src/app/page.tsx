@@ -220,28 +220,30 @@ export default function Home() {
             aside="Where I test how people form trust with AI, outside of client work."
           />
           <Reveal blur y={60}>
-            <Link href="/case-studies/eli-last-experiment" className="overflow-hidden rounded-[16px] bg-[#1d1810] grid grid-cols-[1fr_auto] items-center gap-4 md:gap-10 pl-6 md:pl-[10%] pr-4 md:pr-[8%]">
-              <div className="py-10 md:py-0 max-w-[460px]">
-                <p className="text-[14px] md:text-[14px] uppercase tracking-[0.04em] text-[#8a7a5c]">
-                  Narrative game · Prototype
-                </p>
-                <h3 className="mt-3 md:mt-4 text-[30px] md:text-[56px] leading-[1.02] font-semibold tracking-[-0.05em] text-[#d6bf8e]">
-                  Eli&apos;s Last Experiment
-                </h3>
-                <p className="mt-3 md:mt-5 text-[15px] md:text-[18px] leading-relaxed text-[#a39880]">
-                  A boy built from the player&apos;s own words. An experiment in how people form trust and attachment with
-                  an AI character.
-                </p>
-              </div>
-              <div className="relative h-[260px] sm:h-[360px] md:h-[520px] aspect-[434/660] self-end">
+            <Link
+              href="/case-studies/eli-last-experiment"
+              className="group relative block aspect-[4/3] overflow-hidden rounded-[16px] bg-[#1d1910] sm:aspect-[1576/666]"
+            >
+              <Image
+                src="/images/home/eli-card-bg.webp"
+                alt=""
+                fill
+                sizes="(max-width: 1440px) 100vw, 1304px"
+                className="object-cover object-[80%_center] transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              />
+              {/* Darken the left side a touch so the title stays crisp over the lab */}
+              <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,16,10,0.55),transparent_60%)]" />
+              <div className="absolute left-[6%] top-1/2 w-[50%] -translate-y-1/2 sm:w-[44%]">
                 <Image
-                  src="/images/home/eli.jpg"
+                  src="/images/home/eli-logo.webp"
                   alt=""
-                  fill
-                  sizes="(max-width: 768px) 40vw, 30vw"
-                  className="object-contain object-bottom [mask-image:linear-gradient(to_right,transparent,black_18%,black_88%,transparent)]"
+                  width={1400}
+                  height={885}
+                  sizes="(max-width: 640px) 50vw, 44vw"
+                  className="h-auto w-full"
                 />
               </div>
+              <h3 className="sr-only">Eli&apos;s Last Experiment, a narrative game</h3>
             </Link>
           </Reveal>
         </section>
