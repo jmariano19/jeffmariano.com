@@ -220,7 +220,7 @@ export default function Home() {
             aside="Where I test how people form trust with AI, outside of client work."
           />
           <Reveal blur y={60}>
-            <div className="overflow-hidden rounded-[16px] bg-[#1d1810] grid grid-cols-[1fr_auto] items-center gap-4 md:gap-10 pl-6 md:pl-[10%] pr-4 md:pr-[8%]">
+            <Link href="/case-studies/eli-last-experiment" className="overflow-hidden rounded-[16px] bg-[#1d1810] grid grid-cols-[1fr_auto] items-center gap-4 md:gap-10 pl-6 md:pl-[10%] pr-4 md:pr-[8%]">
               <div className="py-10 md:py-0 max-w-[460px]">
                 <p className="text-[14px] md:text-[14px] uppercase tracking-[0.04em] text-[#8a7a5c]">
                   Narrative game · Prototype
@@ -242,7 +242,7 @@ export default function Home() {
                   className="object-contain object-bottom [mask-image:linear-gradient(to_right,transparent,black_18%,black_88%,transparent)]"
                 />
               </div>
-            </div>
+            </Link>
           </Reveal>
         </section>
 
