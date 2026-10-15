@@ -217,7 +217,7 @@ export default function Home() {
             id="side-projects"
             title="Experiments"
             kicker="Side projects"
-            aside="Where I test how people form trust with AI, outside of client work."
+            aside="Where I explore character, AI and everyday wellbeing, outside of client work."
           />
           <Reveal blur y={60}>
             <Link
@@ -244,6 +244,21 @@ export default function Home() {
                 />
               </div>
               <h3 className="sr-only">Eli&apos;s Last Experiment, a narrative game</h3>
+            </Link>
+          </Reveal>
+          <Reveal blur y={60}>
+            <Link
+              href="/case-studies/little-light"
+              className="group relative mt-4 block aspect-[2400/962] overflow-hidden rounded-[16px] bg-[#3a2416] md:mt-6"
+            >
+              <Image
+                src="/images/home/little-light.webp"
+                alt=""
+                fill
+                sizes="(max-width: 1440px) 100vw, 1304px"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              />
+              <h3 className="sr-only">A Little Light for Your Day, a companion lamp</h3>
             </Link>
           </Reveal>
         </section>
