@@ -136,41 +136,44 @@ export function EditorAnatomy() {
             sizes="(max-width: 1440px) 100vw, 1304px"
             className="h-auto w-full"
           />
-          {PINS.map((p) => (
-            <button
-              key={p.n}
-              type="button"
-              onMouseEnter={() => setHover(p.n)}
-              onMouseLeave={() => setHover(null)}
-              onFocus={() => setHover(p.n)}
-              onBlur={() => setHover(null)}
-              className={`absolute flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[12px] font-bold shadow-[0_0_0_4px_rgba(255,207,138,0.25)] transition-transform md:h-8 md:w-8 md:text-[14px] ${
-                hover === p.n ? "scale-125 bg-[#ffe2b3] text-[#1d1910]" : "bg-[#ffcf8a] text-[#1d1910]"
-              }`}
-              style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              aria-label={`${p.n}. ${p.label}`}
-            >
-              {p.n}
-            </button>
-          ))}
+          {PINS.map((p) => {
+            const open = hover === p.n;
+            const left = p.x > 60;
+            const above = p.y > 65;
+            return (
+              <div key={p.n} className="absolute" style={{ left: `${p.x}%`, top: `${p.y}%` }}>
+                <button
+                  type="button"
+                  onMouseEnter={() => setHover(p.n)}
+                  onMouseLeave={() => setHover(null)}
+                  onFocus={() => setHover(p.n)}
+                  onBlur={() => setHover(null)}
+                  onClick={() => setHover(open ? null : p.n)}
+                  className={`relative z-10 flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-[12px] font-bold text-[#1d1910] shadow-[0_0_0_4px_rgba(255,207,138,0.25)] transition-transform md:h-8 md:w-8 md:text-[14px] ${
+                    open ? "scale-125 bg-[#ffe2b3]" : "bg-[#ffcf8a]"
+                  }`}
+                  aria-label={`${p.n}. ${p.label}: ${p.line}`}
+                  aria-expanded={open}
+                >
+                  {p.n}
+                </button>
+                <motion.div
+                  role="tooltip"
+                  className={`pointer-events-none absolute z-20 w-[200px] rounded-[14px] bg-white px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.35)] md:w-[240px] ${
+                    left ? "right-5 md:right-7" : "left-5 md:left-7"
+                  } ${above ? "bottom-1" : "-top-3"}`}
+                  initial={false}
+                  animate={open ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 6, scale: 0.97 }}
+                  transition={{ duration: 0.22, ease: EASE }}
+                >
+                  <p className="text-[15px] font-semibold text-[#111]">{p.label}</p>
+                  <p className="mt-0.5 text-[13.5px] leading-[1.45] text-[#666]">{p.line}</p>
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
       </Panel>
-      <ol className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
-        {PINS.map((p) => (
-          <li
-            key={p.n}
-            onMouseEnter={() => setHover(p.n)}
-            onMouseLeave={() => setHover(null)}
-            className={`flex gap-3 rounded-[14px] p-2 transition-colors ${hover === p.n ? "bg-white" : ""}`}
-          >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#111] text-[12px] font-bold text-white">{p.n}</span>
-            <span>
-              <span className="block text-[15px] font-semibold text-[#111]">{p.label}</span>
-              <span className="block text-[13.5px] text-[#666]">{p.line}</span>
-            </span>
-          </li>
-        ))}
-      </ol>
     </div>
   );
 }
