@@ -33,6 +33,35 @@ export function LittleLightHero() {
   );
 }
 
+/** A short silent loop of the lamp shifting moods. */
+export function MoodVideo() {
+  const reduce = useReducedMotion();
+  return (
+    <figure className="mb-3">
+      <div className="relative aspect-[1470/630] overflow-hidden rounded-[22px] bg-[#3a2416] md:rounded-[36px]">
+        <video
+          src="/videos/little-light/mood.mp4"
+          poster="/images/case-studies/little-light/mood-poster.webp"
+          autoPlay={!reduce}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="The lamp's face and light shifting from happy to sad, to neutral, and back to a warm smile"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
+      <figcaption className="mt-3 flex flex-wrap gap-2 text-[13px] text-[#666]">
+        {["Happy · pink", "Low · cool white", "Neutral · soft", "Content · warm"].map((m) => (
+          <span key={m} className="rounded-full bg-white px-3 py-1">
+            {m}
+          </span>
+        ))}
+      </figcaption>
+    </figure>
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /* The character                                                       */
 

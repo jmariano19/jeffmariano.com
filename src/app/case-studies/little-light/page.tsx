@@ -8,6 +8,7 @@ import {
   DaySimulator,
   HealthFlow,
   LittleLightHero,
+  MoodVideo,
   Principles,
   Process,
   Questions,
@@ -78,8 +79,9 @@ export default function LittleLight() {
         n="03"
         kicker="Interactive prototype"
         title="A day with the light"
-        takeaway="Move through the day and change how you slept or moved. The character responds."
+        takeaway="One face, many moods. Then try it: move through the day and change how you slept or moved."
       >
+        <MoodVideo />
         <DaySimulator />
       </Chapter>
 
