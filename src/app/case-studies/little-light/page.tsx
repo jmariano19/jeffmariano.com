@@ -5,9 +5,9 @@ import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import { Chapter, StoryMap } from "@/components/case-study/Chapter";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import {
-  DaySimulator,
   HealthFlow,
   LittleLightHero,
+  MoodPicker,
   MoodVideo,
   Principles,
   Process,
@@ -37,7 +37,7 @@ export default function LittleLight() {
         items={[
           { id: "questions", n: "01", title: "The questions", line: "What a glance can say." },
           { id: "signals", n: "02", title: "Connected to your health", line: "Your day becomes its mood." },
-          { id: "day", n: "03", title: "A day with the light", line: "Try it." },
+          { id: "day", n: "03", title: "Moods", line: "Pick one. Watch it change." },
           { id: "principles", n: "04", title: "Principles", line: "Encouraging, never judging." },
           { id: "process", n: "05", title: "Process", line: "From character to object." },
         ]}
@@ -78,11 +78,11 @@ export default function LittleLight() {
         id="day"
         n="03"
         kicker="Interactive prototype"
-        title="A day with the light"
-        takeaway="One face, many moods. Then try it: move through the day and change how you slept or moved."
+        title="One face, many moods"
+        takeaway="Each mood comes from your day. Pick one to see how the lamp responds."
       >
         <MoodVideo />
-        <DaySimulator />
+        <MoodPicker />
       </Chapter>
 
       <Chapter

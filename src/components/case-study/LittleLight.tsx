@@ -443,6 +443,95 @@ function Toggle({ label, a, b, on, onChange }: { label: string; a: string; b: st
 }
 
 /* ------------------------------------------------------------------ */
+/* 03 · Moods: tap a mood, see the real lamp change                    */
+
+const MOODS = [
+  { id: "happy", label: "Happy", color: "#ffd66b", tint: "#fff3cf", signal: "Slept well and moved today", light: "Warm yellow, bright" },
+  { id: "tired", label: "Tired", color: "#ff8fc8", tint: "#ffe3f1", signal: "A short night of sleep", light: "Soft pink, dimmed" },
+  { id: "sleepy", label: "Sleepy", color: "#6fb8ff", tint: "#e1f0ff", signal: "Past your wind-down time", light: "Cool blue, low" },
+  { id: "sick", label: "Sick", color: "#6fe08a", tint: "#e2f8e6", signal: "Resting heart rate higher than usual", light: "Calm green, gentle" },
+  { id: "grumpy", label: "Grumpy", color: "#ff6b5e", tint: "#ffe3df", signal: "A restless, broken night", light: "Coral red, steady" },
+] as const;
+
+export function MoodPicker() {
+  const [active, setActive] = useState<(typeof MOODS)[number]["id"]>("happy");
+  const m = MOODS.find((x) => x.id === active)!;
+  return (
+    <motion.div
+      className="overflow-hidden rounded-[22px] p-3 md:rounded-[36px] md:p-5"
+      animate={{ backgroundColor: m.tint }}
+      transition={{ duration: 0.6, ease: EASE }}
+    >
+      <div className="grid grid-cols-1 items-center gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-10">
+        {/* The lamp */}
+        <div className="relative aspect-square overflow-hidden rounded-[18px] bg-[#6f6c72] md:rounded-[28px]">
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={m.id}
+              src={`/images/case-studies/little-light/mood-${m.id}.webp`}
+              alt={`The lamp feeling ${m.label.toLowerCase()}: ${m.light.toLowerCase()}`}
+              className="absolute inset-0 h-full w-full object-cover"
+              initial={{ opacity: 0, scale: 1.02 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: EASE }}
+            />
+          </AnimatePresence>
+        </div>
+
+        {/* The moods */}
+        <div className="px-2 pb-3 md:px-0 md:pb-0 md:pr-6">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#111]/45">Choose a mood</p>
+          <div className="mt-3 flex flex-wrap gap-2" role="radiogroup" aria-label="Lamp mood">
+            {MOODS.map((x) => (
+              <button
+                key={x.id}
+                type="button"
+                role="radio"
+                aria-checked={x.id === active}
+                onClick={() => setActive(x.id)}
+                className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-[15px] font-semibold transition-all ${
+                  x.id === active ? "bg-[#111] text-white shadow-[0_8px_20px_rgba(0,0,0,0.15)]" : "bg-white text-[#111] hover:-translate-y-0.5"
+                }`}
+              >
+                <span className="h-3 w-3 rounded-full" style={{ background: x.color, boxShadow: `0 0 10px ${x.color}` }} />
+                {x.label}
+              </button>
+            ))}
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={m.id}
+              className="mt-8 border-t border-[#111]/10 pt-6"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.35, ease: EASE }}
+            >
+              <p className="text-[34px] font-bold tracking-[-0.03em] text-[#111] md:text-[44px]">{m.label}</p>
+              <dl className="mt-4 grid gap-3">
+                <div>
+                  <dt className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#111]/45">When your day shows</dt>
+                  <dd className="mt-0.5 text-[17px] text-[#111]">{m.signal}</dd>
+                </div>
+                <div>
+                  <dt className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#111]/45">The lamp responds</dt>
+                  <dd className="mt-0.5 flex items-center gap-2 text-[17px] text-[#111]">
+                    <span className="h-3.5 w-3.5 rounded-full" style={{ background: m.color }} />
+                    {m.light}
+                  </dd>
+                </div>
+              </dl>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* 04 · Principles                                                     */
 
 export function Principles() {
