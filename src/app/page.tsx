@@ -11,10 +11,18 @@ const projects = [
     label: "AI Conversational Canvas",
     context: "Verizon",
     logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180, size: "w-[24%] max-w-[151px]" },
-    description: "An AI platform that unifies every assisted customer service channel, built on the retail design system I led.",
-    feature: true,
+    description: "An AI platform that unifies every assisted customer service channel.",
     image: "/images/home/cortex.jpg",
     href: "/case-studies/ai-conversational-canvas",
+  },
+  {
+    name: "Systems",
+    label: "Design Systems",
+    context: "Verizon",
+    logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180, size: "w-[24%] max-w-[151px]" },
+    description: "A retail design system scaled across 15+ teams at Verizon.",
+    image: "/images/home/systems.jpg",
+    href: "/case-studies/verizon-design-systems",
   },
   {
     name: "Plato Inteligente",
@@ -130,12 +138,12 @@ export default function Home() {
               const card = (
                 <>
                   <h3 className="mb-3 text-[17px] md:text-[20px] font-semibold tracking-[-0.04em]">{p.label}</h3>
-                  <div className={`relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#e4e4e4] ${"feature" in p && p.feature ? "sm:aspect-[16/7]" : ""}`}>
+                  <div className="relative aspect-[4/3] rounded-[16px] overflow-hidden bg-[#e4e4e4]">
                     <Image
                       src={p.image}
                       alt=""
                       fill
-                      sizes={"feature" in p && p.feature ? "(max-width: 1440px) 100vw, 1304px" : "(max-width: 640px) 100vw, 50vw"}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                       className={`object-cover transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] ${
                         p.logo || p.logoText ? "group-hover:blur-[18px] group-focus-visible:blur-[18px]" : ""
                       }`}
@@ -183,7 +191,7 @@ export default function Home() {
                 </>
               );
               return (
-                <Reveal key={p.name} blur y={60} delay={(i % 2) * 0.12} className={"feature" in p && p.feature ? "sm:col-span-2" : undefined}>
+                <Reveal key={p.name} blur y={60} delay={(i % 2) * 0.12}>
                   {p.href ? (
                     <Link
                       href={p.href}

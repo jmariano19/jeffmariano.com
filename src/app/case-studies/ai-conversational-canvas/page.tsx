@@ -16,7 +16,6 @@ import { Consolidation } from "@/components/case-study/Consolidation";
 import { ChannelAdapt } from "@/components/case-study/ChannelAdapt";
 import { IntentComposer } from "@/components/case-study/IntentComposer";
 import { AgentWorkflow } from "@/components/case-study/AgentWorkflow";
-import { StoreTouchpoints } from "@/components/case-study/StoreTouchpoints";
 
 export const metadata: Metadata = {
   title: "AI Conversational Canvas — Jeff Mariano",
@@ -61,42 +60,16 @@ export default function AiConversationalCanvas() {
           { number: "1", label: "approval instead of six manual steps" },
         ]}
         items={[
-          { id: "foundation", n: "01", title: "The foundation", line: "A retail design system for every store screen." },
-          { id: "consolidate", n: "02", title: "One canvas", line: "Separate apps become one place to ask." },
-          { id: "channels", n: "03", title: "Built for each channel", line: "Tap in stores, type in contact centers." },
-          { id: "generative-ui", n: "04", title: "Generative UI", line: "The answer is an interface, not a paragraph." },
-          { id: "agentic", n: "05", title: "Agentic workflows", line: "The agent does the work. The rep approves." },
+          { id: "consolidate", n: "01", title: "One canvas", line: "Separate apps become one place to ask." },
+          { id: "channels", n: "02", title: "Built for each channel", line: "Tap in stores, type in contact centers." },
+          { id: "generative-ui", n: "03", title: "Generative UI", line: "The answer is an interface, not a paragraph." },
+          { id: "agentic", n: "04", title: "Agentic workflows", line: "The agent does the work. The rep approves." },
         ]}
       />
 
       <Chapter
-        id="foundation"
-        n="01"
-        kicker="The foundation · retail design system"
-        title="One deck of cards for every screen in the store"
-        takeaway="Before the canvas, I led the retail design system store screens run on: nine designers across the US and India, 15+ teams, one set of cards."
-        body="The enterprise system couldn't simply shrink to fit a kiosk, so I added a retail theme on top of it. Building blocks snap into cards, and the rep plays the card that fits the conversation. The canvas composes its answers from a shared component library the same way."
-      >
-        <Image
-          src="/images/case-studies/design-systems/deck.webp"
-          alt="Building blocks snap into card templates, and the rep plays the right card from a deck onto the counter tablet"
-          width={1916}
-          height={821}
-          sizes="(max-width: 1440px) 100vw, 1304px"
-          className="h-auto w-full"
-        />
-        <div className="mt-12 border-t border-[#d4d4d4] pt-10 md:mt-16 md:pt-14">
-          <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">Every screen in the store</p>
-          <p className="mt-2 max-w-[60ch] text-[17px] leading-[1.5] text-[#333] md:text-[19px]">
-            The 39-inch screen, the Collaboration tablet, the welcome table and the rep&apos;s tablet all use the same cards, sized for who is using them. Click a + to see the real screens.
-          </p>
-          <StoreTouchpoints />
-        </div>
-      </Chapter>
-
-      <Chapter
         id="consolidate"
-        n="02"
+        n="01"
         kicker="The consolidation"
         title="From a stack of apps to one canvas"
         takeaway="Reps stopped hunting for the right app. They ask once, and the canvas brings the tool to them."
@@ -118,7 +91,7 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="channels"
-        n="03"
+        n="02"
         kicker="Research-led adaptation"
         title="Same canvas, different channel"
         takeaway="Research showed store reps and contact center reps work in opposite ways, so the canvas changes how it's driven, not what it is."
@@ -154,7 +127,7 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="generative-ui"
-        n="04"
+        n="03"
         kicker="Generative UI · the composition logic I designed"
         title="The AI builds the tool, not a reply"
         takeaway="Most AI tools answer with a paragraph. The canvas answers with an interface, composed for the request and the channel."
@@ -165,7 +138,7 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="agentic"
-        n="05"
+        n="04"
         kicker="Agentic workflows"
         title="From answers to actions"
         takeaway="The agent carries out the work across systems. The rep stays with the customer and approves anything that touches the bill."
@@ -176,7 +149,7 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="adoption"
-        n="06"
+        n="05"
         kicker="Key design decisions"
         title="Designed around the barriers to adoption"
         takeaway="A capable AI tool still fails if reps don't trust it. Each decision answers one of the five behavioral barriers I design around."
@@ -236,10 +209,10 @@ export default function AiConversationalCanvas() {
             href: "/case-studies/verizon-ai",
           },
           {
-            company: "Side project",
-            title: "A Boy Built From Your Own Words",
-            image: "/images/home/eli-card-bg.webp",
-            href: "/case-studies/eli-last-experiment",
+            company: "Verizon",
+            title: "From 7 Inconsistent Screens to One Scalable Retail Design System",
+            image: "/images/case-verizon-ecosystem.png",
+            href: "/case-studies/verizon-design-systems",
           },
           {
             company: "ViveBien",

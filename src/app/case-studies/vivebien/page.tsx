@@ -105,9 +105,9 @@ export default function ViveBien() {
         studies={[
           {
             company: "Verizon",
-            title: "One AI Canvas for Every Way Reps Help Customers",
-            image: "/images/case-studies/canvas/hero-bg.webp",
-            href: "/case-studies/ai-conversational-canvas",
+            title: "From 7 Inconsistent Screens to One Scalable Retail Design System",
+            image: "/images/case-verizon-ecosystem.png",
+            href: "/case-studies/verizon-design-systems",
           },
           {
             company: "Verizon",

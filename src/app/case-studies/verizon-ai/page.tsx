@@ -78,8 +78,8 @@ const outcomes = [
 const relatedStudies = [
   {
     company: "Verizon",
-    image: "/images/case-studies/canvas/hero-bg.webp",
-    href: "/case-studies/ai-conversational-canvas",
+    image: "/images/case-verizon-ecosystem.png",
+    href: "/case-studies/verizon-design-systems",
   },
   {
     company: "Verizon",
