@@ -58,7 +58,7 @@ export default function VerizonDesignSystems() {
         takeaway="Reps pick the card that fits the conversation. Every card is built from the same retail components."
         body="The enterprise system couldn't simply shrink to fit a kiosk. So I added a retail theme layer on top of it: React components with retail themes that adapt to each screen size and orientation, shipped as micro front-ends so each team could move on its own."
       >
-        <Figure src="/images/card.png" alt="Lego-like components plus a card container make the front-end cards reps use in store" ratio="1340 / 606" />
+        <Figure src="/images/case-studies/design-systems/deck.webp" alt="Building blocks snap into card templates, and the rep plays the right card from a deck onto the counter tablet" ratio="1916 / 821" bg="bg-[#d6d6d6]" />
       </Chapter>
 
       <Chapter
