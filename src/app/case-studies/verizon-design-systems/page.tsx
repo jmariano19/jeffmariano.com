@@ -83,6 +83,31 @@ export default function VerizonDesignSystems() {
             className="h-auto w-full"
           />
         </div>
+        <div className="mt-6 grid items-center gap-8 overflow-hidden rounded-[22px] bg-[#111] px-5 py-8 text-white md:mt-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-12 md:rounded-[36px] md:px-12 md:py-14">
+          <div>
+            <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">Same system, dark mode</p>
+            <p className="mt-3 text-[24px] font-bold leading-[1.15] tracking-[-0.03em] md:text-[30px]">The rep&apos;s tablet runs on the same cards.</p>
+            <p className="mt-3 max-w-[38ch] text-[16px] leading-[1.55] text-white/65">
+              A dark theme for the tools reps use all day. Only the tokens change, so every card, list and button works in both.
+            </p>
+          </div>
+          {/* Shown at no more than half the video's width, so it stays sharp on retina screens */}
+          <div className="mx-auto w-full max-w-[640px] rounded-[22px] bg-[#2a2a2a] p-[7px] shadow-[0_30px_80px_rgba(0,0,0,0.5)] md:rounded-[28px] md:p-[10px]">
+            <video
+              className="block h-auto w-full rounded-[15px] md:rounded-[19px]"
+              src="/videos/design-systems/ipad-dark.mp4"
+              poster="/images/case-studies/design-systems/ipad-dark-poster.webp"
+              width={1280}
+              height={852}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="The rep tablet app in dark mode: the customer queue, tools and a bundle being built"
+            />
+          </div>
+        </div>
       </Chapter>
 
       <Chapter
