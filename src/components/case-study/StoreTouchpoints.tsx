@@ -260,7 +260,7 @@ export function StoreTouchpoints() {
   return (
     <div>
       {/* Extra room above and below the store so the cards open in their own space */}
-      <div className="relative md:py-28">
+      <div className="relative md:pb-4 md:pt-32">
         {/* The store, with each screen as a pin */}
         <div className="relative" style={{ aspectRatio: "3200 / 1004" }}>
           <Image
