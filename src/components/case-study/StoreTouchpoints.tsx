@@ -81,7 +81,7 @@ const TOUCHPOINTS: Touchpoint[] = [
     who: "Customers, on their own",
     screen: "Large landscape touch screen",
     size: "XL",
-    pin: { x: 5.2, y: 67.8 },
+    pin: { x: 5.2, y: 62.1 },
     rules: ["Type scaled up to read from a step back", "Big touch targets for a standing reach", "One choice per screen, no rep needed"],
     mock: (
       <div className="w-full max-w-[460px] rounded-[14px] bg-[#1b1b1b] p-[6px]">
@@ -105,7 +105,7 @@ const TOUCHPOINTS: Touchpoint[] = [
     who: "Customers, browsing",
     screen: "Small tablet beside each phone",
     size: "M",
-    pin: { x: 53.4, y: 66.4 },
+    pin: { x: 53.4, y: 60.4 },
     rules: ["Short, scannable specs", "One clear next step: talk to a rep", "Same card, tighter spacing"],
     mock: (
       <div className="w-[220px] rounded-[14px] bg-[#1b1b1b] p-[6px]">
@@ -132,7 +132,7 @@ const TOUCHPOINTS: Touchpoint[] = [
     who: "Rep and customer, together",
     screen: "Tablet the rep turns to share",
     size: "L",
-    pin: { x: 68.9, y: 69.4 },
+    pin: { x: 68.9, y: 64 },
     rules: ["Readable from both sides of the counter", "Rep picks the card that fits the conversation", "Selected state clear at a glance"],
     mock: (
       <div className="w-full max-w-[330px] rounded-[16px] bg-[#1b1b1b] p-[7px]">
@@ -158,7 +158,7 @@ const TOUCHPOINTS: Touchpoint[] = [
     who: "Reps, on the floor",
     screen: "Phone in the rep's hand",
     size: "S",
-    pin: { x: 81.1, y: 70.8 },
+    pin: { x: 81.1, y: 65.6 },
     rules: ["Glanceable in one hand", "Dense, but the same cards", "Hands off to the counter tablet"],
     mock: (
       <div className="w-[130px] rounded-[20px] bg-[#1b1b1b] p-[5px]">
@@ -184,9 +184,9 @@ export function StoreTouchpoints() {
   return (
     <div className="overflow-hidden rounded-[22px] bg-white md:rounded-[36px]">
       {/* The store, with each screen as a pin */}
-      <div className="relative" style={{ aspectRatio: "1342 / 497" }}>
+      <div className="relative" style={{ aspectRatio: "3200 / 1003" }}>
         <Image
-          src="/images/case-studies/design-systems/store-map-tall.webp"
+          src="/images/case-studies/design-systems/store-map-hd.webp"
           alt="A Verizon store floor with the screens the system runs on marked in red"
           fill
           sizes="(max-width: 1440px) 100vw, 1304px"

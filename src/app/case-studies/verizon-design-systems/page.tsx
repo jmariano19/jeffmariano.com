@@ -43,16 +43,26 @@ export default function VerizonDesignSystems() {
           { number: "2", label: "continents duplicating the same work" },
         ]}
         items={[
-          { id: "cards", n: "01", title: "A deck of cards", line: "A retail theme on the enterprise system." },
-          { id: "touchpoints", n: "02", title: "Every touchpoint", line: "One system, sized for each screen in the store." },
+          { id: "touchpoints", n: "01", title: "Every touchpoint", line: "One system, sized for each screen in the store." },
+          { id: "cards", n: "02", title: "A deck of cards", line: "A retail theme on the enterprise system." },
           { id: "team", n: "03", title: "One team, two continents", line: "Pods by domain, not by geography." },
           { id: "sandbox", n: "04", title: "Prove it in the store", line: "Test in real stores before it joins the system." },
         ]}
       />
 
       <Chapter
-        id="cards"
+        id="touchpoints"
         n="01"
+        kicker="Retail touchpoints"
+        title="One system, every screen in the store"
+        takeaway="A kiosk, a device table, the counter tablet and the rep's phone each get the same components, sized for who is using them. Tap a screen."
+      >
+        <StoreTouchpoints />
+      </Chapter>
+
+      <Chapter
+        id="cards"
+        n="02"
         kicker="System strategy"
         title="A deck of cards for every conversation"
         takeaway="Reps pick the card that fits the conversation. Every card is built from the same retail components."
@@ -73,16 +83,6 @@ export default function VerizonDesignSystems() {
             className="h-auto w-full"
           />
         </div>
-      </Chapter>
-
-      <Chapter
-        id="touchpoints"
-        n="02"
-        kicker="Retail touchpoints"
-        title="One system, every screen in the store"
-        takeaway="A kiosk, a device table, the counter tablet and the rep's phone each get the same components, sized for who is using them. Tap a screen."
-      >
-        <StoreTouchpoints />
       </Chapter>
 
       <Chapter
