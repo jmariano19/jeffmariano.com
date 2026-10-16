@@ -20,8 +20,21 @@ type Touchpoint = {
   size: string;
   pin: { x: number; y: number };
   rules: string[];
+  /** Placeholder until a real screen is supplied. */
   mock: ReactNode;
+  /** A real screen from the store. When set, it replaces the mock. */
+  shot?: { src: string; width: number; height: number; alt: string };
 };
+
+/** A real screenshot, framed like the device it runs on. */
+function Shot({ shot }: { shot: NonNullable<Touchpoint["shot"]> }) {
+  const tall = shot.height > shot.width;
+  return (
+    <div className={`rounded-[16px] bg-[#1b1b1b] p-[6px] ${tall ? "w-[150px] md:w-[170px]" : "w-full max-w-[460px]"}`}>
+      <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 768px) 90vw, 560px" className="h-auto w-full rounded-[11px]" />
+    </div>
+  );
+}
 
 /* ---------- The shared card, the one component every screen reuses ---------- */
 
@@ -239,7 +252,7 @@ export function StoreTouchpoints() {
               exit={reduce ? undefined : { opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.3 }}
             >
-              {t.mock}
+              {t.shot ? <Shot shot={t.shot} /> : t.mock}
             </motion.div>
           </AnimatePresence>
           <span className="absolute left-3 top-3 rounded-full bg-white px-2.5 py-1 font-mono text-[11px] text-[#555]">size: {t.size}</span>
