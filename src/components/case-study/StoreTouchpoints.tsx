@@ -261,7 +261,7 @@ export function StoreTouchpoints() {
     <div>
       <div className="relative">
         {/* The store, with each screen as a pin */}
-        <div className="relative overflow-hidden rounded-[22px] bg-white md:rounded-[36px]" style={{ aspectRatio: "3200 / 1003" }}>
+        <div className="relative" style={{ aspectRatio: "3200 / 1004" }}>
           <Image
             src="/images/case-studies/design-systems/store-map-hd.webp"
             alt="A Verizon store floor with the screens the system runs on marked in red"
