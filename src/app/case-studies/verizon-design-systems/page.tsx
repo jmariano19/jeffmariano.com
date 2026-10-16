@@ -99,7 +99,7 @@ export default function VerizonDesignSystems() {
         takeaway="New patterns ship as small micro-flows, get watched in real stores, and only then join the system."
         body="Bill optimization was the first sandbox. For adoption I skipped both mandates and pure grassroots: my team first, then PMs, then senior leadership. By the time I presented up, everyone already knew."
       >
-        <Figure src="/images/Experimental sandbox.png" alt="A rep helping a customer at a Verizon store counter" ratio="1340 / 606" bg="bg-[#ddd]" />
+        <Figure src="/images/case-studies/design-systems/counter.webp" alt="A Verizon rep walking a customer through a plan on a counter tablet" ratio="1949 / 1085" bg="bg-[#ddd]" />
       </Chapter>
 
       <Outcomes
