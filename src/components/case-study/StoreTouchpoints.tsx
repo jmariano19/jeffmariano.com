@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
- * One system, every screen in the store. Pick a touchpoint on the floor map
- * and walk through the real screens for it, step by step. Touchpoints whose
- * screens haven't been added yet show a simple placeholder.
+ * One system, every screen in the store. Roll over (or tap) a red dot on the
+ * floor map and a card opens over the store with the real screens for that
+ * touchpoint. On phones the card sits below the map instead.
  */
 
 const RED = "#ee0000";
@@ -93,7 +93,7 @@ const TOUCHPOINTS: Touchpoint[] = [
   },
 ];
 
-/* ---------- Step-through of real screens ---------- */
+/* ---------- The screens for one touchpoint ---------- */
 
 function Arrow({ dir, onClick, disabled }: { dir: "prev" | "next"; onClick: () => void; disabled: boolean }) {
   return (
@@ -102,7 +102,7 @@ function Arrow({ dir, onClick, disabled }: { dir: "prev" | "next"; onClick: () =
       onClick={onClick}
       disabled={disabled}
       aria-label={dir === "prev" ? "Previous screen" : "Next screen"}
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#d9d9d9] bg-white text-[#111] transition-colors hover:border-[#111] disabled:opacity-30 disabled:hover:border-[#d9d9d9]"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9d9d9] bg-white text-[#111] transition-colors hover:border-[#111] disabled:opacity-30 disabled:hover:border-[#d9d9d9]"
     >
       <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
         <path d={dir === "prev" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -111,64 +111,70 @@ function Arrow({ dir, onClick, disabled }: { dir: "prev" | "next"; onClick: () =
   );
 }
 
-function Steps({ tp }: { tp: Touchpoint }) {
+function Screens({ tp }: { tp: Touchpoint }) {
   const reduce = useReducedMotion();
-  const steps = tp.steps!;
   const [i, setI] = useState(0);
+
+  if (tp.shot) {
+    return (
+      <div className="flex justify-center">
+        <Image
+          src={tp.shot.src}
+          alt={tp.shot.alt}
+          width={tp.shot.width}
+          height={tp.shot.height}
+          sizes="(max-width: 768px) 92vw, 641px"
+          className="h-auto w-full max-w-[500px] drop-shadow-[0_18px_30px_rgba(0,0,0,0.16)]"
+        />
+      </div>
+    );
+  }
+  if (!tp.steps) return <div className="flex justify-center">{tp.mock}</div>;
+
+  const steps = tp.steps;
   const s = steps[i];
   const ratio = `${steps[0].width} / ${steps[0].height}`;
   const portrait = steps[0].height > steps[0].width;
+  const go = (d: number) => setI((n) => Math.min(steps.length - 1, Math.max(0, n + d)));
 
   return (
     <div>
-      {/* Portrait screens sit in a phone-sized frame, at about twice their pixel density */}
-      <div className={portrait ? "flex justify-center rounded-[18px] bg-[#f1efe9] px-4 py-8 md:py-12" : ""}>
-      <div
-        className={`relative overflow-hidden ${portrait ? "w-full max-w-[290px] rounded-[26px] border-[7px] border-[#1b1b1b] shadow-[0_24px_50px_rgba(0,0,0,0.18)]" : "rounded-[16px] border border-[#ebe6da] md:rounded-[22px]"}`}
-        style={{ aspectRatio: ratio, background: BEIGE }}
-      >
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={s.src}
-            className="absolute inset-0"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduce ? undefined : { opacity: 0 }}
-            transition={{ duration: 0.35 }}
-          >
-            <Image src={s.src} alt={s.caption} fill sizes={portrait ? "290px" : "(max-width: 1440px) 100vw, 1220px"} className="object-contain" priority={i === 0} />
-          </motion.div>
-        </AnimatePresence>
-        {/* Tap either half of the screen to move through the flow */}
-        <button type="button" aria-label="Previous screen" className="absolute inset-y-0 left-0 w-1/3 cursor-w-resize" onClick={() => setI((n) => Math.max(0, n - 1))} />
-        <button type="button" aria-label="Next screen" className="absolute inset-y-0 right-0 w-2/3 cursor-e-resize" onClick={() => setI((n) => Math.min(steps.length - 1, n + 1))} />
-      </div>
-      </div>
-
-      <div className="mt-4 flex items-center gap-3 md:mt-5 md:gap-4">
-        <Arrow dir="prev" onClick={() => setI((n) => Math.max(0, n - 1))} disabled={i === 0} />
-        <div className="min-w-0 flex-1">
-          <p className="font-mono text-[11.5px] text-[#999]">
-            {String(i + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
-          </p>
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={i}
-              className="text-[15px] leading-[1.45] text-[#222] md:text-[17px]"
-              initial={reduce ? false : { opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
+      <div className={portrait ? "flex justify-center" : ""}>
+        <div
+          className={`relative overflow-hidden ${
+            portrait ? "w-full max-w-[200px] rounded-[22px] border-[6px] border-[#1b1b1b] md:max-w-[180px]" : "mx-auto rounded-[14px] border border-[#ebe6da] md:rounded-[18px]"
+          }`}
+          style={{ aspectRatio: ratio, background: BEIGE, maxWidth: portrait ? undefined : `min(100%, ${Math.round((330 * steps[0].width) / steps[0].height)}px)` }}
+        >
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={s.src}
+              className="absolute inset-0"
+              initial={reduce ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={reduce ? undefined : { opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3 }}
             >
-              {s.caption}
-            </motion.p>
+              <Image src={s.src} alt={s.caption} fill sizes={portrait ? "200px" : "(max-width: 768px) 92vw, 760px"} className="object-contain" />
+            </motion.div>
           </AnimatePresence>
+          {/* Tap the left or right of the screen to move through the flow */}
+          <button type="button" aria-label="Previous screen" className="absolute inset-y-0 left-0 w-1/3 cursor-w-resize" onClick={() => go(-1)} />
+          <button type="button" aria-label="Next screen" className="absolute inset-y-0 right-0 w-2/3 cursor-e-resize" onClick={() => go(1)} />
         </div>
-        <Arrow dir="next" onClick={() => setI((n) => Math.min(steps.length - 1, n + 1))} disabled={i === steps.length - 1} />
       </div>
 
-      {/* The whole flow as thumbnails */}
-      <div className="mt-4 flex gap-2 overflow-x-auto pb-1 md:mt-5">
+      <div className="mx-auto mt-4 flex max-w-[640px] items-center gap-3">
+        <Arrow dir="prev" onClick={() => go(-1)} disabled={i === 0} />
+        <p className="min-w-0 flex-1 text-[14px] leading-[1.4] text-[#333] md:text-[15px]">
+          <span className="mr-2 font-mono text-[11.5px] text-[#999]">
+            {i + 1}/{steps.length}
+          </span>
+          {s.caption}
+        </p>
+        <Arrow dir="next" onClick={() => go(1)} disabled={i === steps.length - 1} />
+      </div>
+      <div className="mt-3 flex justify-center gap-1.5">
         {steps.map((x, n) => (
           <button
             key={x.src}
@@ -176,13 +182,47 @@ function Steps({ tp }: { tp: Touchpoint }) {
             onClick={() => setI(n)}
             aria-label={`Screen ${n + 1}`}
             aria-current={n === i}
-            className={`relative shrink-0 overflow-hidden rounded-[8px] transition-all ${n === i ? "opacity-100 ring-2 ring-[#111] ring-offset-2" : "opacity-55 hover:opacity-90"}`}
-            style={{ width: portrait ? 50 : steps[0].width / steps[0].height > 2 ? 132 : 96, aspectRatio: ratio, background: BEIGE }}
-          >
-            <Image src={x.src} alt="" fill sizes="140px" className="object-contain" />
-          </button>
+            className="h-1.5 rounded-full transition-all"
+            style={{ width: n === i ? 22 : 6, background: n === i ? "#111" : "#d4d4d4" }}
+          />
         ))}
       </div>
+    </div>
+  );
+}
+
+/* ---------- The card that opens over the store ---------- */
+
+function TouchpointCard({ tp, onClose }: { tp: Touchpoint; onClose?: () => void }) {
+  return (
+    <div className="relative grid gap-6 rounded-[22px] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.18)] md:grid-cols-[minmax(0,0.55fr)_minmax(0,1.45fr)] md:items-center md:gap-8 md:rounded-[32px] md:p-8 md:pr-14">
+      {onClose && (
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-4 top-4 hidden h-9 w-9 items-center justify-center rounded-full bg-[#777] text-white transition-colors hover:bg-[#111] md:flex"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+          </svg>
+        </button>
+      )}
+      <div>
+        <p className="text-[12px] font-bold uppercase tracking-[0.14em]" style={{ color: RED }}>
+          {tp.screen}
+        </p>
+        <h3 className="mt-2 text-[26px] font-bold leading-[1.1] tracking-[-0.03em] text-[#111] md:text-[30px]">{tp.name}</h3>
+        <p className="mt-1 text-[16px] text-[#666]">{tp.who}</p>
+        <ul className="mt-5 flex flex-col border-t border-[#e8e8e8]">
+          {tp.rules.map((r) => (
+            <li key={r} className="border-b border-[#e8e8e8] py-2.5 text-[15px] text-[#222]">
+              {r}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Screens key={tp.id} tp={tp} />
     </div>
   );
 }
@@ -191,116 +231,123 @@ function Steps({ tp }: { tp: Touchpoint }) {
 
 export function StoreTouchpoints() {
   const reduce = useReducedMotion();
-  const [active, setActive] = useState("table");
-  const t = TOUCHPOINTS.find((x) => x.id === active)!;
+  const [open, setOpen] = useState<string | null>(null); // desktop overlay
+  const [pinned, setPinned] = useState(false); // opened by a click, stays until closed
+  const [mobile, setMobile] = useState("table"); // phones: card below the map
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+  const close = useCallback(() => {
+    setOpen(null);
+    setPinned(false);
+  }, []);
+  const scheduleClose = () => {
+    cancelClose();
+    if (!pinned) closeTimer.current = setTimeout(close, 280);
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [close]);
+
+  const tp = TOUCHPOINTS.find((x) => x.id === open);
+  const mobileTp = TOUCHPOINTS.find((x) => x.id === mobile)!;
 
   return (
-    <div className="overflow-hidden rounded-[22px] bg-white md:rounded-[36px]">
-      {/* The store, with each screen as a pin */}
-      <div className="relative" style={{ aspectRatio: "3200 / 1003" }}>
-        <Image
-          src="/images/case-studies/design-systems/store-map-hd.webp"
-          alt="A Verizon store floor with the screens the system runs on marked in red"
-          fill
-          sizes="(max-width: 1440px) 100vw, 1304px"
-          className="object-cover"
-        />
-        {TOUCHPOINTS.map((x, n) => {
-          const on = x.id === active;
-          return (
+    <div>
+      <div className="relative">
+        {/* The store, with each screen as a pin */}
+        <div className="relative overflow-hidden rounded-[22px] bg-white md:rounded-[36px]" style={{ aspectRatio: "3200 / 1003" }}>
+          <Image
+            src="/images/case-studies/design-systems/store-map-hd.webp"
+            alt="A Verizon store floor with the screens the system runs on marked in red"
+            fill
+            sizes="(max-width: 1440px) 100vw, 1304px"
+            className="object-cover"
+          />
+          {TOUCHPOINTS.map((x, n) => {
+            const on = x.id === open;
+            const onMobile = x.id === mobile;
+            return (
+              <button
+                key={x.id}
+                type="button"
+                onMouseEnter={() => {
+                  cancelClose();
+                  if (!pinned) setOpen(x.id);
+                }}
+                onMouseLeave={scheduleClose}
+                onClick={() => {
+                  setMobile(x.id);
+                  setOpen(x.id);
+                  setPinned(true);
+                }}
+                aria-label={`Show the ${x.name.toLowerCase()}`}
+                aria-expanded={x.id === open}
+                className="group absolute -translate-x-1/2 -translate-y-1/2"
+                style={{ left: `${x.pin.x}%`, top: `${x.pin.y}%` }}
+              >
+                {!reduce && (
+                  <span
+                    className="absolute inset-0 m-auto h-full w-full rounded-full"
+                    style={{ background: RED, animation: `eli-ripple 2.4s ease-out ${n * 0.5}s infinite` }}
+                  />
+                )}
+                <span
+                  className={`relative block rounded-full border-2 border-white transition-transform group-hover:scale-110 ${onMobile ? "max-md:!bg-[#111]" : ""}`}
+                  style={{ background: on ? "#111" : RED, width: "clamp(14px, 2.2vw, 30px)", height: "clamp(14px, 2.2vw, 30px)" }}
+                />
+                <span className="absolute left-1/2 top-full mt-1.5 hidden -translate-x-1/2 whitespace-nowrap rounded-full bg-[#111] px-2.5 py-1 text-[12px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 md:block">
+                  {x.name}
+                </span>
+              </button>
+            );
+          })}
+          <span className="pointer-events-none absolute bottom-3 right-4 hidden rounded-full bg-white/90 px-3 py-1.5 text-[12.5px] font-medium text-[#333] md:block">
+            Roll over a red dot to see its screens
+          </span>
+        </div>
+
+        {/* Desktop: the card opens over the store */}
+        <AnimatePresence>
+          {tp && (
+            <motion.div
+              key="card"
+              className="absolute left-1/2 top-1/2 z-30 hidden w-[min(1180px,94%)] md:block"
+              initial={reduce ? false : { opacity: 0, x: "-50%", y: "-46%", scale: 0.98 }}
+              animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, x: "-50%", y: "-47%", scale: 0.985 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              onMouseEnter={cancelClose}
+              onMouseLeave={scheduleClose}
+              onClick={() => setPinned(true)}
+            >
+              <TouchpointCard key={tp.id} tp={tp} onClose={close} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Phones: tabs and the card below the map */}
+      <div className="md:hidden">
+        <div className="mt-4 flex gap-1.5 overflow-x-auto">
+          {TOUCHPOINTS.map((x) => (
             <button
               key={x.id}
               type="button"
-              onClick={() => setActive(x.id)}
-              aria-label={`Show the ${x.name.toLowerCase()}`}
-              aria-pressed={on}
-              className="group absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${x.pin.x}%`, top: `${x.pin.y}%` }}
+              onClick={() => setMobile(x.id)}
+              className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] font-medium ${x.id === mobile ? "bg-[#111] text-white" : "bg-white text-[#111]"}`}
             >
-              {!reduce && (
-                <span
-                  className="absolute inset-0 m-auto h-full w-full rounded-full"
-                  style={{ background: on ? "#111" : RED, animation: `eli-ripple ${on ? 1.6 : 2.4}s ease-out ${on ? 0 : n * 0.5}s infinite` }}
-                />
-              )}
-              <span
-                className="relative block rounded-full border-2 border-white transition-transform group-hover:scale-110"
-                style={{ background: on ? "#111" : RED, width: "clamp(14px, 2.2vw, 30px)", height: "clamp(14px, 2.2vw, 30px)" }}
-              />
-              <span
-                className={`absolute left-1/2 top-full mt-1.5 hidden -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold transition-opacity md:block ${
-                  on ? "bg-[#111] text-white" : "bg-white/90 text-[#111] opacity-0 group-hover:opacity-100"
-                }`}
-              >
-                {x.name}
-              </span>
+              {x.name}
             </button>
-          );
-        })}
-      </div>
-
-      {/* Tabs, so phones don't depend on the small pins */}
-      <div className="flex gap-1.5 overflow-x-auto border-t border-[#eee] px-4 pt-4 md:hidden">
-        {TOUCHPOINTS.map((x) => (
-          <button
-            key={x.id}
-            type="button"
-            onClick={() => setActive(x.id)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] font-medium ${x.id === active ? "bg-[#111] text-white" : "bg-[#f1f1f1] text-[#111]"}`}
-          >
-            {x.name}
-          </button>
-        ))}
-      </div>
-
-      <div className="p-5 md:p-10">
-        {/* What this screen is, and what the system does there */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={t.id}
-            initial={reduce ? false : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:items-end md:gap-10"
-          >
-            <div>
-              <p className="text-[12px] font-bold uppercase tracking-[0.14em]" style={{ color: RED }}>
-                {t.screen}
-              </p>
-              <h3 className="mt-2 text-[26px] font-bold leading-[1.1] tracking-[-0.03em] text-[#111] md:text-[32px]">{t.name}</h3>
-              <p className="mt-1 text-[16px] text-[#666]">{t.who}</p>
-            </div>
-            <ul className="flex flex-wrap gap-2 md:justify-end">
-              {t.rules.map((r) => (
-                <li key={r} className="rounded-full bg-[#f3f3f3] px-3.5 py-2 text-[13.5px] text-[#333]">
-                  {r}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="mt-6 md:mt-8">
-          {t.steps ? (
-            <Steps key={t.id} tp={t} />
-          ) : t.shot ? (
-            <div className="flex items-center justify-center rounded-[18px] bg-[#f1efe9] px-4 py-8 md:px-10 md:py-12">
-              {/* Shown at no more than half its pixel width so it stays sharp */}
-              <Image
-                src={t.shot.src}
-                alt={t.shot.alt}
-                width={t.shot.width}
-                height={t.shot.height}
-                sizes="(max-width: 768px) 92vw, 641px"
-                className="h-auto w-full max-w-[641px] drop-shadow-[0_24px_40px_rgba(0,0,0,0.18)]"
-              />
-            </div>
-          ) : (
-            <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-[18px] bg-[#f1efe9] p-6 md:min-h-[420px]">
-              {t.mock}
-            </div>
-          )}
+          ))}
+        </div>
+        <div className="mt-4">
+          <TouchpointCard key={mobileTp.id} tp={mobileTp} />
         </div>
       </div>
     </div>
