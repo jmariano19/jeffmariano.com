@@ -111,9 +111,9 @@ export default function ViveBien() {
           },
           {
             company: "Verizon",
-            title: "The AI Was Smart. The UX Was Wrong.",
-            image: "/images/case-verizon-ai.png",
-            href: "/case-studies/verizon-ai",
+            title: "One AI Canvas for Every Way Reps Help Customers",
+            image: "/images/case-studies/canvas/hero-bg.webp",
+            href: "/case-studies/ai-conversational-canvas",
           },
           {
             company: "Tinybeans",

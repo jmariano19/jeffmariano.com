@@ -112,9 +112,9 @@ export default function EliLastExperiment() {
           },
           {
             company: "Verizon",
-            title: "The AI Was Smart. The UX Was Wrong.",
-            image: "/images/case-verizon-ai.png",
-            href: "/case-studies/verizon-ai",
+            title: "Scaling a Retail Design System Across 15+ Teams",
+            image: "/images/case-verizon-ecosystem.png",
+            href: "/case-studies/verizon-design-systems",
           },
           {
             company: "ViveBien",

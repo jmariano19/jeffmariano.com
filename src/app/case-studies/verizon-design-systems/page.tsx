@@ -166,10 +166,10 @@ export default function VerizonDesignSystems() {
             href: "/case-studies/ai-conversational-canvas",
           },
           {
-            company: "Verizon",
-            title: "The AI Was Smart. The UX Was Wrong.",
-            image: "/images/case-verizon-ai.png",
-            href: "/case-studies/verizon-ai",
+            company: "Side project",
+            title: "A Boy Built From Your Own Words",
+            image: "/images/home/eli-card-bg.webp",
+            href: "/case-studies/eli-last-experiment",
           },
           {
             company: "ViveBien",

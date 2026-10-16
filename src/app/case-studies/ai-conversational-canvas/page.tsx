@@ -16,6 +16,7 @@ import { Consolidation } from "@/components/case-study/Consolidation";
 import { ChannelAdapt } from "@/components/case-study/ChannelAdapt";
 import { IntentComposer } from "@/components/case-study/IntentComposer";
 import { AgentWorkflow } from "@/components/case-study/AgentWorkflow";
+import AnimatedEvidenceGraph from "@/components/case-study/AnimatedEvidenceGraph";
 
 export const metadata: Metadata = {
   title: "AI Conversational Canvas — Jeff Mariano",
@@ -60,16 +61,76 @@ export default function AiConversationalCanvas() {
           { number: "1", label: "approval instead of six manual steps" },
         ]}
         items={[
-          { id: "consolidate", n: "01", title: "One canvas", line: "Separate apps become one place to ask." },
-          { id: "channels", n: "02", title: "Built for each channel", line: "Tap in stores, type in contact centers." },
-          { id: "generative-ui", n: "03", title: "Generative UI", line: "The answer is an interface, not a paragraph." },
-          { id: "agentic", n: "04", title: "Agentic workflows", line: "The agent does the work. The rep approves." },
+          { id: "where-it-started", n: "01", title: "Where it started", line: "The first AI tool reps avoided." },
+          { id: "consolidate", n: "02", title: "One canvas", line: "Separate apps become one place to ask." },
+          { id: "channels", n: "03", title: "Built for each channel", line: "Tap in stores, type in contact centers." },
+          { id: "generative-ui", n: "04", title: "Generative UI", line: "The answer is an interface, not a paragraph." },
+          { id: "agentic", n: "05", title: "Agentic workflows", line: "The agent does the work. The rep approves." },
         ]}
       />
 
       <Chapter
-        id="consolidate"
+        id="where-it-started"
         n="01"
+        kicker="Where it started · AI Advisor"
+        title="The first AI tool reps avoided"
+        takeaway="Verizon's first retail AI tool was powerful, but it interrupted the human rhythm of the sales conversation, so reps avoided it."
+        body="We mapped live store conversations. The breakdowns weren't isolated bugs: they were loops, detours and confidence gaps that sent reps away from the customer to rebuild context by hand. Everything the canvas does starts from this."
+      >
+        <div className="overflow-hidden rounded-[22px] bg-white p-3 md:rounded-[32px] md:p-6">
+          <Image
+            src="/images/case-studies/ai_advisor/friction_map.png"
+            alt="Friction map showing loops and detours in live retail conversations"
+            width={1853}
+            height={1043}
+            sizes="(max-width: 1440px) 100vw, 1304px"
+            className="h-auto w-full"
+          />
+        </div>
+        <div className="mt-8 md:mt-12">
+          <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">What the map revealed</p>
+          <p className="max-w-[30ch] text-[24px] font-bold leading-[1.2] tracking-[-0.03em] text-[#111] md:text-[30px]">
+            96% of conversations hit at least one friction point before a decision.
+          </p>
+          <div className="mt-6">
+            <AnimatedEvidenceGraph
+              signals={[
+                { label: "Support interruptions", value: 17, detail: "broke conversation momentum early" },
+                { label: "Exploratory drift", value: 20, detail: "sent reps searching instead of deciding" },
+                { label: "Decision complexity", value: 53, detail: "delayed confidence at key moments" },
+                { label: "Any friction point", value: 96, detail: "appeared before a decision was reached" },
+              ]}
+            />
+          </div>
+        </div>
+        <div className="mt-12 border-t border-[#d4d4d4] pt-10 md:mt-16 md:pt-14">
+          <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">The fix · from push to pull</p>
+          <div className="mt-5 grid gap-3 md:grid-cols-2 md:gap-4">
+            <div className="rounded-[22px] bg-white p-6 md:rounded-[28px] md:p-8">
+              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">Before · push</p>
+              <p className="mt-3 text-[22px] font-bold leading-[1.2] tracking-[-0.025em] text-[#999] md:text-[26px]">The AI told the rep what was in the quote.</p>
+              <p className="mt-2 text-[16px] leading-[1.55] text-[#777]">Eight recommendations landed in the cart at once, before the rep had built trust with the customer.</p>
+            </div>
+            <div className="rounded-[22px] bg-[#111] p-6 text-white md:rounded-[28px] md:p-8">
+              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/55">After · pull</p>
+              <p className="mt-3 text-[22px] font-bold leading-[1.2] tracking-[-0.025em] md:text-[26px]">The rep invites the AI in.</p>
+              <p className="mt-2 text-[16px] leading-[1.55] text-white/70">Suggestions can be explored, ignored or changed. AI assists, the employee decides.</p>
+            </div>
+          </div>
+          <Image
+            src="/images/case-studies/ai_advisor/before_after.png"
+            alt="Before and after: from a linear interface to AI suggestions the rep invites in"
+            width={2010}
+            height={1089}
+            sizes="(max-width: 1440px) 100vw, 1304px"
+            className="mt-4 h-auto w-full rounded-[22px] md:rounded-[28px]"
+          />
+        </div>
+      </Chapter>
+
+      <Chapter
+        id="consolidate"
+        n="02"
         kicker="The consolidation"
         title="From a stack of apps to one canvas"
         takeaway="Reps stopped hunting for the right app. They ask once, and the canvas brings the tool to them."
@@ -91,7 +152,7 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="channels"
-        n="02"
+        n="03"
         kicker="Research-led adaptation"
         title="Same canvas, different channel"
         takeaway="Research showed store reps and contact center reps work in opposite ways, so the canvas changes how it's driven, not what it is."
@@ -127,18 +188,27 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="generative-ui"
-        n="03"
+        n="04"
         kicker="Generative UI · the composition logic I designed"
         title="The AI builds the tool, not a reply"
         takeaway="Most AI tools answer with a paragraph. The canvas answers with an interface, composed for the request and the channel."
         body="For every request it reads the rep's intent, the customer's situation and the channel, then picks components from a shared library and arranges them. Insights explain the answer in a line, and AI recommendations are always marked. Try a request below."
       >
         <IntentComposer />
+        <div className="mt-6 grid gap-4 rounded-[22px] bg-white p-6 md:mt-8 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-10 md:rounded-[28px] md:p-8">
+          <p className="text-[52px] font-bold leading-none tracking-[-0.04em] text-[#111] md:text-[64px]">~200</p>
+          <div>
+            <p className="text-[19px] font-bold tracking-[-0.02em] text-[#111]">The AI UX framework behind it</p>
+            <p className="mt-1 text-[16px] leading-[1.55] text-[#555]">
+              Components, principles and patterns for AI in retail, built on the AI Advisor work: suggestion cards, override controls, contextual prompts and progressive detail. New AI features stopped needing a new interaction model every time.
+            </p>
+          </div>
+        </div>
       </Chapter>
 
       <Chapter
         id="agentic"
-        n="04"
+        n="05"
         kicker="Agentic workflows"
         title="From answers to actions"
         takeaway="The agent carries out the work across systems. The rep stays with the customer and approves anything that touches the bill."
@@ -149,7 +219,7 @@ export default function AiConversationalCanvas() {
 
       <Chapter
         id="adoption"
-        n="05"
+        n="06"
         kicker="Key design decisions"
         title="Designed around the barriers to adoption"
         takeaway="A capable AI tool still fails if reps don't trust it. Each decision answers one of the five behavioral barriers I design around."
@@ -178,20 +248,30 @@ export default function AiConversationalCanvas() {
             },
           ]}
         />
+        <div className="mt-6 rounded-[22px] bg-[#111] p-6 text-white md:mt-8 md:rounded-[28px] md:p-8">
+          <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/55">Proven in stores</p>
+          <p className="mt-3 max-w-[60ch] text-[17px] leading-[1.6] text-white/85 md:text-[19px]">
+            A tiger team of designers wrote React components, shipped micro-flows to selected stores, and I went to those stores to watch. Each solution had to earn its place through three signals: engagement, efficiency and less friction.
+          </p>
+        </div>
       </Chapter>
 
       <Outcomes
-        title="What the design enables"
+        title="Results from the first AI tool"
         items={[
-          { title: "One Entry Point", description: "A single canvas in place of separate apps for each task" },
-          { title: "Channel-Native", description: "Tap-first in stores, type-first in contact centers, one shared model" },
-          { title: "Answers as Interfaces", description: "Generative UI composed for each intent and channel" },
-          { title: "Rep in Control", description: "The agent does the work, the rep approves what matters" },
+          { title: "Voluntary Adoption", description: "Reps chose to use the AI features" },
+          { title: "Faster Interactions", description: "Bill optimization time dropped significantly" },
+          { title: "Framework Standard", description: "Adopted across the retail AI system" },
+          { title: "Sentiment Shift", description: 'From "worst product" to actively requested' },
         ]}
       />
 
       <Quotes
         quotes={[
+          {
+            text: "I feel that the Verizon team is finally understanding us and the way we work.",
+            author: "Retail representative",
+          },
           {
             text: "The AI shouldn't answer with a paragraph. It should hand the rep the tool they need, already set up, and then get out of the way.",
             author: null,
@@ -203,10 +283,10 @@ export default function AiConversationalCanvas() {
       <NextCaseStudies
         studies={[
           {
-            company: "Verizon",
-            title: "The AI Was Smart. The UX Was Wrong.",
-            image: "/images/case-verizon-ai.png",
-            href: "/case-studies/verizon-ai",
+            company: "Side project",
+            title: "A Boy Built From Your Own Words",
+            image: "/images/home/eli-card-bg.webp",
+            href: "/case-studies/eli-last-experiment",
           },
           {
             company: "Verizon",
