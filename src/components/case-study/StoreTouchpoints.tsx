@@ -193,7 +193,13 @@ function Screens({ tp }: { tp: Touchpoint }) {
 
 /* ---------- The card that opens over the store ---------- */
 
-function TouchpointCard({ tp, onClose }: { tp: Touchpoint; onClose?: () => void }) {
+function TouchpointCard({ tp, onClose, intro = false }: { tp: Touchpoint; onClose?: () => void; intro?: boolean }) {
+  const reduce = useReducedMotion();
+  // When the card opens over the store, the words and the screens rise in just after the reveal.
+  const rise = (delay: number) =>
+    intro && !reduce
+      ? { initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] as const } }
+      : {};
   return (
     <div className="relative grid gap-6 rounded-[22px] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.18)] md:grid-cols-[minmax(0,0.55fr)_minmax(0,1.45fr)] md:items-center md:gap-10 md:rounded-[32px] md:p-10 md:pr-16">
       {onClose && (
@@ -208,7 +214,7 @@ function TouchpointCard({ tp, onClose }: { tp: Touchpoint; onClose?: () => void 
           </svg>
         </button>
       )}
-      <div>
+      <motion.div {...rise(0.28)}>
         <p className="text-[12px] font-bold uppercase tracking-[0.14em]" style={{ color: RED }}>
           {tp.screen}
         </p>
@@ -221,8 +227,10 @@ function TouchpointCard({ tp, onClose }: { tp: Touchpoint; onClose?: () => void 
             </li>
           ))}
         </ul>
-      </div>
-      <Screens key={tp.id} tp={tp} />
+      </motion.div>
+      <motion.div {...rise(0.4)}>
+        <Screens key={tp.id} tp={tp} />
+      </motion.div>
     </div>
   );
 }
@@ -232,20 +240,22 @@ function TouchpointCard({ tp, onClose }: { tp: Touchpoint; onClose?: () => void 
 export function StoreTouchpoints() {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState<string | null>(null); // desktop overlay
-  const [pinned, setPinned] = useState(false); // opened by a click, stays until closed
+  const [origin, setOrigin] = useState({ x: 0, y: 0, r: 1600 }); // where the card grows from, and how far
   const [mobile, setMobile] = useState("table"); // phones: card below the map
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stage = useRef<HTMLDivElement>(null);
 
-  const cancelClose = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-  };
-  const close = useCallback(() => {
-    setOpen(null);
-    setPinned(false);
-  }, []);
-  const scheduleClose = () => {
-    cancelClose();
-    if (!pinned) closeTimer.current = setTimeout(close, 280);
+  const close = useCallback(() => setOpen(null), []);
+  const openFrom = (id: string, el: HTMLElement) => {
+    const box = stage.current?.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    if (box) {
+      const x = r.left + r.width / 2 - box.left;
+      const y = r.top + r.height / 2 - box.top;
+      // Just far enough to reach the farthest corner, so the circle grows at an even pace
+      setOrigin({ x, y, r: Math.hypot(Math.max(x, box.width - x), Math.max(y, box.height - y)) + 40 });
+    }
+    setMobile(id);
+    setOpen((cur) => (cur === id ? null : id));
   };
 
   useEffect(() => {
@@ -260,7 +270,7 @@ export function StoreTouchpoints() {
   return (
     <div>
       {/* Extra room above and below the store so the cards open in their own space */}
-      <div className="relative md:pb-4 md:pt-32">
+      <div ref={stage} className="relative md:pb-4 md:pt-32">
         {/* The store, with each screen as a pin */}
         <div className="relative" style={{ aspectRatio: "3200 / 1004" }}>
           <Image
@@ -277,16 +287,7 @@ export function StoreTouchpoints() {
               <button
                 key={x.id}
                 type="button"
-                onMouseEnter={() => {
-                  cancelClose();
-                  if (!pinned) setOpen(x.id);
-                }}
-                onMouseLeave={scheduleClose}
-                onClick={() => {
-                  setMobile(x.id);
-                  setOpen(x.id);
-                  setPinned(true);
-                }}
+                onClick={(e) => openFrom(x.id, e.currentTarget)}
                 aria-label={`Show the ${x.name.toLowerCase()}`}
                 aria-expanded={x.id === open}
                 className="group absolute -translate-x-1/2 -translate-y-1/2"
@@ -322,25 +323,44 @@ export function StoreTouchpoints() {
             );
           })}
           <span className="pointer-events-none absolute bottom-3 right-4 hidden rounded-full bg-white/90 px-3 py-1.5 text-[12.5px] font-medium text-[#333] md:block">
-            Roll over a + to see its screens
+            Click a + to see its screens
           </span>
         </div>
 
-        {/* Desktop: the card opens over the store */}
-        <AnimatePresence>
+        {/* Desktop: the card grows out of the + that was clicked, like a circle opening */}
+        <AnimatePresence mode="wait">
           {tp && (
-            <motion.div
-              key="card"
-              className="absolute left-1/2 top-1/2 z-30 hidden w-[min(1240px,96%)] md:block"
-              initial={reduce ? false : { opacity: 0, x: "-50%", y: "-46%", scale: 0.98 }}
-              animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, x: "-50%", y: "-47%", scale: 0.985 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              onMouseEnter={cancelClose}
-              onMouseLeave={scheduleClose}
-              onClick={() => setPinned(true)}
-            >
-              <TouchpointCard key={tp.id} tp={tp} onClose={close} />
+            <motion.div key={tp.id} className="absolute inset-0 z-30 hidden md:block">
+              {/* Dim the store behind; clicking it closes the card */}
+              <motion.button
+                type="button"
+                aria-label="Close"
+                tabIndex={-1}
+                onClick={close}
+                className="absolute inset-0 cursor-default bg-[#f2f2f2]/55 backdrop-blur-[3px]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35 }}
+              />
+              <motion.div
+                className="pointer-events-none absolute inset-0 flex items-center justify-center"
+                initial={reduce ? { opacity: 0 } : { clipPath: `circle(0px at ${origin.x}px ${origin.y}px)` }}
+                animate={reduce ? { opacity: 1 } : { clipPath: `circle(${origin.r}px at ${origin.x}px ${origin.y}px)` }}
+                exit={reduce ? { opacity: 0 } : { clipPath: `circle(0px at ${origin.x}px ${origin.y}px)` }}
+                transition={{ duration: reduce ? 0.2 : 0.75, ease: [0.65, 0, 0.35, 1] }}
+              >
+                <motion.div
+                  className="pointer-events-auto w-[min(1240px,96%)]"
+                  style={{ transformOrigin: `${origin.x}px ${origin.y}px` }}
+                  initial={reduce ? false : { scale: 0.92 }}
+                  animate={{ scale: 1 }}
+                  exit={reduce ? undefined : { scale: 0.95 }}
+                  transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <TouchpointCard tp={tp} onClose={close} intro />
+                </motion.div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
