@@ -6,6 +6,7 @@ import { Chapter, ChallengeOverview } from "@/components/case-study/Chapter";
 import Outcomes from "@/components/case-study/Outcomes";
 import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
+import { StoreTouchpoints } from "@/components/case-study/StoreTouchpoints";
 
 export const metadata: Metadata = {
   title: "Verizon Design Systems — Jeff Mariano",
@@ -43,7 +44,7 @@ export default function VerizonDesignSystems() {
         ]}
         items={[
           { id: "cards", n: "01", title: "A deck of cards", line: "A retail theme on the enterprise system." },
-          { id: "scale", n: "02", title: "Earning the right to scale", line: "Easy screens first, built with the roadmap." },
+          { id: "touchpoints", n: "02", title: "Every touchpoint", line: "One system, sized for each screen in the store." },
           { id: "team", n: "03", title: "One team, two continents", line: "Pods by domain, not by geography." },
           { id: "sandbox", n: "04", title: "Prove it in the store", line: "Test in real stores before it joins the system." },
         ]}
@@ -61,13 +62,13 @@ export default function VerizonDesignSystems() {
       </Chapter>
 
       <Chapter
-        id="scale"
+        id="touchpoints"
         n="02"
-        kicker="Adoption strategy"
-        title="Earning the right to scale"
-        takeaway="I started with the easiest, most visible screens, and built roadmap features with the system instead of beside it."
+        kicker="Retail touchpoints"
+        title="One system, every screen in the store"
+        takeaway="A kiosk, a device table, the counter tablet and the rep's phone each get the same components, sized for who is using them. Tap a screen."
       >
-        <Figure src="/images/case-studies/design-systems/store-map.webp" alt="A Verizon store floor with every screen the system touches marked in red, from kiosks to the counter tablet" ratio="1342 / 407" bg="bg-white" />
+        <StoreTouchpoints />
       </Chapter>
 
       <Chapter
@@ -97,7 +98,7 @@ export default function VerizonDesignSystems() {
         kicker="Governance"
         title="Prove it in the store first"
         takeaway="New patterns ship as small micro-flows, get watched in real stores, and only then join the system."
-        body="Bill optimization was the first sandbox. For adoption I skipped both mandates and pure grassroots: my team first, then PMs, then senior leadership. By the time I presented up, everyone already knew."
+        body="I started with the easiest, most visible screens and built roadmap features with the system, not beside it. Bill optimization was the first sandbox. For adoption I skipped both mandates and pure grassroots: my team first, then PMs, then senior leadership. By the time I presented up, everyone already knew."
       >
         <Figure src="/images/case-studies/design-systems/counter.webp" alt="A Verizon rep walking a customer through a plan on a counter tablet" ratio="1949 / 1085" bg="bg-[#ddd]" />
       </Chapter>
