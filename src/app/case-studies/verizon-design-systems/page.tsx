@@ -67,7 +67,7 @@ export default function VerizonDesignSystems() {
         title="Earning the right to scale"
         takeaway="I started with the easiest, most visible screens, and built roadmap features with the system instead of beside it."
       >
-        <Figure src="/images/retail.png" alt="A store floor map showing where the system's screens appear across the store" ratio="1342 / 607" />
+        <Figure src="/images/case-studies/design-systems/store-map.webp" alt="A Verizon store floor with every screen the system touches marked in red, from kiosks to the counter tablet" ratio="1342 / 407" bg="bg-white" />
       </Chapter>
 
       <Chapter
