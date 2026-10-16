@@ -3,10 +3,9 @@ import type { Metadata } from "next";
 import { SitePage } from "@/components/SiteChrome";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import { Chapter, ChallengeOverview } from "@/components/case-study/Chapter";
-import Outcomes from "@/components/case-study/Outcomes";
-import Quotes from "@/components/case-study/Quotes";
 import NextCaseStudies from "@/components/case-study/NextCaseStudies";
 import { StoreTouchpoints } from "@/components/case-study/StoreTouchpoints";
+import { AdoptionPath, ClosingLine, Results, SandboxLoop, TeamPods } from "@/components/case-study/DesignSystemSections";
 
 export const metadata: Metadata = {
   title: "Verizon Design Systems — Jeff Mariano",
@@ -43,26 +42,16 @@ export default function VerizonDesignSystems() {
           { number: "2", label: "continents duplicating the same work" },
         ]}
         items={[
-          { id: "touchpoints", n: "01", title: "Every touchpoint", line: "One system, sized for each screen in the store." },
-          { id: "cards", n: "02", title: "A deck of cards", line: "A retail theme on the enterprise system." },
+          { id: "cards", n: "01", title: "A deck of cards", line: "A retail theme on the enterprise system." },
+          { id: "touchpoints", n: "02", title: "Every touchpoint", line: "One system, sized for each screen in the store." },
           { id: "team", n: "03", title: "One team, two continents", line: "Pods by domain, not by geography." },
           { id: "sandbox", n: "04", title: "Prove it in the store", line: "Test in real stores before it joins the system." },
         ]}
       />
 
       <Chapter
-        id="touchpoints"
-        n="01"
-        kicker="Retail touchpoints"
-        title="One system, every screen in the store"
-        takeaway="The 39-inch screen, the Collaboration tablet, the welcome table and the rep's tablet all use the same cards, sized for who is using them. Tap a screen in the store."
-      >
-        <StoreTouchpoints />
-      </Chapter>
-
-      <Chapter
         id="cards"
-        n="02"
+        n="01"
         kicker="System strategy"
         title="A deck of cards for every conversation"
         takeaway="Reps pick the card that fits the conversation. Every card is built from the same retail components."
@@ -85,10 +74,10 @@ export default function VerizonDesignSystems() {
         </div>
         <div className="mt-6 grid items-center gap-8 overflow-hidden rounded-[22px] bg-[#111] px-5 py-8 text-white md:mt-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-12 md:rounded-[36px] md:px-12 md:py-14">
           <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">Same system, dark mode</p>
+            <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">Same system, light and dark</p>
             <p className="mt-3 text-[24px] font-bold leading-[1.15] tracking-[-0.03em] md:text-[30px]">The rep&apos;s tablet runs on the same cards.</p>
             <p className="mt-3 max-w-[38ch] text-[16px] leading-[1.55] text-white/65">
-              A dark theme for the tools reps use all day. Only the tokens change, so every card, list and button works in both.
+              A dark theme for the tools reps use all day, and the light theme customers see. Only the tokens change, so every card, list and button works in both.
             </p>
           </div>
           {/* Shown at no more than half the video's width, so it stays sharp on retina screens */}
@@ -111,13 +100,24 @@ export default function VerizonDesignSystems() {
       </Chapter>
 
       <Chapter
+        id="touchpoints"
+        n="02"
+        kicker="Retail touchpoints"
+        title="One system, every screen in the store"
+        takeaway="The 39-inch screen, the Collaboration tablet, the welcome table and the rep's tablet all use the same cards, sized for who is using them. Tap a screen in the store."
+      >
+        <StoreTouchpoints />
+      </Chapter>
+
+      <Chapter
         id="team"
         n="03"
         kicker="Operating model"
         title="One team across two continents"
         takeaway="Domain pods for sales, unity and service, each with a US lead and an India lead. Work assigned by priority, not geography."
       >
-        <div className="grid gap-3 md:grid-cols-2 md:gap-4">
+        <TeamPods />
+        <div className="mt-3 grid gap-3 md:mt-4 md:grid-cols-2 md:gap-4">
           <div className="rounded-[22px] bg-white p-6 md:rounded-[28px] md:p-8">
             <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">Before</p>
             <p className="mt-3 text-[22px] font-bold leading-[1.2] tracking-[-0.025em] text-[#999] md:text-[26px]">US designed, India executed.</p>
@@ -137,33 +137,25 @@ export default function VerizonDesignSystems() {
         kicker="Governance"
         title="Prove it in the store first"
         takeaway="New patterns ship as small micro-flows, get watched in real stores, and only then join the system."
-        body="I started with the easiest, most visible screens and built roadmap features with the system, not beside it. Bill optimization was the first sandbox. For adoption I skipped both mandates and pure grassroots: my team first, then PMs, then senior leadership. By the time I presented up, everyone already knew."
+        body="I started with the easiest, most visible screens and built roadmap features with the system, not beside it. Bill optimization was the first sandbox."
       >
         <Figure src="/images/case-studies/design-systems/counter.webp" alt="A Verizon rep walking a customer through a plan on a counter tablet" ratio="1949 / 1085" bg="bg-[#ddd]" />
+        <div className="mt-8 md:mt-12">
+          <SandboxLoop />
+          <AdoptionPath />
+        </div>
       </Chapter>
 
-      <Outcomes
+      <Results
         items={[
-          { title: "Promoted to AD", description: "On the strength of this work" },
-          { title: "VP Design Award", description: "Company-wide recognition" },
-          { title: "Voluntary adoption", description: "Small Biz adopted it without being asked" },
-          { title: "PM method shift", description: "Product moved to modular delivery" },
+          { title: "Promoted to Associate Director", line: "On the strength of this work" },
+          { title: "VP Design Award", line: "Company-wide recognition" },
+          { title: "Adopted by choice", line: "The Small Business team took it on without being asked" },
+          { title: "A new way to ship", line: "Product moved to modular delivery" },
         ]}
       />
 
-      <Quotes
-        quotes={[
-          {
-            text: "I am very impressed with your work, Jeff.",
-            author: "Senior Director of Retail Innovation",
-          },
-          {
-            text: "Design systems fail when they're treated as infrastructure projects. They succeed when they're treated as adoption problems.",
-            author: null,
-            lines: true,
-          },
-        ]}
-      />
+      <ClosingLine text="Design systems fail when they're treated as infrastructure projects. They succeed when they're treated as adoption problems." />
 
       <NextCaseStudies
         studies={[
