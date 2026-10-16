@@ -6,136 +6,95 @@ import { useState, type ReactNode } from "react";
 
 /**
  * One system, every screen in the store. Pick a touchpoint on the floor map
- * and the same retail components re-render for that screen: who is using it,
- * how far away they stand, and what the theme changes to fit.
+ * and walk through the real screens for it, step by step. Touchpoints whose
+ * screens haven't been added yet show a simple placeholder.
  */
 
 const RED = "#ee0000";
+const BEIGE = "#f2ede1";
+
+type Step = { src: string; width: number; height: number; caption: string };
 
 type Touchpoint = {
   id: string;
   name: string;
   who: string;
   screen: string;
-  size: string;
   pin: { x: number; y: number };
   rules: string[];
-  /** Placeholder until a real screen is supplied. */
-  mock: ReactNode;
-  /** A real screen from the store. When set, it replaces the mock. */
-  shot?: { src: string; width: number; height: number; alt: string };
+  /** Real screens, shown as a step-through. */
+  steps?: Step[];
+  /** Placeholder until real screens are supplied. */
+  mock?: ReactNode;
 };
 
-/** A real screenshot, framed like the device it runs on. */
-function Shot({ shot }: { shot: NonNullable<Touchpoint["shot"]> }) {
-  const tall = shot.height > shot.width;
+/* ---------- Placeholder pieces ---------- */
+
+function Card({ title, line, selected = false }: { title: string; line?: string; selected?: boolean }) {
   return (
-    <div className={`rounded-[16px] bg-[#1b1b1b] p-[6px] ${tall ? "w-[150px] md:w-[170px]" : "w-full max-w-[460px]"}`}>
-      <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 768px) 90vw, 560px" className="h-auto w-full rounded-[11px]" />
+    <div className="flex flex-col gap-1 rounded-[10px] bg-white p-2" style={{ boxShadow: selected ? "0 0 0 2px #111" : "0 1px 3px rgba(0,0,0,0.12)" }}>
+      <span className="block text-[9px] font-bold leading-[1.15] tracking-[-0.02em] text-[#111]">{title}</span>
+      {line && <span className="block text-[6.5px] leading-[1.3] text-[#666]">{line}</span>}
     </div>
   );
 }
 
-/* ---------- The shared card, the one component every screen reuses ---------- */
-
-function Card({ title, line, scale = 1, selected = false, tone }: { title: string; line?: string; scale?: number; selected?: boolean; tone?: string }) {
-  return (
-    <div
-      className="flex flex-col rounded-[10px] bg-white"
-      style={{
-        padding: 8 * scale,
-        gap: 4 * scale,
-        boxShadow: selected ? `0 0 0 ${2 * scale}px #111` : "0 1px 3px rgba(0,0,0,0.12)",
-      }}
-    >
-      {tone && <div className="rounded-[6px]" style={{ height: 34 * scale, background: tone }} />}
-      <span className="block font-bold leading-[1.15] tracking-[-0.02em] text-[#111]" style={{ fontSize: 9 * scale }}>
-        {title}
-      </span>
-      {line && (
-        <span className="block leading-[1.3] text-[#666]" style={{ fontSize: 6.5 * scale }}>
-          {line}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function Button({ label, scale = 1, dark = true }: { label: string; scale?: number; dark?: boolean }) {
+function Button({ label, dark = true }: { label: string; dark?: boolean }) {
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-full font-semibold ${dark ? "bg-[#111] text-white" : "border border-[#111] text-[#111]"}`}
-      style={{ fontSize: 7 * scale, height: 18 * scale, padding: `0 ${10 * scale}px` }}
+      className={`inline-flex h-[18px] items-center justify-center rounded-full px-2.5 text-[7px] font-semibold ${dark ? "bg-[#111] text-white" : "border border-[#111] text-[#111]"}`}
     >
       {label}
     </span>
   );
 }
 
-/* ---------- One mock per screen ---------- */
+/* ---------- The touchpoints ---------- */
+
+const T = "/images/case-studies/design-systems/table";
+const S39 = "/images/case-studies/design-systems/screen39";
 
 const TOUCHPOINTS: Touchpoint[] = [
   {
-    id: "kiosk",
-    name: "Welcome kiosk",
-    who: "Customers, on their own",
-    screen: "Large landscape touch screen",
-    size: "XL",
+    id: "screen39",
+    name: "39-inch screen",
+    who: "Customer and rep, side by side",
+    screen: "Ultra-wide display at the wall",
     pin: { x: 5.2, y: 62.1 },
-    rules: ["Type scaled up to read from a step back", "Big touch targets for a standing reach", "One choice per screen, no rep needed"],
-    mock: (
-      <div className="w-full max-w-[460px] rounded-[14px] bg-[#1b1b1b] p-[6px]">
-        <div className="rounded-[9px] bg-[#f6f6f6] p-4">
-          <p className="text-[19px] font-bold tracking-[-0.03em]" style={{ color: RED }}>
-            Start your plan here
-          </p>
-          <div className="mt-3 grid grid-cols-4 gap-2">
-            <Card title="Plans" line="Find yours" tone="#f3c5bd" scale={1.15} />
-            <Card title="Protect" line="Cover your device" tone="#e8d3b8" scale={1.15} />
-            <Card title="Home" line="Internet at home" tone="#d7d4ce" scale={1.15} />
-            <Card title="Trade in" line="See what it's worth" tone="#f1b3a8" scale={1.15} />
-          </div>
-        </div>
-      </div>
-    ),
+    rules: ["The whole account fits in one row", "Cards sized to read from a step back", "Same cards as the table tablet"],
+    steps: [
+      { src: `${S39}/3.webp`, width: 1920, height: 700, caption: "Every line on the account at a glance, with priority upgrades called out." },
+      { src: `${S39}/0.webp`, width: 1920, height: 700, caption: "The account on one screen: overview, mobile, billing, home, perks and support as cards." },
+      { src: `${S39}/2.webp`, width: 1920, height: 700, caption: "Bundles for Amy: her current plan next to three bundles, built from the same device, plan and perk cards." },
+    ],
   },
   {
     id: "table",
-    name: "Device table",
-    who: "Customers, browsing",
-    screen: "Small tablet beside each phone",
-    size: "M",
+    name: "Table tablet",
+    who: "Customers exploring, a rep nearby",
+    screen: "Tablet on the device tables",
     pin: { x: 53.4, y: 60.4 },
-    rules: ["Short, scannable specs", "One clear next step: talk to a rep", "Same card, tighter spacing"],
-    mock: (
-      <div className="w-[220px] rounded-[14px] bg-[#1b1b1b] p-[6px]">
-        <div className="flex flex-col gap-2 rounded-[9px] bg-[#f6f6f6] p-3">
-          <div className="flex items-center gap-2">
-            <div className="h-[46px] w-[24px] rounded-[5px] bg-[#222]" />
-            <div>
-              <p className="text-[11px] font-bold tracking-[-0.02em]">This phone</p>
-              <p className="text-[8px] text-[#666]">Compare it with yours</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-1.5">
-            <Card title="Camera" line="Best in its class" />
-            <Card title="Battery" line="All-day" />
-          </div>
-          <Button label="Talk to a rep" />
-        </div>
-      </div>
-    ),
+    rules: ["Invites a tap, then gets personal", "Offers, devices and perks as one set of cards", "Every step works with or without a rep"],
+    steps: [
+      { src: `${T}/1.webp`, width: 2000, height: 1117, caption: "A customer at the device table, with a rep close by." },
+      { src: `${T}/2.webp`, width: 2000, height: 1123, caption: "Tap to explore. The tablet invites them in." },
+      { src: `${T}/5.webp`, width: 2000, height: 1074, caption: "A personal welcome starts the session." },
+      { src: `${T}/6.webp`, width: 2000, height: 1071, caption: "Two of four devices on the account are ready to upgrade." },
+      { src: `${T}/7.webp`, width: 2000, height: 1074, caption: "Just for Jamie: the best offer, device, plan and perks, all as cards. Pricing can be shown or hidden." },
+      { src: `${T}/8.webp`, width: 2000, height: 1074, caption: "Choosing a phone: color, storage and how to pay." },
+      { src: `${T}/10.webp`, width: 2000, height: 1072, caption: "Perks are cards too, added with one tap." },
+      { src: `${T}/11.webp`, width: 2000, height: 1071, caption: "Trade-in starts from the devices already on the account." },
+    ],
   },
   {
     id: "counter",
     name: "Counter tablet",
     who: "Rep and customer, together",
     screen: "Tablet the rep turns to share",
-    size: "L",
     pin: { x: 68.9, y: 64 },
     rules: ["Readable from both sides of the counter", "Rep picks the card that fits the conversation", "Selected state clear at a glance"],
     mock: (
-      <div className="w-full max-w-[330px] rounded-[16px] bg-[#1b1b1b] p-[7px]">
+      <div className="w-full max-w-[330px] rounded-[16px] bg-[#1b1b1b] p-[7px] md:scale-[1.2]">
         <div className="rounded-[10px] bg-[#f6f6f6] p-3.5">
           <p className="text-[12px] font-bold tracking-[-0.02em]">Plans for Maria</p>
           <p className="text-[8px] text-[#666]">2 lines · upgrading</p>
@@ -157,11 +116,10 @@ const TOUCHPOINTS: Touchpoint[] = [
     name: "Rep's phone",
     who: "Reps, on the floor",
     screen: "Phone in the rep's hand",
-    size: "S",
     pin: { x: 81.1, y: 65.6 },
     rules: ["Glanceable in one hand", "Dense, but the same cards", "Hands off to the counter tablet"],
     mock: (
-      <div className="w-[130px] rounded-[20px] bg-[#1b1b1b] p-[5px]">
+      <div className="w-[130px] rounded-[20px] bg-[#1b1b1b] p-[5px] md:scale-[1.2]">
         <div className="flex flex-col gap-1.5 rounded-[16px] bg-[#f6f6f6] px-2 pb-3 pt-4">
           <p className="text-[9px] font-bold tracking-[-0.02em]">Next up</p>
           <Card title="Maria · Upgrade" line="Waiting 4 min" selected />
@@ -176,9 +134,98 @@ const TOUCHPOINTS: Touchpoint[] = [
   },
 ];
 
+/* ---------- Step-through of real screens ---------- */
+
+function Arrow({ dir, onClick, disabled }: { dir: "prev" | "next"; onClick: () => void; disabled: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={dir === "prev" ? "Previous screen" : "Next screen"}
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#d9d9d9] bg-white text-[#111] transition-colors hover:border-[#111] disabled:opacity-30 disabled:hover:border-[#d9d9d9]"
+    >
+      <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+        <path d={dir === "prev" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </button>
+  );
+}
+
+function Steps({ tp }: { tp: Touchpoint }) {
+  const reduce = useReducedMotion();
+  const steps = tp.steps!;
+  const [i, setI] = useState(0);
+  const s = steps[i];
+  const ratio = `${steps[0].width} / ${steps[0].height}`;
+
+  return (
+    <div>
+      <div className="relative overflow-hidden rounded-[16px] border border-[#ebe6da] md:rounded-[22px]" style={{ aspectRatio: ratio, background: BEIGE }}>
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={s.src}
+            className="absolute inset-0"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduce ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            <Image src={s.src} alt={s.caption} fill sizes="(max-width: 1440px) 100vw, 1220px" className="object-contain" priority={i === 0} />
+          </motion.div>
+        </AnimatePresence>
+        {/* Tap either half of the screen to move through the flow */}
+        <button type="button" aria-label="Previous screen" className="absolute inset-y-0 left-0 w-1/3 cursor-w-resize" onClick={() => setI((n) => Math.max(0, n - 1))} />
+        <button type="button" aria-label="Next screen" className="absolute inset-y-0 right-0 w-2/3 cursor-e-resize" onClick={() => setI((n) => Math.min(steps.length - 1, n + 1))} />
+      </div>
+
+      <div className="mt-4 flex items-center gap-3 md:mt-5 md:gap-4">
+        <Arrow dir="prev" onClick={() => setI((n) => Math.max(0, n - 1))} disabled={i === 0} />
+        <div className="min-w-0 flex-1">
+          <p className="font-mono text-[11.5px] text-[#999]">
+            {String(i + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
+          </p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={i}
+              className="text-[15px] leading-[1.45] text-[#222] md:text-[17px]"
+              initial={reduce ? false : { opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduce ? undefined : { opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {s.caption}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+        <Arrow dir="next" onClick={() => setI((n) => Math.min(steps.length - 1, n + 1))} disabled={i === steps.length - 1} />
+      </div>
+
+      {/* The whole flow as thumbnails */}
+      <div className="mt-4 flex gap-2 overflow-x-auto pb-1 md:mt-5">
+        {steps.map((x, n) => (
+          <button
+            key={x.src}
+            type="button"
+            onClick={() => setI(n)}
+            aria-label={`Screen ${n + 1}`}
+            aria-current={n === i}
+            className={`relative shrink-0 overflow-hidden rounded-[8px] transition-all ${n === i ? "opacity-100 ring-2 ring-[#111] ring-offset-2" : "opacity-55 hover:opacity-90"}`}
+            style={{ width: steps[0].width / steps[0].height > 2 ? 132 : 96, aspectRatio: ratio, background: BEIGE }}
+          >
+            <Image src={x.src} alt="" fill sizes="140px" className="object-contain" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- The chapter piece ---------- */
+
 export function StoreTouchpoints() {
   const reduce = useReducedMotion();
-  const [active, setActive] = useState("counter");
+  const [active, setActive] = useState("table");
   const t = TOUCHPOINTS.find((x) => x.id === active)!;
 
   return (
@@ -215,9 +262,9 @@ export function StoreTouchpoints() {
                 style={{ background: on ? "#111" : RED, width: "clamp(14px, 2.2vw, 30px)", height: "clamp(14px, 2.2vw, 30px)" }}
               />
               <span
-                className={`absolute left-1/2 top-full mt-1.5 hidden -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold md:block ${
+                className={`absolute left-1/2 top-full mt-1.5 hidden -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold transition-opacity md:block ${
                   on ? "bg-[#111] text-white" : "bg-white/90 text-[#111] opacity-0 group-hover:opacity-100"
-                } transition-opacity`}
+                }`}
               >
                 {x.name}
               </span>
@@ -240,24 +287,8 @@ export function StoreTouchpoints() {
         ))}
       </div>
 
-      {/* The same components, rendered for that screen */}
-      <div className="grid gap-6 p-5 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-10 md:p-10">
-        <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-[18px] bg-[#f1efe9] p-5 md:min-h-[400px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={t.id}
-              className="flex w-full justify-center md:scale-[1.2]"
-              initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={reduce ? undefined : { opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.3 }}
-            >
-              {t.shot ? <Shot shot={t.shot} /> : t.mock}
-            </motion.div>
-          </AnimatePresence>
-          <span className="absolute left-3 top-3 rounded-full bg-white px-2.5 py-1 font-mono text-[11px] text-[#555]">size: {t.size}</span>
-        </div>
-
+      <div className="p-5 md:p-10">
+        {/* What this screen is, and what the system does there */}
         <AnimatePresence mode="wait">
           <motion.div
             key={t.id}
@@ -265,23 +296,34 @@ export function StoreTouchpoints() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="flex flex-col justify-center"
+            className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:items-end md:gap-10"
           >
-            <p className="text-[12px] font-bold uppercase tracking-[0.14em]" style={{ color: RED }}>
-              {t.screen}
-            </p>
-            <h3 className="mt-2 text-[26px] font-bold leading-[1.1] tracking-[-0.03em] text-[#111] md:text-[32px]">{t.name}</h3>
-            <p className="mt-1 text-[16px] text-[#666]">{t.who}</p>
-            <ul className="mt-5 flex flex-col border-t border-[#e5e5e5]">
+            <div>
+              <p className="text-[12px] font-bold uppercase tracking-[0.14em]" style={{ color: RED }}>
+                {t.screen}
+              </p>
+              <h3 className="mt-2 text-[26px] font-bold leading-[1.1] tracking-[-0.03em] text-[#111] md:text-[32px]">{t.name}</h3>
+              <p className="mt-1 text-[16px] text-[#666]">{t.who}</p>
+            </div>
+            <ul className="flex flex-wrap gap-2 md:justify-end">
               {t.rules.map((r) => (
-                <li key={r} className="border-b border-[#e5e5e5] py-2.5 text-[15.5px] text-[#222]">
+                <li key={r} className="rounded-full bg-[#f3f3f3] px-3.5 py-2 text-[13.5px] text-[#333]">
                   {r}
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-[13.5px] text-[#888]">Same cards, buttons and tokens. Only the retail theme&apos;s size changes.</p>
           </motion.div>
         </AnimatePresence>
+
+        <div className="mt-6 md:mt-8">
+          {t.steps ? (
+            <Steps key={t.id} tp={t} />
+          ) : (
+            <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-[18px] bg-[#f1efe9] p-6 md:min-h-[420px]">
+              {t.mock}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
