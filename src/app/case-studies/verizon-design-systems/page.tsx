@@ -30,7 +30,8 @@ export default function VerizonDesignSystems() {
         title="Scaling a Retail Design System Across 15+ Teams"
         summary="Store reps worked on kiosks and tablets the enterprise design system was never built for, and every team rebuilt the same buttons its own way. I led nine designers across the US and India to build a retail theme on top of the enterprise system, and to get teams to adopt it by choice."
         meta="Role: Team leader, retail design system | Team: 9 designers · US + India | Scope: 15+ teams · 5–10 retail products"
-        image="/images/case-studies/Design Systems-verizon.png"
+        image="/images/case-studies/design-systems/hero.webp"
+        imageAlt="A customer using the retail kiosk at a Verizon store, starting a plan on the Services screen"
       />
 
       <ChallengeOverview
