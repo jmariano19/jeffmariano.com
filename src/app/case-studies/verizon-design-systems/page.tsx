@@ -55,7 +55,7 @@ export default function VerizonDesignSystems() {
         n="01"
         kicker="Retail touchpoints"
         title="One system, every screen in the store"
-        takeaway="The 39-inch screen, the table tablet, the counter tablet and the rep's phone all use the same cards, sized for who is using them. Tap a screen in the store."
+        takeaway="The 39-inch screen, the table tablet, the counter tablet and the rep's tablet all use the same cards, sized for who is using them. Tap a screen in the store."
       >
         <StoreTouchpoints />
       </Chapter>

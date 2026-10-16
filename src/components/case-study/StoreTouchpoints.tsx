@@ -24,6 +24,8 @@ type Touchpoint = {
   rules: string[];
   /** Real screens, shown as a step-through. */
   steps?: Step[];
+  /** A single real screen, already in its device frame. */
+  shot?: { src: string; width: number; height: number; alt: string };
   /** Placeholder until real screens are supplied. */
   mock?: ReactNode;
 };
@@ -113,24 +115,12 @@ const TOUCHPOINTS: Touchpoint[] = [
   },
   {
     id: "phone",
-    name: "Rep's phone",
+    name: "Rep's tablet",
     who: "Reps, on the floor",
-    screen: "Phone in the rep's hand",
+    screen: "Tablet the rep carries",
     pin: { x: 81.1, y: 65.6 },
-    rules: ["Glanceable in one hand", "Dense, but the same cards", "Hands off to the counter tablet"],
-    mock: (
-      <div className="w-[130px] rounded-[20px] bg-[#1b1b1b] p-[5px] md:scale-[1.2]">
-        <div className="flex flex-col gap-1.5 rounded-[16px] bg-[#f6f6f6] px-2 pb-3 pt-4">
-          <p className="text-[9px] font-bold tracking-[-0.02em]">Next up</p>
-          <Card title="Maria · Upgrade" line="Waiting 4 min" selected />
-          <Card title="James · Bill question" line="Waiting 9 min" />
-          <Card title="Ana · New line" line="Booked 2:30" />
-          <span className="mt-1 flex justify-center">
-            <Button label="Start with Maria" />
-          </span>
-        </div>
-      </div>
-    ),
+    rules: ["The whole account in one view", "Mobile, home, billing and perks as the same cards", "Goes wherever the customer is"],
+    shot: { src: "/images/case-studies/design-systems/rep-account.webp", width: 1282, height: 850, alt: "The rep's tablet showing a customer's account: overview, mobile, home, billing and perks as cards" },
   },
 ];
 
@@ -318,6 +308,18 @@ export function StoreTouchpoints() {
         <div className="mt-6 md:mt-8">
           {t.steps ? (
             <Steps key={t.id} tp={t} />
+          ) : t.shot ? (
+            <div className="flex items-center justify-center rounded-[18px] bg-[#f1efe9] px-4 py-8 md:px-10 md:py-12">
+              {/* Shown at no more than half its pixel width so it stays sharp */}
+              <Image
+                src={t.shot.src}
+                alt={t.shot.alt}
+                width={t.shot.width}
+                height={t.shot.height}
+                sizes="(max-width: 768px) 92vw, 641px"
+                className="h-auto w-full max-w-[641px] drop-shadow-[0_24px_40px_rgba(0,0,0,0.18)]"
+              />
+            </div>
           ) : (
             <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-[18px] bg-[#f1efe9] p-6 md:min-h-[420px]">
               {t.mock}
