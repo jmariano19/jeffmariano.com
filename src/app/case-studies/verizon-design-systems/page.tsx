@@ -69,7 +69,7 @@ export default function VerizonDesignSystems() {
         body="The enterprise system couldn't simply shrink to fit a kiosk. So I added a retail theme layer on top of it: React components with retail themes that adapt to each screen size and orientation, shipped as micro front-ends so each team could move on its own."
       >
         <Figure src="/images/case-studies/design-systems/deck.webp" alt="Building blocks snap into card templates, and the rep plays the right card from a deck onto the counter tablet" ratio="1916 / 821" bg="bg-[#f2f2f3]" />
-        <div className="mt-10 md:mt-16">
+        <div className="mt-12 border-t border-[#d4d4d4] pt-10 md:mt-20 md:pt-16">
           <div className="mb-5 flex flex-col gap-1 md:mb-8 md:flex-row md:items-baseline md:justify-between">
             <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">From metaphor to screens</p>
             <p className="text-[15px] text-[#555] md:text-[16px]">The same cards on a kiosk, a tablet and a counter display.</p>
