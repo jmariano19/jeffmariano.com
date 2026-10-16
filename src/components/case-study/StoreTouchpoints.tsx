@@ -43,7 +43,7 @@ const TOUCHPOINTS: Touchpoint[] = [
     who: "Customer and rep, side by side",
     screen: "Ultra-wide display at the wall",
     pin: { x: 5.2, y: 62.1 },
-    rules: ["The whole account fits in one row", "Cards sized to read from a step back", "Same cards as the Collaboration Tablet"],
+    rules: ["The whole account fits in one row", "Cards sized to read from a step back", "Same cards as the Collaboration tablet"],
     steps: [
       { src: `${S39}/3.webp`, width: 1920, height: 700, caption: "Every line on the account at a glance, with priority upgrades called out." },
       { src: `${S39}/0.webp`, width: 1920, height: 700, caption: "The account on one screen: overview, mobile, billing, home, perks and support as cards." },
@@ -52,7 +52,7 @@ const TOUCHPOINTS: Touchpoint[] = [
   },
   {
     id: "table",
-    name: "Collaboration Tablet",
+    name: "Collaboration tablet",
     who: "Customers exploring, a rep nearby",
     screen: "Tablet on the device tables",
     pin: { x: 53.4, y: 60.4 },
