@@ -292,24 +292,37 @@ export function StoreTouchpoints() {
                 className="group absolute -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${x.pin.x}%`, top: `${x.pin.y}%` }}
               >
+                {/* A black "+" button with a soft ring, so it reads as clickable and
+                    never blends into the red markers in the illustration */}
                 {!reduce && (
                   <span
                     className="absolute inset-0 m-auto h-full w-full rounded-full"
-                    style={{ background: RED, animation: `eli-ripple 2.4s ease-out ${n * 0.5}s infinite` }}
+                    style={{ background: "#111", animation: `eli-ripple 2.2s ease-out ${n * 0.45}s infinite` }}
                   />
                 )}
                 <span
-                  className={`relative block rounded-full border-2 border-white transition-transform group-hover:scale-110 ${onMobile ? "max-md:!bg-[#111]" : ""}`}
-                  style={{ background: on ? "#111" : RED, width: "clamp(14px, 2.2vw, 30px)", height: "clamp(14px, 2.2vw, 30px)" }}
-                />
-                <span className="absolute left-1/2 top-full mt-1.5 hidden -translate-x-1/2 whitespace-nowrap rounded-full bg-[#111] px-2.5 py-1 text-[12px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 md:block">
+                  className={`relative flex items-center justify-center rounded-full border-[3px] border-white text-white shadow-[0_6px_16px_rgba(0,0,0,0.35)] transition-transform duration-200 group-hover:scale-110 ${
+                    on ? "scale-110" : ""
+                  } ${onMobile ? "max-md:!bg-[#ee0000]" : ""}`}
+                  style={{ background: on ? RED : "#111", width: "clamp(22px, 2.6vw, 38px)", height: "clamp(22px, 2.6vw, 38px)" }}
+                >
+                  <svg viewBox="0 0 24 24" className="h-1/2 w-1/2 transition-transform duration-200" style={{ transform: on ? "rotate(45deg)" : undefined }} aria-hidden="true">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                  </svg>
+                </span>
+                {/* Name tag, always visible on desktop */}
+                <span
+                  className={`absolute left-1/2 top-full mt-2 hidden -translate-x-1/2 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold shadow-[0_4px_12px_rgba(0,0,0,0.12)] transition-colors md:block ${
+                    on ? "bg-[#ee0000] text-white" : "bg-white text-[#111] group-hover:bg-[#111] group-hover:text-white"
+                  }`}
+                >
                   {x.name}
                 </span>
               </button>
             );
           })}
           <span className="pointer-events-none absolute bottom-3 right-4 hidden rounded-full bg-white/90 px-3 py-1.5 text-[12.5px] font-medium text-[#333] md:block">
-            Roll over a red dot to see its screens
+            Roll over a + to see its screens
           </span>
         </div>
 
