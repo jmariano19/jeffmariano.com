@@ -30,31 +30,11 @@ type Touchpoint = {
   mock?: ReactNode;
 };
 
-/* ---------- Placeholder pieces ---------- */
-
-function Card({ title, line, selected = false }: { title: string; line?: string; selected?: boolean }) {
-  return (
-    <div className="flex flex-col gap-1 rounded-[10px] bg-white p-2" style={{ boxShadow: selected ? "0 0 0 2px #111" : "0 1px 3px rgba(0,0,0,0.12)" }}>
-      <span className="block text-[9px] font-bold leading-[1.15] tracking-[-0.02em] text-[#111]">{title}</span>
-      {line && <span className="block text-[6.5px] leading-[1.3] text-[#666]">{line}</span>}
-    </div>
-  );
-}
-
-function Button({ label, dark = true }: { label: string; dark?: boolean }) {
-  return (
-    <span
-      className={`inline-flex h-[18px] items-center justify-center rounded-full px-2.5 text-[7px] font-semibold ${dark ? "bg-[#111] text-white" : "border border-[#111] text-[#111]"}`}
-    >
-      {label}
-    </span>
-  );
-}
-
 /* ---------- The touchpoints ---------- */
 
 const T = "/images/case-studies/design-systems/table";
 const S39 = "/images/case-studies/design-systems/screen39";
+const C = "/images/case-studies/design-systems/checkin";
 
 const TOUCHPOINTS: Touchpoint[] = [
   {
@@ -90,28 +70,17 @@ const TOUCHPOINTS: Touchpoint[] = [
   },
   {
     id: "counter",
-    name: "Counter tablet",
-    who: "Rep and customer, together",
-    screen: "Tablet the rep turns to share",
+    name: "Welcome table",
+    who: "Customers, as they arrive",
+    screen: "Tablet on the welcome table",
     pin: { x: 68.9, y: 64 },
-    rules: ["Readable from both sides of the counter", "Rep picks the card that fits the conversation", "Selected state clear at a glance"],
-    mock: (
-      <div className="w-full max-w-[330px] rounded-[16px] bg-[#1b1b1b] p-[7px] md:scale-[1.2]">
-        <div className="rounded-[10px] bg-[#f6f6f6] p-3.5">
-          <p className="text-[12px] font-bold tracking-[-0.02em]">Plans for Maria</p>
-          <p className="text-[8px] text-[#666]">2 lines · upgrading</p>
-          <div className="mt-2.5 grid grid-cols-3 gap-1.5">
-            <Card title="Starter" line="The basics" />
-            <Card title="Plus" line="More data, perks" selected />
-            <Card title="Ultimate" line="Everything" />
-          </div>
-          <div className="mt-2.5 flex gap-1.5">
-            <Button label="Review together" />
-            <Button label="Compare" dark={false} />
-          </div>
-        </div>
-      </div>
-    ),
+    rules: ["Customers check themselves in", "One choice per screen, big touch targets", "The same cards as every other screen"],
+    steps: [
+      { src: `${C}/1.webp`, width: 540, height: 960, caption: "Check-in: use your phone, walk in, appointment or pick-up, each one a card." },
+      { src: `${C}/1a.webp`, width: 540, height: 960, caption: "Pick one or more reasons for the visit." },
+      { src: `${C}/2.webp`, width: 540, height: 960, caption: "Save time while you wait: confirm the account with a text." },
+      { src: `${C}/3.webp`, width: 540, height: 960, caption: "The waitlist, so customers see where they stand." },
+    ],
   },
   {
     id: "phone",
@@ -148,10 +117,16 @@ function Steps({ tp }: { tp: Touchpoint }) {
   const [i, setI] = useState(0);
   const s = steps[i];
   const ratio = `${steps[0].width} / ${steps[0].height}`;
+  const portrait = steps[0].height > steps[0].width;
 
   return (
     <div>
-      <div className="relative overflow-hidden rounded-[16px] border border-[#ebe6da] md:rounded-[22px]" style={{ aspectRatio: ratio, background: BEIGE }}>
+      {/* Portrait screens sit in a phone-sized frame, at about twice their pixel density */}
+      <div className={portrait ? "flex justify-center rounded-[18px] bg-[#f1efe9] px-4 py-8 md:py-12" : ""}>
+      <div
+        className={`relative overflow-hidden ${portrait ? "w-full max-w-[290px] rounded-[26px] border-[7px] border-[#1b1b1b] shadow-[0_24px_50px_rgba(0,0,0,0.18)]" : "rounded-[16px] border border-[#ebe6da] md:rounded-[22px]"}`}
+        style={{ aspectRatio: ratio, background: BEIGE }}
+      >
         <AnimatePresence initial={false}>
           <motion.div
             key={s.src}
@@ -161,12 +136,13 @@ function Steps({ tp }: { tp: Touchpoint }) {
             exit={reduce ? undefined : { opacity: 0 }}
             transition={{ duration: 0.35 }}
           >
-            <Image src={s.src} alt={s.caption} fill sizes="(max-width: 1440px) 100vw, 1220px" className="object-contain" priority={i === 0} />
+            <Image src={s.src} alt={s.caption} fill sizes={portrait ? "290px" : "(max-width: 1440px) 100vw, 1220px"} className="object-contain" priority={i === 0} />
           </motion.div>
         </AnimatePresence>
         {/* Tap either half of the screen to move through the flow */}
         <button type="button" aria-label="Previous screen" className="absolute inset-y-0 left-0 w-1/3 cursor-w-resize" onClick={() => setI((n) => Math.max(0, n - 1))} />
         <button type="button" aria-label="Next screen" className="absolute inset-y-0 right-0 w-2/3 cursor-e-resize" onClick={() => setI((n) => Math.min(steps.length - 1, n + 1))} />
+      </div>
       </div>
 
       <div className="mt-4 flex items-center gap-3 md:mt-5 md:gap-4">
@@ -201,7 +177,7 @@ function Steps({ tp }: { tp: Touchpoint }) {
             aria-label={`Screen ${n + 1}`}
             aria-current={n === i}
             className={`relative shrink-0 overflow-hidden rounded-[8px] transition-all ${n === i ? "opacity-100 ring-2 ring-[#111] ring-offset-2" : "opacity-55 hover:opacity-90"}`}
-            style={{ width: steps[0].width / steps[0].height > 2 ? 132 : 96, aspectRatio: ratio, background: BEIGE }}
+            style={{ width: portrait ? 50 : steps[0].width / steps[0].height > 2 ? 132 : 96, aspectRatio: ratio, background: BEIGE }}
           >
             <Image src={x.src} alt="" fill sizes="140px" className="object-contain" />
           </button>
