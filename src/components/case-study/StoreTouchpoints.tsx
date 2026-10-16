@@ -124,7 +124,7 @@ function Screens({ tp }: { tp: Touchpoint }) {
           width={tp.shot.width}
           height={tp.shot.height}
           sizes="(max-width: 768px) 92vw, 641px"
-          className="h-auto w-full max-w-[500px] drop-shadow-[0_18px_30px_rgba(0,0,0,0.16)]"
+          className="h-auto w-full max-w-[641px] drop-shadow-[0_18px_30px_rgba(0,0,0,0.16)]"
         />
       </div>
     );
@@ -142,9 +142,9 @@ function Screens({ tp }: { tp: Touchpoint }) {
       <div className={portrait ? "flex justify-center" : ""}>
         <div
           className={`relative overflow-hidden ${
-            portrait ? "w-full max-w-[200px] rounded-[22px] border-[6px] border-[#1b1b1b] md:max-w-[180px]" : "mx-auto rounded-[14px] border border-[#ebe6da] md:rounded-[18px]"
+            portrait ? "w-full max-w-[200px] rounded-[22px] border-[6px] border-[#1b1b1b] md:max-w-[240px]" : "mx-auto rounded-[14px] border border-[#ebe6da] md:rounded-[18px]"
           }`}
-          style={{ aspectRatio: ratio, background: BEIGE, maxWidth: portrait ? undefined : `min(100%, ${Math.round((330 * steps[0].width) / steps[0].height)}px)` }}
+          style={{ aspectRatio: ratio, background: BEIGE, maxWidth: portrait ? undefined : `min(100%, ${Math.round((440 * steps[0].width) / steps[0].height)}px)` }}
         >
           <AnimatePresence initial={false}>
             <motion.div
@@ -155,7 +155,7 @@ function Screens({ tp }: { tp: Touchpoint }) {
               exit={reduce ? undefined : { opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Image src={s.src} alt={s.caption} fill sizes={portrait ? "200px" : "(max-width: 768px) 92vw, 760px"} className="object-contain" />
+              <Image src={s.src} alt={s.caption} fill sizes={portrait ? "240px" : "(max-width: 768px) 92vw, 760px"} className="object-contain" />
             </motion.div>
           </AnimatePresence>
           {/* Tap the left or right of the screen to move through the flow */}
@@ -164,7 +164,7 @@ function Screens({ tp }: { tp: Touchpoint }) {
         </div>
       </div>
 
-      <div className="mx-auto mt-4 flex max-w-[640px] items-center gap-3">
+      <div className="mx-auto mt-4 flex max-w-[760px] items-center gap-3">
         <Arrow dir="prev" onClick={() => go(-1)} disabled={i === 0} />
         <p className="min-w-0 flex-1 text-[14px] leading-[1.4] text-[#333] md:text-[15px]">
           <span className="mr-2 font-mono text-[11.5px] text-[#999]">
@@ -195,7 +195,7 @@ function Screens({ tp }: { tp: Touchpoint }) {
 
 function TouchpointCard({ tp, onClose }: { tp: Touchpoint; onClose?: () => void }) {
   return (
-    <div className="relative grid gap-6 rounded-[22px] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.18)] md:grid-cols-[minmax(0,0.55fr)_minmax(0,1.45fr)] md:items-center md:gap-8 md:rounded-[32px] md:p-8 md:pr-14">
+    <div className="relative grid gap-6 rounded-[22px] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.18)] md:grid-cols-[minmax(0,0.55fr)_minmax(0,1.45fr)] md:items-center md:gap-10 md:rounded-[32px] md:p-10 md:pr-16">
       {onClose && (
         <button
           type="button"
@@ -259,7 +259,8 @@ export function StoreTouchpoints() {
 
   return (
     <div>
-      <div className="relative">
+      {/* Extra room above and below the store so the cards open in their own space */}
+      <div className="relative md:py-28">
         {/* The store, with each screen as a pin */}
         <div className="relative" style={{ aspectRatio: "3200 / 1004" }}>
           <Image
@@ -317,7 +318,7 @@ export function StoreTouchpoints() {
           {tp && (
             <motion.div
               key="card"
-              className="absolute left-1/2 top-1/2 z-30 hidden w-[min(1180px,94%)] md:block"
+              className="absolute left-1/2 top-1/2 z-30 hidden w-[min(1240px,96%)] md:block"
               initial={reduce ? false : { opacity: 0, x: "-50%", y: "-46%", scale: 0.98 }}
               animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, x: "-50%", y: "-47%", scale: 0.985 }}
