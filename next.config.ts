@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // The design systems case study now lives inside the AI Canvas story.
+  async redirects() {
+    return [
+      { source: "/case-studies/verizon-design-systems", destination: "/case-studies/ai-conversational-canvas#foundation", permanent: true },
+    ];
+  },
   images: {
     unoptimized: process.env.NODE_ENV === "development",
     formats: ["image/avif", "image/webp"],

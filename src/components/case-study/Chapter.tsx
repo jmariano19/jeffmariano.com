@@ -90,8 +90,8 @@ export function ChallengeOverview({
 
       <FadeUp delay={0.15}>
         <nav aria-label="The story at a glance" className="mt-10 md:mt-14">
-          <p className="mb-5 text-[13px] font-bold uppercase tracking-[0.12em] text-[#888]">The story in four parts</p>
-          <ol className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
+          <p className="mb-5 text-[13px] font-bold uppercase tracking-[0.12em] text-[#888]">The story in {["zero","one","two","three","four","five","six"][items.length] ?? items.length} parts</p>
+          <ol className="grid gap-x-8 sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none">
             {items.map((it) => (
               <li key={it.id}>
                 <a href={`#${it.id}`} className="group block border-t-2 border-[#d4d4d4] pt-4 pb-6 transition-colors hover:border-[#111]">
