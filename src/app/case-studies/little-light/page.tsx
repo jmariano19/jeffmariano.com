@@ -103,6 +103,35 @@ export default function LittleLight() {
         takeaway="Personality first, then behaviors on a screen, then the lamp, then real data."
       >
         <Process />
+
+        {/* On the bench: real photos of the hardware tests */}
+        <div className="mt-12 border-t border-[#d4d4d4] pt-10 md:mt-20 md:pt-16">
+          <div className="mb-5 flex flex-col gap-1 md:mb-8 md:flex-row md:items-baseline md:justify-between">
+            <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">On the bench</p>
+            <p className="text-[15px] text-[#555] md:text-[16px]">Testing the parts one at a time before they go inside the lamp.</p>
+          </div>
+          <div className="mx-auto grid max-w-[880px] gap-3 sm:grid-cols-2 md:gap-4">
+            {[
+              {
+                src: "/images/case-studies/little-light/bench-sensor.webp",
+                alt: "An ultrasonic distance sensor, a small stepper motor and its driver board wired up on a desk",
+                caption: "Testing a distance sensor and a small motor, wired to the ESP32.",
+              },
+              {
+                src: "/images/case-studies/little-light/bench-button.webp",
+                alt: "A finger pressing a push button on a breadboard wired to an ESP32 board",
+                caption: "A push button on the breadboard: the simplest way to test a tap.",
+              },
+            ].map((p) => (
+              <figure key={p.src}>
+                <div className="relative overflow-hidden rounded-[22px] bg-[#e5e1d6] md:rounded-[28px]" style={{ aspectRatio: "1200 / 1593" }}>
+                  <Image src={p.src} alt={p.alt} fill sizes="(max-width: 640px) 100vw, 440px" className="object-cover" />
+                </div>
+                <figcaption className="mt-3 text-[15px] leading-[1.5] text-[#666]">{p.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </Chapter>
 
       <NextCaseStudies
