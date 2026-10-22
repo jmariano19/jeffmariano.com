@@ -105,7 +105,7 @@ export default function Tinybeans() {
             company: "Verizon",
             title: "From 7 Inconsistent Screens to One Scalable Retail Design System",
             image: "/images/case-verizon-ecosystem.png",
-            href: "/case-studies/verizon-design-systems",
+            href: "/case-studies/retail-design-system",
           },
           {
             company: "Verizon",

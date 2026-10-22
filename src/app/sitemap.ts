@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: "https://jeffmariano.com/case-studies/verizon-design-systems",
+      url: "https://jeffmariano.com/case-studies/retail-design-system",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,

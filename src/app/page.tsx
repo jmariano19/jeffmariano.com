@@ -22,7 +22,7 @@ const projects = [
     logo: { src: "/images/logos/verizon.png", alt: "Verizon", width: 800, height: 180, size: "w-[24%] max-w-[151px]" },
     description: "A retail design system scaled across 15+ teams at Verizon.",
     image: "/images/home/systems.jpg",
-    href: "/case-studies/verizon-design-systems",
+    href: "/case-studies/retail-design-system",
   },
   {
     name: "Plato Inteligente",

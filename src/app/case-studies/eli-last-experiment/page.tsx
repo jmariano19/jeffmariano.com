@@ -114,7 +114,7 @@ export default function EliLastExperiment() {
             company: "Verizon",
             title: "Scaling a Retail Design System Across 15+ Teams",
             image: "/images/case-verizon-ecosystem.png",
-            href: "/case-studies/verizon-design-systems",
+            href: "/case-studies/retail-design-system",
           },
           {
             company: "ViveBien",

@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // The AI Advisor story now lives inside the AI Canvas case study (chapter 01).
   async redirects() {
     return [
+      // Old address of the retail design system page. Browsers that saw a brief permanent redirect from it to
+      // the AI Canvas page keep following that, so the page now lives at a new address.
+      { source: "/case-studies/verizon-design-systems", destination: "/case-studies/retail-design-system", permanent: false },
       { source: "/case-studies/verizon-ai", destination: "/case-studies/ai-conversational-canvas#where-it-started", permanent: false },
     ];
   },

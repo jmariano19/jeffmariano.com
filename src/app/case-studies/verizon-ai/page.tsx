@@ -79,7 +79,7 @@ const relatedStudies = [
   {
     company: "Verizon",
     image: "/images/case-verizon-ecosystem.png",
-    href: "/case-studies/verizon-design-systems",
+    href: "/case-studies/retail-design-system",
   },
   {
     company: "Verizon",
