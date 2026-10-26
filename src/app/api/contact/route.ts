@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
   const name = clean(body.name, LIMITS.name).replace(/\n/g, " ");
   const email = clean(body.email, LIMITS.email).replace(/\n/g, "");
   const message = clean(body.message, LIMITS.message);
+  const source = clean(body.source, 40).replace(/[^a-z-]/gi, "");
 
   if (!name || !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: "Please enter your name and a valid email." }, { status: 400 });
@@ -77,7 +78,7 @@ export async function POST(req: NextRequest) {
       from: { name: "jeffmariano.com", address: user },
       to: process.env.CONTACT_TO || "jmariano19@gmail.com",
       replyTo: { name, address: email },
-      subject: `New message from ${name} via jeffmariano.com`,
+      subject: `${source === "consulting" ? "[Consulting] " : ""}New message from ${name} via jeffmariano.com${source === "consulting" ? "/consultant" : ""}`,
       text,
       html,
     });

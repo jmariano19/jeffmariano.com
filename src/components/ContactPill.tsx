@@ -23,7 +23,12 @@ export function ContactForm({
   autoFocus = false,
   roomy = false,
   tone = "light",
+  source,
+  placeholder = "Message",
 }: {
+  /** Tags the email subject, e.g. "consulting" for messages from /consultant. */
+  source?: string;
+  placeholder?: string;
   autoFocus?: boolean;
   roomy?: boolean;
   /** "dark" is the footer panel style: gray fields and a white pill button. */
@@ -55,7 +60,7 @@ export function ContactForm({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message, company }),
+        body: JSON.stringify({ name, email, message, company, source }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Couldn't send right now. Please try again.");
@@ -119,7 +124,7 @@ export function ContactForm({
       <textarea
         id={`${id}-message`}
         className={`${field} ${dark ? "h-[135px] py-3" : roomy ? "h-[150px] py-3.5" : "h-[122px] py-3.5"} resize-none`}
-        placeholder="Message"
+        placeholder={placeholder}
         maxLength={5000}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
