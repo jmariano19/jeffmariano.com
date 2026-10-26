@@ -92,3 +92,14 @@ body {
 
 /* Little Light: the active dot fills like a progress bar, then the next slide comes in */
 @keyframes ll-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Range sliders on /consultant (time calculator) */
+.calc-range { -webkit-appearance: none; appearance: none; height: 24px; background: transparent; cursor: pointer; }
+.calc-range:focus { outline: none; }
+.calc-range::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: linear-gradient(to right, #111 var(--fill, 50%), #e4e4e4 var(--fill, 50%)); }
+.calc-range::-moz-range-track { height: 6px; border-radius: 999px; background: #e4e4e4; }
+.calc-range::-moz-range-progress { height: 6px; border-radius: 999px; background: #111; }
+.calc-range::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -9px; border-radius: 999px; background: #fff; border: 2px solid #111; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+.calc-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 999px; background: #fff; border: 2px solid #111; }
+.calc-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px rgba(17,17,17,0.2); }
+.calc-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px rgba(17,17,17,0.2); }

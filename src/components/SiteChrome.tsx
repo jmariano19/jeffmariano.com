@@ -44,6 +44,7 @@ const navLinks = [
   { label: "About", href: "/about", key: "about" },
   { label: "Experiments", href: "/#side-projects", key: "experiments" },
   { label: "Articles", href: "/articles", key: "articles" },
+  { label: "AI Consulting", href: "/consultant", key: "consulting" },
 ] as const;
 
 type NavKey = (typeof navLinks)[number]["key"];
@@ -62,7 +63,7 @@ export function SiteHeader({ active }: { active?: NavKey }) {
             <span className="text-[#6b6b6b]">Currently at Verizon</span>
           </span>
         </Link>
-        <nav className="flex items-center gap-6 md:gap-8 text-[15px] md:text-[16px] tracking-[-0.03em]" aria-label="Main">
+        <nav className="flex items-center gap-6 whitespace-nowrap sm:gap-4 md:gap-6 lg:gap-8 text-[15px] md:text-[16px] tracking-[-0.03em]" aria-label="Main">
           {navLinks.map((l) => {
             const isActive = l.key === active;
             return (
@@ -185,6 +186,7 @@ export function SiteFooter() {
         >
           LinkedIn ↗
         </a>
+        <Link href="/consultant" className="hover:text-[#111]">AI Consulting</Link>
         <a href="#top" className="hover:text-[#111]">Back to top ↑</a>
       </div>
     </footer>

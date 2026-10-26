@@ -6,9 +6,9 @@ import { ContactForm } from "@/components/ContactPill";
 import { Asterisk, OnlineAsterisk } from "@/components/SiteChrome";
 import Simplify from "@/components/consultant/Simplify";
 import BeforeAfter from "@/components/consultant/BeforeAfter";
+import TimeCalculator from "@/components/consultant/TimeCalculator";
 
-// The business-facing side of jeffmariano.com. Reached only by its URL (/consultant):
-// it isn't in the portfolio navigation or the sitemap, so recruiters see the portfolio as before.
+// The business-facing side of jeffmariano.com, linked quietly from the portfolio as "AI Consulting".
 
 const description =
   "I help service businesses cut repetitive work by connecting the tools they already use and adding AI where it actually helps.";
@@ -17,8 +17,6 @@ export const metadata: Metadata = {
   title: "Practical AI for service businesses",
   description,
   alternates: { canonical: "/consultant" },
-  // Kept out of search for now; switch to true when you're ready for people to find it.
-  robots: { index: false, follow: false },
   openGraph: {
     title: "Your team has better things to do than repetitive work · Jeff Mariano",
     description,
@@ -86,36 +84,42 @@ const problems = [
   },
 ];
 
-const help = [
+const steps = [
   {
-    n: "01",
-    title: "Find the opportunities",
-    body: "I look at how work actually gets done, find the friction that costs you the most time, and help you pick what's worth fixing first.",
+    n: "1",
+    title: "Discover",
+    body: "We walk through one existing workflow together, talk to the people doing it, and find the repetitive tasks that cost the most time.",
   },
   {
-    n: "02",
-    title: "Design and build the solution",
-    body: "I connect the systems you already have, add AI where it genuinely helps, and build practical tools for one specific problem at a time.",
+    n: "2",
+    title: "Prioritize",
+    body: "We pick one realistic opportunity, weighing business impact, what's technically feasible with your tools, and what your team will actually adopt.",
   },
   {
-    n: "03",
-    title: "Make it stick",
-    body: "I test with the people who'll use it, refine until it fits their day, and measure whether it's actually saving time.",
+    n: "3",
+    title: "Pilot",
+    body: "I design and build a focused prototype or working solution within an agreed scope, using the systems you already have where possible.",
+  },
+  {
+    n: "4",
+    title: "Measure",
+    body: "We look at the results and how your team experienced it, then decide together whether going further makes sense.",
   },
 ];
 
-const steps = [
-  { n: "1", title: "Discover", body: "We talk through your business, your tools, your team and the requests that keep repeating." },
-  { n: "2", title: "Pick one workflow", body: "Together we choose one process where a fix would make a real difference." },
-  { n: "3", title: "Pilot", body: "I build and test a focused solution with your team, with clear measures of success agreed up front." },
-  { n: "4", title: "Improve", body: "We look at the results, refine what needs it, and decide together whether it's worth going further." },
+const deliverables = [
+  "A clear map of how the workflow runs today",
+  "One prioritized opportunity, with the reasoning behind it",
+  "A focused AI-assisted prototype or working solution",
+  "Feedback from the people who used it",
+  "Honest recommendations for what to do next",
 ];
 
 const credentials = [
-  { k: "15+ years", v: "designing digital products and the tools teams use every day." },
-  { k: "Complex workflows", v: "for retail and customer service teams at Fortune 50 scale." },
-  { k: "Hands-on", v: "I design, prototype and build working tools myself, including an AI product I launched." },
-  { k: "Adoption first", v: "I measure whether people actually use it, not just whether it shipped." },
+  { k: "15+ years", v: "designing digital products and the everyday tools teams rely on." },
+  { k: "Frontline teams", v: "complex workflows for retail and customer service staff at Fortune 50 scale." },
+  { k: "Hands-on", v: "I design, prototype and build working tools myself, not just slides." },
+  { k: "Adoption first", v: "I check whether people actually use what's built, not just whether it shipped." },
 ];
 
 export default function Consultant() {
@@ -168,6 +172,9 @@ export default function Consultant() {
                   <a href="#how" className={CTA_SECONDARY}>
                     See how it works
                   </a>
+                  <p className="w-full text-[14px] text-[#6b6b6b] md:text-[15px]">
+                    No complicated AI strategy required. Let&apos;s start with one problem worth solving.
+                  </p>
                 </div>
               </div>
             </Reveal>
@@ -208,7 +215,8 @@ export default function Consultant() {
                   <Heading dark="From disconnected steps" light="to one clear flow." />
                 </div>
                 <p className="text-[16px] leading-[1.55] text-[#5f5f5f] md:pb-2 md:text-[17px]">
-                  Here&apos;s a request almost every service business gets. Switch between the two to see the difference.
+                  One request almost every service business gets, handled two ways. Switch between them to see what changes for your team
+                  and your customer.
                 </p>
               </div>
             </Reveal>
@@ -217,32 +225,62 @@ export default function Consultant() {
                 <BeforeAfter />
               </div>
             </Reveal>
+
+            {/* Trust and human control */}
+            <Reveal y={40}>
+              <div className="mt-3 grid gap-6 rounded-[22px] bg-white p-6 md:mt-4 md:rounded-[32px] md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
+                <div>
+                  <h3 className="max-w-[18ch] text-[26px] font-bold leading-[1.1] tracking-[-0.035em] md:text-[34px]">
+                    AI should support your team, <span className="text-[#9a9a9a]">not take control away from it.</span>
+                  </h3>
+                  <p className="mt-4 max-w-[44ch] text-[16px] leading-[1.55] text-[#5f5f5f] md:text-[17px]">
+                    Solutions are designed around your existing workflows, appropriate data access, and human review wherever a decision
+                    matters.
+                  </p>
+                </div>
+                <ul className="grid gap-0 self-end">
+                  {[
+                    ["Works with what you have", "Built around the tools your team already uses, not a new system to learn."],
+                    ["Only what the task needs", "Each workflow gets access to the information it needs, and nothing more is assumed."],
+                    ["A person approves what matters", "Replies, changes to bookings and customer records wait for someone on your team."],
+                  ].map(([t, d]) => (
+                    <li key={t} className="grid gap-1 border-t border-[#e6e6e6] py-4 sm:grid-cols-[220px_1fr] sm:gap-6">
+                      <span className="text-[16px] font-semibold tracking-[-0.02em] md:text-[17px]">{t}</span>
+                      <span className="text-[15px] leading-[1.5] text-[#5f5f5f] md:text-[16px]">{d}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
           </Section>
 
-          {/* 4. What I help with */}
-          <Section>
+          {/* 4. Calculator */}
+          <Section id="estimate">
             <Reveal y={50}>
-              <Label>How I help</Label>
-              <Heading dark="Practical help," light="from first look to working tool." />
+              <div className="grid gap-6 md:grid-cols-[1fr_minmax(0,380px)] md:items-end">
+                <div>
+                  <Label>A quick estimate</Label>
+                  <Heading dark="How much time does repetitive work" light="cost your team?" />
+                </div>
+                <p className="text-[16px] leading-[1.55] text-[#5f5f5f] md:pb-2 md:text-[17px]">
+                  Move the sliders to match your team. The starting numbers are only an example.
+                </p>
+              </div>
             </Reveal>
-            <div className="mt-12 grid gap-3 md:mt-16 lg:grid-cols-3 lg:gap-4">
-              {help.map((h, i) => (
-                <Reveal key={h.title} y={40} delay={i * 0.08} className="h-full">
-                  <div className="flex h-full min-h-[240px] flex-col justify-between rounded-[16px] bg-white p-6 md:p-7">
-                    <span className="font-mono text-[13px] text-[#9a9a9a]">{h.n}</span>
-                    <div>
-                      <h3 className="text-[24px] font-semibold tracking-[-0.035em] md:text-[28px]">{h.title}</h3>
-                      <p className="mt-3 text-[16px] leading-[1.55] text-[#5f5f5f]">{h.body}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal y={60}>
+              <div className="mt-10 md:mt-14">
+                <TimeCalculator />
+              </div>
+            </Reveal>
             <Reveal y={30}>
-              <p className="mt-10 max-w-[760px] text-[22px] font-semibold leading-[1.35] tracking-[-0.03em] md:mt-14 md:text-[28px]">
-                Technology alone doesn&apos;t fix a workflow. <span className="text-[#9a9a9a]">If your team won&apos;t use it, it doesn&apos;t work. So
-                I design around the people doing the work, then build.</span>
-              </p>
+              <div className="mt-10 flex flex-col gap-5 md:mt-14 md:flex-row md:items-center md:justify-between">
+                <p className="max-w-[28ch] text-[24px] font-semibold leading-[1.2] tracking-[-0.03em] md:text-[32px]">
+                  Let&apos;s identify what&apos;s actually worth automating.
+                </p>
+                <a href="#contact" className={CTA_PRIMARY} data-ga-event="consulting_cta" data-ga-category="consulting" data-ga-label="Calculator">
+                  Let&apos;s discuss your workflow <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </Reveal>
           </Section>
 
@@ -251,6 +289,9 @@ export default function Consultant() {
             <Reveal y={50}>
               <Label>How we work together</Label>
               <Heading dark="Start with one workflow." light="Then decide what's next." />
+              <p className="mt-6 max-w-[620px] text-[17px] leading-[1.6] text-[#333] md:text-[18px]">
+                A small first engagement you can see working with your own team before you commit to anything bigger.
+              </p>
             </Reveal>
             <ol className="mt-12 grid gap-0 md:mt-16 md:grid-cols-4 md:gap-4">
               {steps.map((s, i) => (
@@ -264,10 +305,24 @@ export default function Consultant() {
                 </li>
               ))}
             </ol>
-            <Reveal y={30}>
-              <p className="mt-10 max-w-[620px] rounded-[16px] bg-white p-5 text-[16px] leading-[1.55] text-[#333] md:mt-14 md:p-6 md:text-[17px]">
-                No big transformation program. A focused pilot you can see working, with your own team, before you decide on anything more.
-              </p>
+            <Reveal y={40}>
+              <div className="mt-12 grid gap-6 rounded-[22px] bg-white p-6 md:mt-16 md:rounded-[32px] md:p-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
+                <div>
+                  <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#999]">What a pilot can include</p>
+                  <p className="mt-3 max-w-[30ch] text-[20px] font-semibold leading-[1.3] tracking-[-0.03em] md:text-[24px]">
+                    Technology alone doesn&apos;t fix a workflow. <span className="text-[#9a9a9a]">If your team won&apos;t use it, it doesn&apos;t work.</span>
+                  </p>
+                  <p className="mt-4 text-[15px] leading-[1.5] text-[#777]">Scope and cost are agreed with you up front, based on the workflow.</p>
+                </div>
+                <ul className="self-end">
+                  {deliverables.map((d) => (
+                    <li key={d} className="flex items-start gap-3 border-t border-[#e6e6e6] py-3.5 text-[16px] leading-[1.45] md:text-[17px]">
+                      <span aria-hidden="true" className="mt-[3px] text-[#111]"><Asterisk size={12} /></span>
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
           </Section>
 
@@ -278,13 +333,13 @@ export default function Consultant() {
                 <Label>Why work with me</Label>
                 <Heading dark="Big-company experience," light="for small teams." />
                 <p className="mt-6 max-w-[540px] text-[17px] leading-[1.65] text-[#333] md:text-[18px]">
-                  I&apos;ve spent more than 15 years designing digital products and the tools behind them. Much of that has been for frontline
-                  retail and customer service teams, where software only succeeds if busy people choose to use it. In that work I helped turn
-                  an AI tool that almost nobody used, around 2%, into something people reached for every day.
+                  I&apos;ve spent more than 15 years designing digital products and the tools behind them, much of it for frontline retail and
+                  customer service teams, where software only succeeds if busy people choose to use it. One example: I led a point-of-sale
+                  redesign that went from 2% adoption to voluntary daily use.
                 </p>
                 <p className="mt-4 max-w-[540px] text-[17px] leading-[1.65] text-[#333] md:text-[18px]">
-                  I also build. I designed and launched my own AI product from scratch, so I know what it takes to make AI work outside a
-                  slide deck.
+                  I also build. On my own, I designed and built ViveBien, an AI health companion on WhatsApp, and tested it with real users.
+                  So I know what it takes to make AI work outside a slide deck.
                 </p>
                 <Link
                   href="/"
@@ -318,7 +373,7 @@ export default function Consultant() {
                       Let&apos;s find one workflow worth improving.
                     </h2>
                     <p className="mt-5 max-w-[30rem] text-[18px] leading-[1.4] tracking-[-0.02em] text-white/55 md:text-[20px]">
-                      You don&apos;t need an AI strategy for everything. You need a clear place to start.
+                      No complicated AI strategy required. Let&apos;s start with one problem worth solving.
                     </p>
                     <div className="mt-8 flex max-w-[593px] flex-wrap gap-x-8 gap-y-2 border-t border-white/15 pt-5 text-[14px] text-white/50">
                       <a href="mailto:jmariano19@gmail.com?subject=Workflow%20conversation" className="hover:text-white">
@@ -335,7 +390,7 @@ export default function Consultant() {
                     </div>
                   </div>
                   <div className="flex flex-col justify-center rounded-[22px] bg-[#262626] p-5 md:p-7 lg:rounded-[27px] lg:px-[28px] lg:py-[40px]">
-                    <p className="mb-2 px-1 text-[22px] font-bold tracking-[-0.03em] md:text-[27px]">Let&apos;s talk about your business</p>
+                    <p className="mb-2 px-1 text-[22px] font-bold tracking-[-0.03em] md:text-[27px]">Let&apos;s discuss your workflow</p>
                     <p className="mb-6 px-1 text-[15px] leading-[1.45] text-white/55">
                       Tell me a little about your team and the task that eats the most time. I&apos;ll get back to you personally.
                     </p>

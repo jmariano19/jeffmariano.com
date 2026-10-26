@@ -11,6 +11,7 @@ const links = [
   { label: "About", href: "/about" },
   { label: "Experiments", href: "/#side-projects" },
   { label: "Articles", href: "/articles" },
+  { label: "AI Consulting", href: "/consultant" },
 ];
 
 const ease = [0.76, 0, 0.24, 1] as const;

@@ -18,6 +18,14 @@ const BEFORE = [
 ];
 
 const SLOTS = ["1:30 pm", "3:00 pm", "4:15 pm"];
+
+// What changes, side by side. Counts come from the example above, not from client data.
+const COMPARE = [
+  { label: "Steps done by hand", before: "6", after: "1 approval" },
+  { label: "Tools to open", before: "4", after: "1 screen" },
+  { label: "Customer details", before: "Searched for", after: "Already there" },
+  { label: "The reply", before: "Depends who answers", after: "Consistent, then personalized" },
+];
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function BeforeAfter() {
@@ -79,9 +87,7 @@ export default function BeforeAfter() {
                   </li>
                 ))}
               </ol>
-              <p className="mt-5 text-[15px] text-[#555] md:text-[17px]">
-                <span className="font-semibold text-[#111]">4 tools, 6 steps, all by hand.</span> Multiply it by every request, every day.
-              </p>
+
             </motion.div>
           ) : (
             <motion.div key="after" id="ba-panel-after" role="tabpanel" aria-labelledby="ba-tab-after" {...motionProps}>
@@ -129,10 +135,16 @@ export default function BeforeAfter() {
                     Hi! Happy to move you. I can do <strong className="font-semibold">Thursday at {slot}</strong> instead of Tuesday at 10.
                     Want me to switch it?
                   </p>
+                  {!sent && (
+                    <div className="mt-4 rounded-[12px] bg-[#f6f6f6] px-4 py-3 text-[14px] leading-[1.5] text-[#555]">
+                      <span className="font-semibold text-[#111]">When you approve:</span> the reply goes out, the booking moves to Thursday at{" "}
+                      {slot}, and a note is added to the customer&apos;s record. Nothing changes until then.
+                    </div>
+                  )}
                   <div className="mt-5 flex flex-wrap items-center gap-3" aria-live="polite">
                     {sent ? (
                       <p className="inline-flex items-center gap-2 rounded-full bg-[#eaf7ee] px-4 py-2.5 text-[14px] font-medium text-[#1d6b36]">
-                        <span aria-hidden="true">✓</span> Sent. Booking and records updated.
+                        <span aria-hidden="true">✓</span> Approved. Reply sent, booking moved, note added.
                       </p>
                     ) : (
                       <>
@@ -149,17 +161,30 @@ export default function BeforeAfter() {
                   </div>
                 </div>
               </div>
-              <p className="mt-5 text-[15px] text-[#555] md:text-[17px]">
-                <span className="font-semibold text-[#111]">1 screen, 1 decision.</span> The busywork happens in the background; a person still
-                makes the call.
-              </p>
+
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
+      {/* Side-by-side difference; the active column is highlighted */}
+      <div className="mt-6 overflow-hidden rounded-[16px] border border-[#ececec] md:mt-8">
+        <div className="grid grid-cols-[1.1fr_1fr_1fr] bg-[#fafafa] text-[12px] font-bold uppercase tracking-[0.1em] text-[#999] md:text-[13px]">
+          <span className="px-4 py-3">For this request</span>
+          <span className={`px-4 py-3 transition-colors ${view === "before" ? "bg-[#ececec] text-[#111]" : ""}`}>By hand</span>
+          <span className={`px-4 py-3 transition-colors ${view === "after" ? "bg-[#111] text-white" : ""}`}>Connected</span>
+        </div>
+        {COMPARE.map((c) => (
+          <div key={c.label} className="grid grid-cols-[1.1fr_1fr_1fr] border-t border-[#ececec] text-[13px] sm:text-[14px] md:text-[16px]">
+            <span className="px-3 py-3 text-[#666] sm:px-4">{c.label}</span>
+            <span className={`px-3 py-3 transition-colors sm:px-4 ${view === "before" ? "bg-[#f4f4f4] font-semibold" : "text-[#999]"}`}>{c.before}</span>
+            <span className={`px-3 py-3 transition-colors sm:px-4 ${view === "after" ? "bg-[#f4f4f4] font-semibold" : "text-[#999]"}`}>{c.after}</span>
+          </div>
+        ))}
+      </div>
+
       <p className="mt-6 border-t border-[#ececec] pt-4 text-[13px] text-[#9a9a9a]">
-        Illustrative example to show the idea, not a client engagement.
+        Illustrative example to show the idea, not a client engagement. Step counts come from this example only.
       </p>
     </div>
   );
