@@ -49,7 +49,7 @@ const projects = [
 const stats = [
   { value: "15+", unit: "yrs", label: "Designing products", note: "Across retail, media, e-commerce, customer service and health." },
   { value: "15+", unit: "teams", label: "On one design system", note: "Verizon's retail design system, shared across product teams." },
-  { value: "2%", unit: "→ daily", label: "Adoption turnaround", note: "A POS redesign that went from 2% adoption to voluntary daily use." },
+  { value: "2%", unit: "→ daily", label: "Adoption turnaround", note: "An AI platform inside the POS that went from 2% adoption to voluntary daily use." },
   { value: "13", unit: "agents", label: "In one rep platform", note: "A multi-agent platform for Verizon retail representatives." },
 ];
 

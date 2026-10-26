@@ -334,8 +334,8 @@ export default function Consultant() {
                 <Heading dark="Big-company experience," light="for small teams." />
                 <p className="mt-6 max-w-[540px] text-[17px] leading-[1.65] text-[#333] md:text-[18px]">
                   I&apos;ve spent more than 15 years designing digital products and the tools behind them, much of it for frontline retail and
-                  customer service teams, where software only succeeds if busy people choose to use it. One example: I led a point-of-sale
-                  redesign that went from 2% adoption to voluntary daily use.
+                  customer service teams, where software only succeeds if busy people choose to use it. One example: I led the redesign of an AI-assisted platform inside a retail point-of-sale system, with conversational flows
+                  that help staff complete sales and resolve problems. It went from 2% adoption to voluntary daily use.
                 </p>
                 <p className="mt-4 max-w-[540px] text-[17px] leading-[1.65] text-[#333] md:text-[18px]">
                   I also build. On my own, I designed and built ViveBien, an AI health companion on WhatsApp, and tested it with real users.

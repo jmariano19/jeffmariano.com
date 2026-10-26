@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const paragraphs = [
   "I design AI-assisted systems around the five behavioral barriers that decide whether people keep using them: trust uncertainty, cognitive load, identity threat, delayed reward, and behavioral friction.",
   "Identity threat is the one teams miss. When a tool implies someone’s expertise is now optional, they find reasons not to use it — and none of those reasons are about the interface.",
-  "At Verizon, I lead AI-powered retail experiences at Fortune 50 scale, including a multi-agent rep platform routing across 13 specialized agents. A POS redesign I led went from 2% adoption to voluntary daily use. I run a micro-experimentation framework there on a sandbox-first principle: earn the right to scale.",
+  "At Verizon, I lead AI-powered retail experiences at Fortune 50 scale, including a multi-agent rep platform routing across 13 specialized agents. An AI-assisted platform I redesigned inside the POS, with conversational and agentic flows that help reps close sales and resolve problems, went from 2% adoption to voluntary daily use. I run a micro-experimentation framework there on a sandbox-first principle: earn the right to scale.",
   "In health, I’m building a WhatsApp-first AI platform for Spanish-speaking users, designed around a 14-day arc that ends in users owning their own patterns rather than depending on the system.",
   "The method is the same in both: design for the behavior, then let the system improve as people use it.",
 ];
