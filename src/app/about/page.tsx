@@ -25,7 +25,7 @@ export default function About() {
           <Reveal onLoad delay={0.1} blur>
             <div className="relative w-full max-w-[498px] aspect-[498/710] rounded-[26px] overflow-hidden bg-[#e4e4e4]">
               <Image
-                src="/images/about_portrait.jpg"
+                src="/images/about_portrait_2026.webp"
                 alt="Jeffrey Mariano"
                 fill
                 priority
