@@ -17,6 +17,7 @@ import { ChannelAdapt } from "@/components/case-study/ChannelAdapt";
 import { IntentComposer } from "@/components/case-study/IntentComposer";
 import { AgentWorkflow } from "@/components/case-study/AgentWorkflow";
 import AnimatedEvidenceGraph from "@/components/case-study/AnimatedEvidenceGraph";
+import AdvisorResults from "@/components/case-study/AdvisorResults";
 
 export const metadata: Metadata = {
   title: "AI Conversational Canvas — Jeff Mariano",
@@ -256,11 +257,13 @@ export default function AiConversationalCanvas() {
         </div>
       </Chapter>
 
+      <AdvisorResults />
+
       <Outcomes
-        title="Results from the first AI tool"
+        title="Beyond the numbers"
         items={[
           { title: "Voluntary Adoption", description: "Reps chose to use the AI features" },
-          { title: "Faster Interactions", description: "Bill optimization time dropped significantly" },
+          { title: "Primary Tool", description: "The main conversational tool in four sales channels" },
           { title: "Framework Standard", description: "Adopted across the retail AI system" },
           { title: "Sentiment Shift", description: 'From "worst product" to actively requested' },
         ]}
